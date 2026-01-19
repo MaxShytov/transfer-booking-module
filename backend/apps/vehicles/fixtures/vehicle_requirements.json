@@ -1,0 +1,98 @@
+[
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 1,
+    "fields": {
+      "min_value": 1,
+      "max_value": 4,
+      "min_vehicle_tier": 1,
+      "required_for": "passengers",
+      "is_strict": true,
+      "validation_message": "1-4 passengers can use Economy Sedan or higher"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 2,
+    "fields": {
+      "min_value": 5,
+      "max_value": 7,
+      "min_vehicle_tier": 4,
+      "required_for": "passengers",
+      "is_strict": true,
+      "validation_message": "5-7 passengers require a Minivan or larger"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 3,
+    "fields": {
+      "min_value": 8,
+      "max_value": 16,
+      "min_vehicle_tier": 6,
+      "required_for": "passengers",
+      "is_strict": true,
+      "validation_message": "8-16 passengers require a Minibus or larger"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 4,
+    "fields": {
+      "min_value": 17,
+      "max_value": 25,
+      "min_vehicle_tier": 7,
+      "required_for": "passengers",
+      "is_strict": true,
+      "validation_message": "17-25 passengers require a Large Minibus"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 5,
+    "fields": {
+      "min_value": 0,
+      "max_value": 2,
+      "min_vehicle_tier": 1,
+      "required_for": "luggage",
+      "is_strict": true,
+      "validation_message": "0-2 large bags can fit in Economy Sedan or higher"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 6,
+    "fields": {
+      "min_value": 3,
+      "max_value": 5,
+      "min_vehicle_tier": 4,
+      "required_for": "luggage",
+      "is_strict": true,
+      "validation_message": "3-5 large bags require a Minivan or larger"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 7,
+    "fields": {
+      "min_value": 6,
+      "max_value": 12,
+      "min_vehicle_tier": 6,
+      "required_for": "luggage",
+      "is_strict": true,
+      "validation_message": "6-12 large bags require a Minibus or larger"
+    }
+  },
+  {
+    "model": "vehicles.vehicleclassrequirement",
+    "pk": 8,
+    "fields": {
+      "min_value": 13,
+      "max_value": 99,
+      "min_vehicle_tier": 7,
+      "required_for": "luggage",
+      "is_strict": true,
+      "validation_message": "13+ large bags require a Large Minibus"
+    }
+  }
+]

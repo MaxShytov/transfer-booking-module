@@ -1,0 +1,128 @@
+[
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 1,
+    "fields": {
+      "class_name": "Economy Sedan",
+      "class_code": "economy_sedan",
+      "tier_level": 1,
+      "price_multiplier": "1.00",
+      "max_passengers": 4,
+      "max_large_luggage": 2,
+      "max_small_luggage": 2,
+      "description": "Comfortable sedan for up to 4 passengers",
+      "example_vehicles": "VW Passat, Toyota Camry, Ford Mondeo, Skoda Superb",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 2,
+    "fields": {
+      "class_name": "Business Sedan",
+      "class_code": "business_sedan",
+      "tier_level": 2,
+      "price_multiplier": "1.30",
+      "max_passengers": 4,
+      "max_large_luggage": 3,
+      "max_small_luggage": 2,
+      "description": "Premium sedan with extra comfort and luggage space",
+      "example_vehicles": "Mercedes E-Class, BMW 5 Series, Audi A6",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 3,
+    "fields": {
+      "class_name": "Luxury Sedan",
+      "class_code": "luxury_sedan",
+      "tier_level": 3,
+      "price_multiplier": "1.80",
+      "max_passengers": 3,
+      "max_large_luggage": 2,
+      "max_small_luggage": 2,
+      "description": "Top-tier luxury sedan for VIP passengers",
+      "example_vehicles": "Mercedes S-Class, BMW 7 Series, Audi A8, Tesla Model S",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 3
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 4,
+    "fields": {
+      "class_name": "Minivan",
+      "class_code": "minivan",
+      "tier_level": 4,
+      "price_multiplier": "1.40",
+      "max_passengers": 7,
+      "max_large_luggage": 5,
+      "max_small_luggage": 4,
+      "description": "Spacious minivan for groups and families",
+      "example_vehicles": "Mercedes V-Class, VW Multivan, Ford Transit Custom",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 4
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 5,
+    "fields": {
+      "class_name": "Luxury Minivan",
+      "class_code": "luxury_minivan",
+      "tier_level": 5,
+      "price_multiplier": "2.20",
+      "max_passengers": 7,
+      "max_large_luggage": 5,
+      "max_small_luggage": 4,
+      "description": "Premium minivan with VIP amenities",
+      "example_vehicles": "Mercedes V-Class VIP, VW Multivan Premium",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 5
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 6,
+    "fields": {
+      "class_name": "Minibus",
+      "class_code": "minibus",
+      "tier_level": 6,
+      "price_multiplier": "2.50",
+      "max_passengers": 16,
+      "max_large_luggage": 12,
+      "max_small_luggage": 8,
+      "description": "Medium bus for larger groups",
+      "example_vehicles": "Mercedes Sprinter, Ford Transit",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 6
+    }
+  },
+  {
+    "model": "vehicles.vehicleclass",
+    "pk": 7,
+    "fields": {
+      "class_name": "Large Minibus",
+      "class_code": "large_minibus",
+      "tier_level": 7,
+      "price_multiplier": "3.50",
+      "max_passengers": 25,
+      "max_large_luggage": 20,
+      "max_small_luggage": 15,
+      "description": "Large bus for big groups and events",
+      "example_vehicles": "Mercedes Sprinter Extended, Iveco Daily",
+      "icon_url": "",
+      "is_active": true,
+      "display_order": 7
+    }
+  }
+]
