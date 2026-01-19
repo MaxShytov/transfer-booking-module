@@ -33,7 +33,7 @@
         <!-- Google Maps API Key - TODO: Replace with your actual key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCfn1i3KY-qsUgTlSTyYsWWFxzSASgG2A8" />
+            android:value="AIzaSyDVKSZEG7OodJHiew1xrfE9D7KmxLzi9SA" />
     </application>
     <!-- Location permissions for geolocator -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
