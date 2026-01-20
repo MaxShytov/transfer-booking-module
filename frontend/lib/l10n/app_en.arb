@@ -1,0 +1,673 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2026-01-19",
+
+  "appTitle": "8Move Transfer",
+  "@appTitle": {"description": "Application title"},
+
+  "login": "Login",
+  "@login": {"description": "Login button and title"},
+
+  "register": "Register",
+  "@register": {"description": "Register button and link"},
+
+  "logout": "Logout",
+  "@logout": {"description": "Logout button"},
+
+  "cancel": "Cancel",
+  "@cancel": {"description": "Cancel button"},
+
+  "ok": "OK",
+  "@ok": {"description": "OK button"},
+
+  "done": "Done",
+  "@done": {"description": "Done button"},
+
+  "retry": "Retry",
+  "@retry": {"description": "Retry button"},
+
+  "skip": "Skip",
+  "@skip": {"description": "Skip button"},
+
+  "continueButton": "Continue",
+  "@continueButton": {"description": "Continue button"},
+
+  "edit": "Edit",
+  "@edit": {"description": "Edit button"},
+
+  "close": "Close",
+  "@close": {"description": "Close button"},
+
+  "expand": "Expand",
+  "@expand": {"description": "Expand button"},
+
+  "selected": "Selected",
+  "@selected": {"description": "Selected indicator"},
+
+  "email": "Email",
+  "@email": {"description": "Email field label"},
+
+  "emailHint": "Enter your email",
+  "@emailHint": {"description": "Email field placeholder"},
+
+  "password": "Password",
+  "@password": {"description": "Password field label"},
+
+  "passwordHint": "Enter your password",
+  "@passwordHint": {"description": "Password field placeholder"},
+
+  "passwordMinChars": "At least 8 characters",
+  "@passwordMinChars": {"description": "Password hint for minimum characters"},
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {"description": "Confirm password field label"},
+
+  "confirmPasswordHint": "Repeat your password",
+  "@confirmPasswordHint": {"description": "Confirm password placeholder"},
+
+  "firstName": "First Name",
+  "@firstName": {"description": "First name field label"},
+
+  "firstNameHint": "Enter your first name",
+  "@firstNameHint": {"description": "First name placeholder"},
+
+  "lastName": "Last Name",
+  "@lastName": {"description": "Last name field label"},
+
+  "lastNameHint": "Enter your last name",
+  "@lastNameHint": {"description": "Last name placeholder"},
+
+  "phone": "Phone",
+  "@phone": {"description": "Phone field label"},
+
+  "phoneOptional": "Phone (optional)",
+  "@phoneOptional": {"description": "Optional phone field label"},
+
+  "phoneHint": "+39 123 456 7890",
+  "@phoneHint": {"description": "Phone placeholder"},
+
+  "loginError": "Login Error",
+  "@loginError": {"description": "Login error dialog title"},
+
+  "noAccount": "Don't have an account?",
+  "@noAccount": {"description": "Registration prompt"},
+
+  "createAccount": "Create Account",
+  "@createAccount": {"description": "Create account title and button"},
+
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {"description": "Login prompt"},
+
+  "logoutConfirmTitle": "Logout",
+  "@logoutConfirmTitle": {"description": "Logout confirmation dialog title"},
+
+  "logoutConfirmMessage": "Are you sure you want to logout?",
+  "@logoutConfirmMessage": {"description": "Logout confirmation message"},
+
+  "profile": "Profile",
+  "@profile": {"description": "Profile screen title"},
+
+  "language": "Language",
+  "@language": {"description": "Language setting label"},
+
+  "notSet": "Not set",
+  "@notSet": {"description": "Fallback for empty values"},
+
+  "roleAdmin": "Administrator",
+  "@roleAdmin": {"description": "Admin role label"},
+
+  "roleManager": "Manager",
+  "@roleManager": {"description": "Manager role label"},
+
+  "roleDriver": "Driver",
+  "@roleDriver": {"description": "Driver role label"},
+
+  "roleCustomer": "Customer",
+  "@roleCustomer": {"description": "Customer role label"},
+
+  "langEnglish": "English",
+  "@langEnglish": {"description": "English language name"},
+
+  "langItalian": "Italiano",
+  "@langItalian": {"description": "Italian language name"},
+
+  "langGerman": "Deutsch",
+  "@langGerman": {"description": "German language name"},
+
+  "langFrench": "Français",
+  "@langFrench": {"description": "French language name"},
+
+  "langArabic": "العربية",
+  "@langArabic": {"description": "Arabic language name"},
+
+  "bookTransfer": "Book a Transfer",
+  "@bookTransfer": {"description": "Book transfer screen title"},
+
+  "route": "Route",
+  "@route": {"description": "Route section header"},
+
+  "pickupLocation": "Pickup Location",
+  "@pickupLocation": {"description": "Pickup location label"},
+
+  "dropoffLocation": "Dropoff Location",
+  "@dropoffLocation": {"description": "Dropoff location label"},
+
+  "dateTime": "Date & Time",
+  "@dateTime": {"description": "Date and time section header"},
+
+  "pickupDate": "Pickup Date",
+  "@pickupDate": {"description": "Pickup date label"},
+
+  "returnDate": "Return Date",
+  "@returnDate": {"description": "Return date label"},
+
+  "time": "Time",
+  "@time": {"description": "Time label"},
+
+  "date": "Date",
+  "@date": {"description": "Date label"},
+
+  "selectDate": "Select date",
+  "@selectDate": {"description": "Date picker placeholder"},
+
+  "selectTime": "Select time",
+  "@selectTime": {"description": "Time picker placeholder"},
+
+  "passengersAndLuggage": "Passengers & Luggage",
+  "@passengersAndLuggage": {"description": "Passengers and luggage section header"},
+
+  "adults": "Adults",
+  "@adults": {"description": "Adults stepper label"},
+
+  "children": "Children",
+  "@children": {"description": "Children stepper label"},
+
+  "childrenSubtitle": "Under 12 years",
+  "@childrenSubtitle": {"description": "Children age description"},
+
+  "largeLuggage": "Large Luggage",
+  "@largeLuggage": {"description": "Large luggage stepper label"},
+
+  "largeLuggageSubtitle": "Suitcases, large bags",
+  "@largeLuggageSubtitle": {"description": "Large luggage description"},
+
+  "smallLuggage": "Small Luggage",
+  "@smallLuggage": {"description": "Small luggage stepper label"},
+
+  "smallLuggageSubtitle": "Backpacks, carry-on bags",
+  "@smallLuggageSubtitle": {"description": "Small luggage description"},
+
+  "oneWay": "One Way",
+  "@oneWay": {"description": "One way trip type"},
+
+  "roundTrip": "Round Trip",
+  "@roundTrip": {"description": "Round trip type"},
+
+  "discountBadge": "-10%",
+  "@discountBadge": {"description": "Round trip discount badge"},
+
+  "continueToVehicle": "Continue to Vehicle Selection",
+  "@continueToVehicle": {"description": "Continue to vehicle selection button"},
+
+  "cancelBookingTitle": "Cancel Booking?",
+  "@cancelBookingTitle": {"description": "Cancel booking dialog title"},
+
+  "cancelBookingMessage": "Are you sure you want to cancel? Your progress will be lost.",
+  "@cancelBookingMessage": {"description": "Cancel booking confirmation message"},
+
+  "continueBooking": "Continue Booking",
+  "@continueBooking": {"description": "Continue booking button in dialog"},
+
+  "comingSoon": "Coming Soon",
+  "@comingSoon": {"description": "Coming soon dialog title"},
+
+  "gpsComingSoon": "GPS location will be available soon.",
+  "@gpsComingSoon": {"description": "GPS feature coming soon message"},
+
+  "selectVehicle": "Select Vehicle",
+  "@selectVehicle": {"description": "Vehicle selection screen title"},
+
+  "passengersAndBagsInfo": "{passengers} passengers, {bags} large bags",
+  "@passengersAndBagsInfo": {
+    "description": "Passenger and bags info banner",
+    "placeholders": {
+      "passengers": {"type": "int"},
+      "bags": {"type": "int"}
+    }
+  },
+
+  "notSuitableForPassengersAndBags": "Not suitable for {passengers} passengers and {bags} bags",
+  "@notSuitableForPassengersAndBags": {
+    "description": "Vehicle not suitable message",
+    "placeholders": {
+      "passengers": {"type": "int"},
+      "bags": {"type": "int"}
+    }
+  },
+
+  "maxPassengers": "Max {count} passengers",
+  "@maxPassengers": {
+    "description": "Maximum passengers limit",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "maxLargeBags": "Max {count} large bags",
+  "@maxLargeBags": {
+    "description": "Maximum large bags limit",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "selectedVehicle": "Selected: {vehicle}",
+  "@selectedVehicle": {
+    "description": "Selected vehicle confirmation",
+    "placeholders": {
+      "vehicle": {"type": "String"}
+    }
+  },
+
+  "continueToExtras": "Continue to Extras",
+  "@continueToExtras": {"description": "Continue to extras button"},
+
+  "failedToLoadVehicles": "Failed to load vehicles",
+  "@failedToLoadVehicles": {"description": "Vehicle loading error"},
+
+  "passengers": "passengers",
+  "@passengers": {"description": "Passengers label (plural)"},
+
+  "largeBags": "large bags",
+  "@largeBags": {"description": "Large bags label"},
+
+  "smallBags": "small bags",
+  "@smallBags": {"description": "Small bags label"},
+
+  "pax": "pax",
+  "@pax": {"description": "Abbreviated passengers"},
+
+  "extraServices": "Extra Services",
+  "@extraServices": {"description": "Extra services screen title"},
+
+  "optionalServices": "Optional Services",
+  "@optionalServices": {"description": "Optional services section header"},
+
+  "optionalServicesSubtitle": "Enhance your journey with these extras",
+  "@optionalServicesSubtitle": {"description": "Optional services description"},
+
+  "includedServices": "Included Services",
+  "@includedServices": {"description": "Included services section header"},
+
+  "includedServicesSubtitle": "These fees may apply based on your trip",
+  "@includedServicesSubtitle": {"description": "Included services description"},
+
+  "selectedExtras": "Selected extras:",
+  "@selectedExtras": {"description": "Selected extras count label"},
+
+  "failedToLoadExtras": "Failed to load extras",
+  "@failedToLoadExtras": {"description": "Extras loading error"},
+
+  "noExtrasAvailable": "No extras available",
+  "@noExtrasAvailable": {"description": "No extras empty state title"},
+
+  "continueToNextStep": "Continue to the next step",
+  "@continueToNextStep": {"description": "No extras empty state subtitle"},
+
+  "each": "each",
+  "@each": {"description": "Price per item qualifier"},
+
+  "passengerDetails": "Passenger Details",
+  "@passengerDetails": {"description": "Passenger details screen title"},
+
+  "contactInformation": "Contact Information",
+  "@contactInformation": {"description": "Contact info section header"},
+
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {"description": "Phone number field label"},
+
+  "phoneNumberHint": "+39 xxx xxx xxxx",
+  "@phoneNumberHint": {"description": "Phone number placeholder"},
+
+  "tripDetailsOptional": "Trip Details (Optional)",
+  "@tripDetailsOptional": {"description": "Optional trip details section header"},
+
+  "flightNumber": "Flight Number",
+  "@flightNumber": {"description": "Flight number field label"},
+
+  "flightNumberHint": "e.g. FR1234",
+  "@flightNumberHint": {"description": "Flight number placeholder"},
+
+  "flightMonitoringInfo": "We will monitor your flight for delays",
+  "@flightMonitoringInfo": {"description": "Flight monitoring helper text"},
+
+  "specialRequests": "Special Requests",
+  "@specialRequests": {"description": "Special requests field label"},
+
+  "specialRequestsHint": "Any special requirements?",
+  "@specialRequestsHint": {"description": "Special requests placeholder"},
+
+  "continueToReview": "Continue to Review",
+  "@continueToReview": {"description": "Continue to review button"},
+
+  "reviewBooking": "Review Booking",
+  "@reviewBooking": {"description": "Review booking screen title"},
+
+  "calculatingPrice": "Calculating final price...",
+  "@calculatingPrice": {"description": "Price calculation loading text"},
+
+  "totalPrice": "Total Price",
+  "@totalPrice": {"description": "Total price label"},
+
+  "discountOff": "10% OFF",
+  "@discountOff": {"description": "Discount badge text"},
+
+  "confirmBooking": "Confirm Booking",
+  "@confirmBooking": {"description": "Confirm booking button"},
+
+  "bookingConfirmed": "Booking Confirmed!",
+  "@bookingConfirmed": {"description": "Booking success dialog title"},
+
+  "bookingConfirmedMessage": "Your transfer has been booked successfully. You will receive a confirmation email shortly.",
+  "@bookingConfirmedMessage": {"description": "Booking success message"},
+
+  "bookingFailed": "Booking Failed",
+  "@bookingFailed": {"description": "Booking error dialog title"},
+
+  "failedToCalculatePrice": "Failed to calculate price",
+  "@failedToCalculatePrice": {"description": "Price calculation error"},
+
+  "agreeToTermsPart1": "I agree to the ",
+  "@agreeToTermsPart1": {"description": "Terms agreement text part 1"},
+
+  "termsAndConditions": "Terms and Conditions",
+  "@termsAndConditions": {"description": "Terms and conditions link"},
+
+  "andConnector": " and ",
+  "@andConnector": {"description": "And connector between terms and privacy"},
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {"description": "Privacy policy link"},
+
+  "priceBreakdown": "Price Breakdown",
+  "@priceBreakdown": {"description": "Price breakdown title (detailed)"},
+
+  "price": "Price",
+  "@price": {"description": "Price title (simple)"},
+
+  "pricingType": "Pricing Type",
+  "@pricingType": {"description": "Pricing type label"},
+
+  "fixedRoute": "Fixed Route",
+  "@fixedRoute": {"description": "Fixed route pricing type"},
+
+  "distanceBased": "Distance Based",
+  "@distanceBased": {"description": "Distance based pricing type"},
+
+  "distance": "Distance",
+  "@distance": {"description": "Distance label"},
+
+  "basePrice": "Base Price",
+  "@basePrice": {"description": "Base price label"},
+
+  "multipliersApplied": "Multipliers Applied",
+  "@multipliersApplied": {"description": "Multipliers section header"},
+
+  "vehicleMultiplier": "Vehicle ({name})",
+  "@vehicleMultiplier": {
+    "description": "Vehicle multiplier label",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "passengersMultiplier": "Passengers ({count})",
+  "@passengersMultiplier": {
+    "description": "Passengers multiplier label",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "seasonMultiplier": "Season",
+  "@seasonMultiplier": {"description": "Season multiplier label"},
+
+  "seasonMultiplierNamed": "Season ({name})",
+  "@seasonMultiplierNamed": {
+    "description": "Season multiplier with name",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "timeMultiplier": "Time",
+  "@timeMultiplier": {"description": "Time multiplier label"},
+
+  "timeMultiplierNamed": "Time ({name})",
+  "@timeMultiplierNamed": {
+    "description": "Time multiplier with name",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "subtotal": "Subtotal",
+  "@subtotal": {"description": "Subtotal label"},
+
+  "extrasTotal": "Extras Total",
+  "@extrasTotal": {"description": "Extras total label"},
+
+  "total": "TOTAL",
+  "@total": {"description": "Total price label"},
+
+  "calculationFormula": "Calculation Formula",
+  "@calculationFormula": {"description": "Formula section header"},
+
+  "formulaText": "(Base × Vehicle × Passengers × Season × Time) + Extras",
+  "@formulaText": {"description": "Price calculation formula"},
+
+  "includesExtras": "Includes {count} extra service(s)",
+  "@includesExtras": {
+    "description": "Extras count summary",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "stepRoute": "Route",
+  "@stepRoute": {"description": "Booking step 1 label"},
+
+  "stepVehicle": "Vehicle",
+  "@stepVehicle": {"description": "Booking step 2 label"},
+
+  "stepExtras": "Extras",
+  "@stepExtras": {"description": "Booking step 3 label"},
+
+  "stepDetails": "Details",
+  "@stepDetails": {"description": "Booking step 4 label"},
+
+  "stepReview": "Review",
+  "@stepReview": {"description": "Booking step 5 label"},
+
+  "from": "From",
+  "@from": {"description": "From location label"},
+
+  "to": "To",
+  "@to": {"description": "To location label"},
+
+  "notSelected": "Not selected",
+  "@notSelected": {"description": "Location not selected fallback"},
+
+  "dateNotSelected": "Date not selected",
+  "@dateNotSelected": {"description": "Date not selected fallback"},
+
+  "timeNotSelected": "Time not selected",
+  "@timeNotSelected": {"description": "Time not selected fallback"},
+
+  "vehicle": "Vehicle",
+  "@vehicle": {"description": "Vehicle section title"},
+
+  "extras": "Extras",
+  "@extras": {"description": "Extras section title"},
+
+  "passenger": "Passenger",
+  "@passenger": {"description": "Passenger section title"},
+
+  "flightInfo": "Flight: {number}",
+  "@flightInfo": {
+    "description": "Flight number display",
+    "placeholders": {
+      "number": {"type": "String"}
+    }
+  },
+
+  "enterAddressOrSelect": "Enter address or select from list",
+  "@enterAddressOrSelect": {"description": "Location input placeholder"},
+
+  "currentLocation": "Current Location",
+  "@currentLocation": {"description": "GPS location option"},
+
+  "currentLocationSubtitle": "Use GPS to detect your location",
+  "@currentLocationSubtitle": {"description": "GPS option description"},
+
+  "chooseOnMap": "Choose on Map",
+  "@chooseOnMap": {"description": "Map selection option"},
+
+  "chooseOnMapSubtitle": "Select a custom location on the map",
+  "@chooseOnMapSubtitle": {"description": "Map option description"},
+
+  "noMatchingLocations": "No matching locations found",
+  "@noMatchingLocations": {"description": "Empty location search state"},
+
+  "pickup": "Pickup",
+  "@pickup": {"description": "Pickup marker/label"},
+
+  "dropoff": "Dropoff",
+  "@dropoff": {"description": "Dropoff marker/label"},
+
+  "loadingRoute": "Loading route...",
+  "@loadingRoute": {"description": "Route loading indicator"},
+
+  "selectLocationsToSeeRoute": "Select locations to see route",
+  "@selectLocationsToSeeRoute": {"description": "Empty map state"},
+
+  "moveMapToSelectLocation": "Move the map to select location",
+  "@moveMapToSelectLocation": {"description": "Map selection instruction"},
+
+  "selectPickupLocation": "Select Pickup Location",
+  "@selectPickupLocation": {"description": "Pickup selection title"},
+
+  "selectDropoffLocation": "Select Dropoff Location",
+  "@selectDropoffLocation": {"description": "Dropoff selection title"},
+
+  "confirmPickup": "Confirm Pickup",
+  "@confirmPickup": {"description": "Confirm pickup button"},
+
+  "confirmDropoff": "Confirm Dropoff",
+  "@confirmDropoff": {"description": "Confirm dropoff button"},
+
+  "routePreview": "Route Preview",
+  "@routePreview": {"description": "Route preview screen title"},
+
+  "locationSelected": "Location selected",
+  "@locationSelected": {"description": "Location selected fallback"},
+
+  "validationEmailRequired": "Email is required",
+  "@validationEmailRequired": {"description": "Email required error"},
+
+  "validationEmailInvalid": "Please enter a valid email",
+  "@validationEmailInvalid": {"description": "Invalid email error"},
+
+  "validationPasswordRequired": "Password is required",
+  "@validationPasswordRequired": {"description": "Password required error"},
+
+  "validationPasswordMinLength": "Password must be at least 8 characters",
+  "@validationPasswordMinLength": {"description": "Password too short error"},
+
+  "validationConfirmPasswordRequired": "Please confirm your password",
+  "@validationConfirmPasswordRequired": {"description": "Confirm password required error"},
+
+  "validationPasswordsDoNotMatch": "Passwords do not match",
+  "@validationPasswordsDoNotMatch": {"description": "Passwords mismatch error"},
+
+  "validationFieldRequired": "{fieldName} is required",
+  "@validationFieldRequired": {
+    "description": "Generic field required error",
+    "placeholders": {
+      "fieldName": {"type": "String"}
+    }
+  },
+
+  "validationPhoneInvalid": "Please enter a valid phone number",
+  "@validationPhoneInvalid": {"description": "Invalid phone error"},
+
+  "validationFirstNameRequired": "Please enter your first name",
+  "@validationFirstNameRequired": {"description": "First name required error"},
+
+  "validationLastNameRequired": "Please enter your last name",
+  "@validationLastNameRequired": {"description": "Last name required error"},
+
+  "validationPhoneRequired": "Please enter your phone number",
+  "@validationPhoneRequired": {"description": "Phone required error"},
+
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {"description": "Language picker title"},
+
+  "systemDefault": "System Default",
+  "@systemDefault": {"description": "Use device language option"},
+
+  "bookTransferSubtitle": "Book your airport transfer easily",
+  "@bookTransferSubtitle": {"description": "Subtitle on home screen"},
+
+  "readyToTravel": "Ready to Travel?",
+  "@readyToTravel": {"description": "Card title on home screen"},
+
+  "bookingDescription": "Book your airport transfer in just a few steps.\nChoose your route, vehicle, and extras.",
+  "@bookingDescription": {"description": "Booking card description"},
+
+  "popularRoutes": "Popular Routes",
+  "@popularRoutes": {"description": "Popular routes section title"},
+
+  "tabBook": "Book",
+  "@tabBook": {"description": "Book tab label"},
+
+  "tabMyBookings": "My Bookings",
+  "@tabMyBookings": {"description": "My Bookings tab label"},
+
+  "tabMore": "More",
+  "@tabMore": {"description": "More tab label"},
+
+  "noBookingsYet": "No Bookings Yet",
+  "@noBookingsYet": {"description": "Empty bookings message"},
+
+  "bookingHistoryWillAppear": "Your booking history will appear here",
+  "@bookingHistoryWillAppear": {"description": "Empty bookings subtitle"},
+
+  "helpAndSupport": "Help & Support",
+  "@helpAndSupport": {"description": "Help menu item"},
+
+  "helpComingSoon": "Help & Support will be available soon.",
+  "@helpComingSoon": {"description": "Help coming soon message"},
+
+  "about": "About",
+  "@about": {"description": "About menu item"},
+
+  "version": "Version {version}",
+  "@version": {
+    "description": "Version string",
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "copyright": "© {year} 8Move Transfer",
+  "@copyright": {
+    "description": "Copyright notice",
+    "placeholders": {
+      "year": {"type": "String"}
+    }
+  },
+
+  "priceFrom": "from",
+  "@priceFrom": {"description": "Price from label"}
+}
