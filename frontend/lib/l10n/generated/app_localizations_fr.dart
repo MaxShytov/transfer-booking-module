@@ -329,6 +329,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get flightNumber => 'Numéro de vol';
 
   @override
+  String get outboundFlightNumber => 'Numéro de vol aller';
+
+  @override
+  String get returnFlightNumber => 'Numéro de vol retour';
+
+  @override
   String get flightNumberHint => 'ex. FR1234';
 
   @override
@@ -653,4 +659,88 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get priceFrom => 'à partir de';
+
+  @override
+  String get yourRoute => 'Votre itinéraire';
+
+  @override
+  String get swapLocations => 'Inverser les lieux';
+
+  @override
+  String get travelDate => 'Date de voyage';
+
+  @override
+  String get travelDates => 'Dates de voyage';
+
+  @override
+  String get outbound => 'ALLER';
+
+  @override
+  String get returnTrip => 'RETOUR';
+
+  @override
+  String get departure => 'Départ';
+
+  @override
+  String get arrival => 'Arrivée';
+
+  @override
+  String get departureAbbrev => 'Dép';
+
+  @override
+  String get arrivalAbbrev => 'Arr';
+
+  @override
+  String get now => 'maintenant';
+
+  @override
+  String get applyButton => 'Appliquer';
+
+  @override
+  String get outboundDate => 'Date d\'aller';
+
+  @override
+  String get returnDateModal => 'Date de retour';
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get tripInfo => 'Info trajet';
+
+  @override
+  String get distanceLabel => 'DISTANCE';
+
+  @override
+  String get durationLabel => 'DURÉE';
+
+  @override
+  String get passengersCard => 'Passagers';
+
+  @override
+  String get luggageCard => 'Bagages';
+
+  @override
+  String get large => 'Grand';
+
+  @override
+  String get small => 'Petit';
+
+  @override
+  String get surfboardBikeGolf => 'Planche de surf/Vélo/Golf';
+
+  @override
+  String get skiSnowboard => 'Ski/Snowboard';
+
+  @override
+  String get otherSportsEquipment => 'Autres sports';
+
+  @override
+  String get otherSportsPlaceholder => 'Veuillez préciser l\'équipement...';
+
+  @override
+  String get hour => 'Heure';
+
+  @override
+  String get minute => 'Minute';
 }

@@ -328,6 +328,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get flightNumber => 'Numero Volo';
 
   @override
+  String get outboundFlightNumber => 'Numero Volo Andata';
+
+  @override
+  String get returnFlightNumber => 'Numero Volo Ritorno';
+
+  @override
   String get flightNumberHint => 'es. FR1234';
 
   @override
@@ -648,4 +654,88 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get priceFrom => 'da';
+
+  @override
+  String get yourRoute => 'Il tuo percorso';
+
+  @override
+  String get swapLocations => 'Inverti posizioni';
+
+  @override
+  String get travelDate => 'Data di viaggio';
+
+  @override
+  String get travelDates => 'Date di viaggio';
+
+  @override
+  String get outbound => 'ANDATA';
+
+  @override
+  String get returnTrip => 'RITORNO';
+
+  @override
+  String get departure => 'Partenza';
+
+  @override
+  String get arrival => 'Arrivo';
+
+  @override
+  String get departureAbbrev => 'Par';
+
+  @override
+  String get arrivalAbbrev => 'Arr';
+
+  @override
+  String get now => 'ora';
+
+  @override
+  String get applyButton => 'Applica';
+
+  @override
+  String get outboundDate => 'Data di andata';
+
+  @override
+  String get returnDateModal => 'Data di ritorno';
+
+  @override
+  String get today => 'Oggi';
+
+  @override
+  String get tripInfo => 'Info viaggio';
+
+  @override
+  String get distanceLabel => 'DISTANZA';
+
+  @override
+  String get durationLabel => 'DURATA';
+
+  @override
+  String get passengersCard => 'Passeggeri';
+
+  @override
+  String get luggageCard => 'Bagagli';
+
+  @override
+  String get large => 'Grande';
+
+  @override
+  String get small => 'Piccolo';
+
+  @override
+  String get surfboardBikeGolf => 'Tavola da surf/Bici/Golf';
+
+  @override
+  String get skiSnowboard => 'Sci/Snowboard';
+
+  @override
+  String get otherSportsEquipment => 'Altri sport';
+
+  @override
+  String get otherSportsPlaceholder => 'Specifica l\'attrezzatura...';
+
+  @override
+  String get hour => 'Ora';
+
+  @override
+  String get minute => 'Minuto';
 }

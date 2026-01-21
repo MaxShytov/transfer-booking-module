@@ -24,8 +24,9 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
     super.initState();
     Future.microtask(() {
       final bookingState = ref.read(bookingFlowProvider);
+      final totalPassengers = bookingState.numPassengers + bookingState.numChildren;
       ref.read(availableVehiclesProvider.notifier).loadAvailableVehicles(
-            numPassengers: bookingState.numPassengers,
+            numPassengers: totalPassengers,
             numLargeLuggage: bookingState.numLargeLuggage,
           );
     });
@@ -36,6 +37,7 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
     final bookingState = ref.watch(bookingFlowProvider);
     final vehiclesState = ref.watch(availableVehiclesProvider);
     final l10n = AppLocalizations.of(context);
+    final totalPassengers = bookingState.numPassengers + bookingState.numChildren;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -89,7 +91,7 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                   Expanded(
                     child: Text(
                       l10n.passengersAndBagsInfo(
-                        bookingState.numPassengers,
+                        totalPassengers,
                         bookingState.numLargeLuggage,
                       ),
                       style: const TextStyle(
@@ -112,10 +114,11 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                           retryLabel: l10n.retry,
                           onRetry: () {
                             final bs = ref.read(bookingFlowProvider);
+                            final total = bs.numPassengers + bs.numChildren;
                             ref
                                 .read(availableVehiclesProvider.notifier)
                                 .loadAvailableVehicles(
-                                  numPassengers: bs.numPassengers,
+                                  numPassengers: total,
                                   numLargeLuggage: bs.numLargeLuggage,
                                 );
                           },
@@ -131,7 +134,7 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                             // Check both capacity AND tier level
                             final isBelowMinTier = vehicle.tierLevel < vehiclesState.minTier;
                             final isCapacityInsufficient = vehicle.maxPassengers <
-                                    bookingState.numPassengers ||
+                                    totalPassengers ||
                                 vehicle.maxLargeLuggage <
                                     bookingState.numLargeLuggage;
                             final isDisabled = isBelowMinTier || isCapacityInsufficient;
@@ -139,11 +142,10 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                             String? disabledReason;
                             if (isBelowMinTier) {
                               disabledReason = l10n.notSuitableForPassengersAndBags(
-                                bookingState.numPassengers,
+                                totalPassengers,
                                 bookingState.numLargeLuggage,
                               );
-                            } else if (vehicle.maxPassengers <
-                                bookingState.numPassengers) {
+                            } else if (vehicle.maxPassengers < totalPassengers) {
                               disabledReason = l10n.maxPassengers(vehicle.maxPassengers);
                             } else if (vehicle.maxLargeLuggage <
                                 bookingState.numLargeLuggage) {

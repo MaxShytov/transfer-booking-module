@@ -8,9 +8,13 @@ import '../../providers/booking_flow_provider.dart';
 import '../../providers/locations_provider.dart';
 import '../../widgets/atoms/booking_progress_indicator.dart';
 import '../../widgets/atoms/gradient_button.dart';
-import '../../widgets/atoms/stepper_field.dart';
-import '../../widgets/molecules/date_time_picker.dart';
+import '../../widgets/atoms/route_card.dart';
 import '../../widgets/molecules/location_input_field.dart';
+import '../../widgets/molecules/luggage_card.dart';
+import '../../widgets/molecules/passengers_card.dart';
+import '../../widgets/molecules/travel_dates_card.dart';
+import '../../widgets/molecules/trip_info_card.dart';
+import '../../widgets/organisms/date_time_picker_modal.dart';
 import '../../widgets/organisms/map_route_preview.dart';
 
 /// Screen for route selection (Step 1 of booking wizard) - Cupertino style.
@@ -18,17 +22,77 @@ class RouteSelectionScreen extends ConsumerStatefulWidget {
   const RouteSelectionScreen({super.key});
 
   @override
-  ConsumerState<RouteSelectionScreen> createState() => _RouteSelectionScreenState();
+  ConsumerState<RouteSelectionScreen> createState() =>
+      _RouteSelectionScreenState();
 }
 
 class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
+  /// Initial booking state when screen was opened, used to detect changes.
+  BookingFlowState? _initialState;
+
+  /// Scroll controller for scrolling to map.
+  final ScrollController _scrollController = ScrollController();
+
+  /// Key for map widget to scroll to.
+  final GlobalKey _mapKey = GlobalKey();
+
+  /// Route info from map
+  String? _distanceText;
+  String? _durationText;
+
   @override
   void initState() {
     super.initState();
     // Load predefined locations
     Future.microtask(() {
       ref.read(locationsProvider.notifier).loadLocations();
+      // Capture initial state after provider is ready
+      _initialState = ref.read(bookingFlowProvider);
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  /// Check if user has made any changes to the booking state.
+  bool _hasUserMadeChanges(BookingFlowState currentState) {
+    if (_initialState == null) return false;
+
+    final initial = _initialState!;
+    return currentState.pickupLocation?.address !=
+            initial.pickupLocation?.address ||
+        currentState.dropoffLocation?.address !=
+            initial.dropoffLocation?.address ||
+        currentState.serviceDate != initial.serviceDate ||
+        currentState.pickupTime != initial.pickupTime ||
+        currentState.isRoundTrip != initial.isRoundTrip ||
+        currentState.returnDate != initial.returnDate ||
+        currentState.returnTime != initial.returnTime ||
+        currentState.numPassengers != initial.numPassengers ||
+        currentState.numChildren != initial.numChildren ||
+        currentState.numLargeLuggage != initial.numLargeLuggage ||
+        currentState.numSmallLuggage != initial.numSmallLuggage ||
+        currentState.numSurfboardsBikesGolf !=
+            initial.numSurfboardsBikesGolf ||
+        currentState.numSkiSnowboard != initial.numSkiSnowboard ||
+        currentState.hasOtherSportsEquipment !=
+            initial.hasOtherSportsEquipment ||
+        currentState.otherSportsEquipmentDetails !=
+            initial.otherSportsEquipmentDetails;
+  }
+
+  void _scrollToMap() {
+    final context = _mapKey.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -43,7 +107,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
           child: const Icon(CupertinoIcons.xmark),
-          onPressed: () => _showCancelDialog(context, l10n),
+          onPressed: () => _handleClose(context, bookingState, l10n),
         ),
       ),
       child: SafeArea(
@@ -67,209 +131,347 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
             // Content
             Expanded(
               child: SingleChildScrollView(
+                controller: _scrollController,
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Section: Route
-                    Text(
-                      l10n.route,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: CupertinoColors.label,
+                    // Card 1: Your Route
+                    RouteCard(
+                      title: l10n.yourRoute,
+                      trailing: _MapIconButton(
+                        onTap: _scrollToMap,
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    // Map preview
-                    MapRoutePreview(
-                      pickupLat: bookingState.pickupLocation?.lat,
-                      pickupLng: bookingState.pickupLocation?.lng,
-                      dropoffLat: bookingState.dropoffLocation?.lat,
-                      dropoffLng: bookingState.dropoffLocation?.lng,
-                      pickupAddress: bookingState.pickupLocation?.address,
-                      dropoffAddress: bookingState.dropoffLocation?.address,
-                      departureDate: bookingState.serviceDate,
-                      departureTime: bookingState.pickupTime,
-                      height: 150,
-                      interactive: true,
-                      onTap: () => _openFullScreenMap(context, bookingState, l10n),
-                      expandLabel: l10n.expand,
-                      loadingRouteLabel: l10n.loadingRoute,
-                      selectLocationsLabel: l10n.selectLocationsToSeeRoute,
-                      pickupMarkerTitle: l10n.pickup,
-                      dropoffMarkerTitle: l10n.dropoff,
-                    ),
-                    const SizedBox(height: 16),
-                    // Pickup location
-                    LocationInputField(
-                      label: l10n.pickupLocation,
-                      hint: l10n.enterAddressOrSelect,
-                      icon: CupertinoIcons.location,
-                      selectedAddress: bookingState.pickupLocation?.address,
-                      predefinedLocations: locationsState.locations,
-                      currentLocationLabel: l10n.currentLocation,
-                      currentLocationSubtitle: l10n.currentLocationSubtitle,
-                      chooseOnMapLabel: l10n.chooseOnMap,
-                      chooseOnMapSubtitle: l10n.chooseOnMapSubtitle,
-                      noMatchingLocationsLabel: l10n.noMatchingLocations,
-                      onPredefinedSelected: (location) {
-                        _selectPickupLocation(location);
-                      },
-                      onCurrentLocationTap: () {
-                        showCupertinoDialog(
-                          context: context,
-                          builder: (ctx) => CupertinoAlertDialog(
-                            title: Text(l10n.comingSoon),
-                            content: Text(l10n.gpsComingSoon),
-                            actions: [
-                              CupertinoDialogAction(
-                                child: Text(l10n.ok),
-                                onPressed: () => Navigator.pop(ctx),
+                      child: Stack(
+                        children: [
+                          // Connection line between pickup and dropoff
+                          Positioned(
+                            left: 12,
+                            top: 40,
+                            bottom: 40,
+                            child: Container(
+                              width: 2,
+                              color: CupertinoColors.separator.resolveFrom(context),
+                            ),
+                          ),
+                          // Location inputs
+                          Column(
+                            children: [
+                              // Pickup location
+                              Padding(
+                                padding: const EdgeInsets.only(right: 70),
+                                child: LocationInputField(
+                                  label: l10n.pickupLocation,
+                                  hint: l10n.enterAddressOrSelect,
+                                  icon: CupertinoIcons.scope,
+                                  iconColor: CupertinoColors.systemBlue,
+                                  selectedAddress: bookingState.pickupLocation?.address,
+                                  predefinedLocations: locationsState.locations,
+                                  currentLocationLabel: l10n.currentLocation,
+                                  currentLocationSubtitle: l10n.currentLocationSubtitle,
+                                  chooseOnMapLabel: l10n.chooseOnMap,
+                                  chooseOnMapSubtitle: l10n.chooseOnMapSubtitle,
+                                  noMatchingLocationsLabel: l10n.noMatchingLocations,
+                                  onPredefinedSelected: (location) {
+                                    _selectPickupLocation(location);
+                                  },
+                                  onCustomAddressSelected: (customLocation) {
+                                    ref.read(bookingFlowProvider.notifier).setPickupLocation(
+                                      SelectedLocation(
+                                        lat: customLocation.lat,
+                                        lng: customLocation.lng,
+                                        address: customLocation.address,
+                                      ),
+                                    );
+                                  },
+                                  onCurrentLocationTap: () {
+                                    showCupertinoDialog(
+                                      context: context,
+                                      builder: (ctx) => CupertinoAlertDialog(
+                                        title: Text(l10n.comingSoon),
+                                        content: Text(l10n.gpsComingSoon),
+                                        actions: [
+                                          CupertinoDialogAction(
+                                            child: Text(l10n.ok),
+                                            onPressed: () => Navigator.pop(ctx),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  onCustomLocationTap: () {
+                                    // TODO: Open map picker
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              // Dropoff location
+                              Padding(
+                                padding: const EdgeInsets.only(right: 70),
+                                child: LocationInputField(
+                                  label: l10n.dropoffLocation,
+                                  hint: l10n.enterAddressOrSelect,
+                                  icon: CupertinoIcons.circle_fill,
+                                  iconColor: const Color(0xFFDC143C),
+                                  selectedAddress: bookingState.dropoffLocation?.address,
+                                  predefinedLocations: locationsState.locations,
+                                  chooseOnMapLabel: l10n.chooseOnMap,
+                                  chooseOnMapSubtitle: l10n.chooseOnMapSubtitle,
+                                  noMatchingLocationsLabel: l10n.noMatchingLocations,
+                                  onPredefinedSelected: (location) {
+                                    _selectDropoffLocation(location);
+                                  },
+                                  onCustomAddressSelected: (customLocation) {
+                                    ref.read(bookingFlowProvider.notifier).setDropoffLocation(
+                                      SelectedLocation(
+                                        lat: customLocation.lat,
+                                        lng: customLocation.lng,
+                                        address: customLocation.address,
+                                      ),
+                                    );
+                                  },
+                                  showCurrentLocation: false,
+                                  onCustomLocationTap: () {
+                                    // TODO: Open map picker
+                                  },
+                                ),
                               ),
                             ],
                           ),
-                        );
-                      },
-                      onCustomLocationTap: () {
-                        // TODO: Open map picker
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    // Dropoff location
-                    LocationInputField(
-                      label: l10n.dropoffLocation,
-                      hint: l10n.enterAddressOrSelect,
-                      icon: CupertinoIcons.placemark,
-                      selectedAddress: bookingState.dropoffLocation?.address,
-                      predefinedLocations: locationsState.locations,
-                      chooseOnMapLabel: l10n.chooseOnMap,
-                      chooseOnMapSubtitle: l10n.chooseOnMapSubtitle,
-                      noMatchingLocationsLabel: l10n.noMatchingLocations,
-                      onPredefinedSelected: (location) {
-                        _selectDropoffLocation(location);
-                      },
-                      showCurrentLocation: false,
-                      onCustomLocationTap: () {
-                        // TODO: Open map picker
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    // Section: Date & Time
-                    Text(
-                      l10n.dateTime,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: CupertinoColors.label,
+                          // Swap button positioned at the right side between inputs
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            child: Center(
+                              child: _SwapButton(
+                                onTap: () {
+                                  ref.read(bookingFlowProvider.notifier).swapLocations();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    DateTimePicker(
-                      dateLabel: l10n.pickupDate,
-                      timeLabel: l10n.time,
-                      selectedDate: bookingState.serviceDate,
-                      selectedTime: bookingState.pickupTime,
-                      selectDatePlaceholder: l10n.selectDate,
-                      selectTimePlaceholder: l10n.selectTime,
-                      cancelLabel: l10n.cancel,
-                      doneLabel: l10n.done,
-                      onDateChanged: (date) {
-                        ref.read(bookingFlowProvider.notifier).setServiceDate(date);
-                      },
-                      onTimeChanged: (time) {
-                        ref.read(bookingFlowProvider.notifier).setPickupTime(time);
-                      },
-                      firstDate: DateTime.now(),
-                    ),
-                    const SizedBox(height: 16),
-                    // Round trip toggle
-                    _CupertinoRoundTripToggle(
+                    const SizedBox(height: 20),
+
+                    // Card 2: Travel Dates
+                    TravelDatesCard(
                       isRoundTrip: bookingState.isRoundTrip,
-                      onChanged: (value) {
+                      onRoundTripChanged: (value) {
                         ref.read(bookingFlowProvider.notifier).setRoundTrip(value);
                       },
-                      oneWayLabel: l10n.oneWay,
+                      outboundDate: bookingState.serviceDate,
+                      outboundTime: bookingState.pickupTime,
+                      isOutboundArrival: bookingState.isPickupTimeArrival,
+                      onOutboundTap: () => _showDateTimePicker(
+                        context: context,
+                        l10n: l10n,
+                        initialDate: bookingState.serviceDate ?? DateTime.now(),
+                        initialTime: bookingState.pickupTime,
+                        isArrival: bookingState.isPickupTimeArrival,
+                        onResult: (result) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setServiceDate(result.date);
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setPickupTime(result.time);
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setPickupTimeMode(result.isArrival);
+                        },
+                      ),
+                      onOutboundNowTap: () {
+                        final now = DateTime.now();
+                        ref.read(bookingFlowProvider.notifier).setServiceDate(
+                              DateTime(now.year, now.month, now.day),
+                            );
+                        final nextHour = now.hour + 1;
+                        final time = nextHour >= 24
+                            ? '00:00'
+                            : '${nextHour.toString().padLeft(2, '0')}:00';
+                        ref.read(bookingFlowProvider.notifier).setPickupTime(time);
+                      },
+                      returnDate: bookingState.returnDate,
+                      returnTime: bookingState.returnTime,
+                      isReturnArrival: bookingState.isReturnTimeArrival,
+                      onReturnTap: () => _showDateTimePicker(
+                        context: context,
+                        l10n: l10n,
+                        initialDate: bookingState.returnDate ??
+                            bookingState.serviceDate ??
+                            DateTime.now(),
+                        initialTime: bookingState.returnTime,
+                        isArrival: bookingState.isReturnTimeArrival,
+                        onResult: (result) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setReturnDate(result.date);
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setReturnTime(result.time);
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setReturnTimeMode(result.isArrival);
+                        },
+                      ),
+                      onReturnNowTap: () {
+                        final now = DateTime.now();
+                        ref.read(bookingFlowProvider.notifier).setReturnDate(
+                              DateTime(now.year, now.month, now.day),
+                            );
+                        final nextHour = now.hour + 1;
+                        final time = nextHour >= 24
+                            ? '00:00'
+                            : '${nextHour.toString().padLeft(2, '0')}:00';
+                        ref.read(bookingFlowProvider.notifier).setReturnTime(time);
+                      },
+                      travelDateLabel: l10n.travelDate,
+                      travelDatesLabel: l10n.travelDates,
                       roundTripLabel: l10n.roundTrip,
-                      discountBadge: l10n.discountBadge,
+                      discountText: l10n.discountBadge,
+                      outboundLabel: l10n.outbound,
+                      returnLabel: l10n.returnTrip,
+                      departureAbbrev: l10n.departureAbbrev,
+                      arrivalAbbrev: l10n.arrivalAbbrev,
+                      nowLabel: l10n.now,
                     ),
-                    // Return date & time (if round trip)
-                    if (bookingState.isRoundTrip) ...[
-                      const SizedBox(height: 16),
-                      DateTimePicker(
-                        dateLabel: l10n.returnDate,
-                        timeLabel: l10n.time,
-                        selectedDate: bookingState.returnDate,
-                        selectedTime: bookingState.returnTime,
-                        selectDatePlaceholder: l10n.selectDate,
-                        selectTimePlaceholder: l10n.selectTime,
-                        cancelLabel: l10n.cancel,
-                        doneLabel: l10n.done,
-                        onDateChanged: (date) {
-                          ref.read(bookingFlowProvider.notifier).setReturnDate(date);
+                    const SizedBox(height: 20),
+
+                    // Card 3: Trip Info
+                    TripInfoCard(
+                      distanceText: _distanceText,
+                      durationText: _durationText,
+                      distanceLabel: l10n.distanceLabel,
+                      durationLabel: l10n.durationLabel,
+                      onTap: _scrollToMap,
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Card 4: Passengers
+                    RouteCard(
+                      title: l10n.passengersCard,
+                      titleIcon: CupertinoIcons.person_2,
+                      child: PassengersCard(
+                        adults: bookingState.numPassengers,
+                        onAdultsChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumPassengers(value);
                         },
-                        onTimeChanged: (time) {
-                          ref.read(bookingFlowProvider.notifier).setReturnTime(time);
+                        adultsLabel: l10n.adults,
+                        children: bookingState.numChildren,
+                        onChildrenChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumChildren(value);
                         },
-                        firstDate: bookingState.serviceDate ?? DateTime.now(),
-                      ),
-                    ],
-                    const SizedBox(height: 24),
-                    // Section: Passengers & Luggage
-                    Text(
-                      l10n.passengersAndLuggage,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: CupertinoColors.label,
+                        childrenLabel: l10n.children,
+                        childrenSubtitle: l10n.childrenSubtitle,
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    StepperField(
-                      label: l10n.adults,
-                      value: bookingState.numPassengers,
-                      minValue: 1,
-                      maxValue: 25,
-                      icon: CupertinoIcons.person,
-                      onChanged: (value) {
-                        ref.read(bookingFlowProvider.notifier).setNumPassengers(value);
-                      },
+                    const SizedBox(height: 20),
+
+                    // Card 5: Luggage
+                    RouteCard(
+                      title: l10n.luggageCard,
+                      titleIcon: CupertinoIcons.briefcase,
+                      child: LuggageCard(
+                        largeLuggage: bookingState.numLargeLuggage,
+                        onLargeLuggageChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumLargeLuggage(value);
+                        },
+                        largeLabel: l10n.large,
+                        largeSubtitle: l10n.largeLuggageSubtitle,
+                        surfboardBikeGolf: bookingState.numSurfboardsBikesGolf,
+                        onSurfboardBikeGolfChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumSurfboardsBikesGolf(value);
+                        },
+                        surfboardBikeGolfLabel: l10n.surfboardBikeGolf,
+                        skiSnowboard: bookingState.numSkiSnowboard,
+                        onSkiSnowboardChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumSkiSnowboard(value);
+                        },
+                        skiSnowboardLabel: l10n.skiSnowboard,
+                        hasOtherSports: bookingState.hasOtherSportsEquipment,
+                        otherSportsDetails:
+                            bookingState.otherSportsEquipmentDetails,
+                        onOtherSportsChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setOtherSportsEquipment(
+                                value,
+                                value
+                                    ? bookingState.otherSportsEquipmentDetails
+                                    : null,
+                              );
+                        },
+                        onOtherSportsDetailsChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setOtherSportsEquipment(true, value);
+                        },
+                        otherSportsLabel: l10n.otherSportsEquipment,
+                        otherSportsPlaceholder: l10n.otherSportsPlaceholder,
+                        smallLuggage: bookingState.numSmallLuggage,
+                        onSmallLuggageChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumSmallLuggage(value);
+                        },
+                        smallLabel: l10n.small,
+                        smallSubtitle: l10n.smallLuggageSubtitle,
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    StepperField(
-                      label: l10n.children,
-                      subtitle: l10n.childrenSubtitle,
-                      value: bookingState.numChildren,
-                      minValue: 0,
-                      maxValue: 10,
-                      icon: CupertinoIcons.person_2,
-                      onChanged: (value) {
-                        ref.read(bookingFlowProvider.notifier).setNumChildren(value);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    StepperField(
-                      label: l10n.largeLuggage,
-                      subtitle: l10n.largeLuggageSubtitle,
-                      value: bookingState.numLargeLuggage,
-                      minValue: 0,
-                      maxValue: 20,
-                      icon: CupertinoIcons.briefcase,
-                      onChanged: (value) {
-                        ref.read(bookingFlowProvider.notifier).setNumLargeLuggage(value);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    StepperField(
-                      label: l10n.smallLuggage,
-                      subtitle: l10n.smallLuggageSubtitle,
-                      value: bookingState.numSmallLuggage,
-                      minValue: 0,
-                      maxValue: 20,
-                      icon: CupertinoIcons.bag,
-                      onChanged: (value) {
-                        ref.read(bookingFlowProvider.notifier).setNumSmallLuggage(value);
-                      },
+                    const SizedBox(height: 20),
+
+                    // Card 6: Map Preview (matching HTML: border-radius 20px, shadow, overflow hidden)
+                    Container(
+                      key: _mapKey,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: CupertinoColors.systemGrey.withValues(alpha: 0.1),
+                            blurRadius: 15,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: MapRoutePreview(
+                        pickupLat: bookingState.pickupLocation?.lat,
+                        pickupLng: bookingState.pickupLocation?.lng,
+                        dropoffLat: bookingState.dropoffLocation?.lat,
+                        dropoffLng: bookingState.dropoffLocation?.lng,
+                        pickupAddress: bookingState.pickupLocation?.address,
+                        dropoffAddress: bookingState.dropoffLocation?.address,
+                        departureDate: bookingState.serviceDate,
+                        departureTime: bookingState.pickupTime,
+                        height: 400,
+                        interactive: true,
+                        onTap: () =>
+                            _openFullScreenMap(context, bookingState, l10n),
+                        expandLabel: l10n.expand,
+                        loadingRouteLabel: l10n.loadingRoute,
+                        selectLocationsLabel: l10n.selectLocationsToSeeRoute,
+                        pickupMarkerTitle: l10n.pickup,
+                        dropoffMarkerTitle: l10n.dropoff,
+                        onRouteInfoChanged: (distance, duration) {
+                          setState(() {
+                            _distanceText = distance;
+                            _durationText = duration;
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(height: 100), // Space for bottom button
                   ],
@@ -303,6 +505,32 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
     );
   }
 
+  void _showDateTimePicker({
+    required BuildContext context,
+    required AppLocalizations l10n,
+    required DateTime initialDate,
+    String? initialTime,
+    required bool isArrival,
+    required void Function(DateTimePickerResult) onResult,
+  }) async {
+    final result = await DateTimePickerModal.show(
+      context: context,
+      initialDate: initialDate,
+      initialTime: initialTime,
+      isArrival: isArrival,
+      departureLabel: l10n.departure,
+      arrivalLabel: l10n.arrival,
+      hourLabel: l10n.hour,
+      minuteLabel: l10n.minute,
+      applyLabel: l10n.applyButton,
+      todayLabel: l10n.today,
+    );
+
+    if (result != null) {
+      onResult(result);
+    }
+  }
+
   void _selectPickupLocation(PredefinedLocation location) {
     ref.read(bookingFlowProvider.notifier).setPickupLocation(
           SelectedLocation.fromPredefined(location),
@@ -315,7 +543,8 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
         );
   }
 
-  void _openFullScreenMap(BuildContext context, BookingFlowState bookingState, AppLocalizations l10n) {
+  void _openFullScreenMap(
+      BuildContext context, BookingFlowState bookingState, AppLocalizations l10n) {
     Navigator.of(context).push(
       CupertinoPageRoute(
         fullscreenDialog: true,
@@ -355,7 +584,16 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
     );
   }
 
-  void _showCancelDialog(BuildContext context, AppLocalizations l10n) {
+  void _handleClose(
+      BuildContext context, BookingFlowState currentState, AppLocalizations l10n) {
+    // If user hasn't made any changes, just navigate back without dialog
+    if (!_hasUserMadeChanges(currentState)) {
+      ref.read(bookingFlowProvider.notifier).reset();
+      context.go('/');
+      return;
+    }
+
+    // Show confirmation dialog only if user has made changes
     showCupertinoDialog(
       context: context,
       builder: (dialogContext) => CupertinoAlertDialog(
@@ -381,124 +619,58 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
   }
 }
 
-class _CupertinoRoundTripToggle extends StatelessWidget {
-  final bool isRoundTrip;
-  final ValueChanged<bool> onChanged;
-  final String oneWayLabel;
-  final String roundTripLabel;
-  final String discountBadge;
-
-  const _CupertinoRoundTripToggle({
-    required this.isRoundTrip,
-    required this.onChanged,
-    required this.oneWayLabel,
-    required this.roundTripLabel,
-    required this.discountBadge,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _CupertinoTripTypeButton(
-              label: oneWayLabel,
-              icon: CupertinoIcons.arrow_right,
-              isSelected: !isRoundTrip,
-              onTap: () => onChanged(false),
-            ),
-          ),
-          Expanded(
-            child: _CupertinoTripTypeButton(
-              label: roundTripLabel,
-              icon: CupertinoIcons.arrow_2_squarepath,
-              isSelected: isRoundTrip,
-              onTap: () => onChanged(true),
-              badge: discountBadge,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CupertinoTripTypeButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final bool isSelected;
+/// Blue map icon button for header - scrolls to map.
+class _MapIconButton extends StatelessWidget {
   final VoidCallback onTap;
-  final String? badge;
 
-  const _CupertinoTripTypeButton({
-    required this.label,
-    required this.icon,
-    required this.isSelected,
-    required this.onTap,
-    this.badge,
-  });
+  const _MapIconButton({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? CupertinoColors.systemBlue : const Color(0x00000000),
-          borderRadius: BorderRadius.circular(10),
+        width: 32,
+        height: 32,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: CupertinoColors.systemBlue,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 16,
-              color: isSelected
-                  ? CupertinoColors.white
-                  : CupertinoColors.label.resolveFrom(context),
-            ),
-            const SizedBox(width: 4),
-            Flexible(
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: isSelected
-                      ? CupertinoColors.white
-                      : CupertinoColors.label.resolveFrom(context),
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            if (badge != null) ...[
-              const SizedBox(width: 4),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? CupertinoColors.white.withValues(alpha: 0.2)
-                      : CupertinoColors.systemGreen,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  badge!,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                  ),
-                ),
-              ),
-            ],
-          ],
+        child: const Icon(
+          CupertinoIcons.map,
+          size: 18,
+          color: CupertinoColors.white,
+        ),
+      ),
+    );
+  }
+}
+
+/// Swap button for exchanging pickup and dropoff locations.
+class _SwapButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _SwapButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 56,
+        height: 56,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          border: Border.all(
+            color: CupertinoColors.separator.resolveFrom(context),
+            width: 2,
+          ),
+        ),
+        child: Icon(
+          CupertinoIcons.arrow_up_arrow_down,
+          size: 28,
+          color: CupertinoColors.secondaryLabel.resolveFrom(context),
         ),
       ),
     );

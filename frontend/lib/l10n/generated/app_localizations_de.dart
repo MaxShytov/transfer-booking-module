@@ -329,6 +329,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get flightNumber => 'Flugnummer';
 
   @override
+  String get outboundFlightNumber => 'Hinflug-Flugnummer';
+
+  @override
+  String get returnFlightNumber => 'Rückflug-Flugnummer';
+
+  @override
   String get flightNumberHint => 'z.B. FR1234';
 
   @override
@@ -654,4 +660,88 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get priceFrom => 'ab';
+
+  @override
+  String get yourRoute => 'Ihre Route';
+
+  @override
+  String get swapLocations => 'Orte tauschen';
+
+  @override
+  String get travelDate => 'Reisedatum';
+
+  @override
+  String get travelDates => 'Reisedaten';
+
+  @override
+  String get outbound => 'HINFAHRT';
+
+  @override
+  String get returnTrip => 'RÜCKFAHRT';
+
+  @override
+  String get departure => 'Abfahrt';
+
+  @override
+  String get arrival => 'Ankunft';
+
+  @override
+  String get departureAbbrev => 'Abf';
+
+  @override
+  String get arrivalAbbrev => 'Ank';
+
+  @override
+  String get now => 'jetzt';
+
+  @override
+  String get applyButton => 'Anwenden';
+
+  @override
+  String get outboundDate => 'Hinfahrtsdatum';
+
+  @override
+  String get returnDateModal => 'Rückfahrtsdatum';
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String get tripInfo => 'Fahrtinfo';
+
+  @override
+  String get distanceLabel => 'ENTFERNUNG';
+
+  @override
+  String get durationLabel => 'DAUER';
+
+  @override
+  String get passengersCard => 'Passagiere';
+
+  @override
+  String get luggageCard => 'Gepäck';
+
+  @override
+  String get large => 'Groß';
+
+  @override
+  String get small => 'Klein';
+
+  @override
+  String get surfboardBikeGolf => 'Surfbrett/Fahrrad/Golf';
+
+  @override
+  String get skiSnowboard => 'Ski/Snowboard';
+
+  @override
+  String get otherSportsEquipment => 'Andere Sportgeräte';
+
+  @override
+  String get otherSportsPlaceholder => 'Bitte Ausrüstung angeben...';
+
+  @override
+  String get hour => 'Stunde';
+
+  @override
+  String get minute => 'Minute';
 }

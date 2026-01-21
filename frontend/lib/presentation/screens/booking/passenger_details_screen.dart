@@ -25,6 +25,7 @@ class _PassengerDetailsScreenState
   TextEditingController? _phoneController;
   TextEditingController? _emailController;
   TextEditingController? _flightNumberController;
+  TextEditingController? _returnFlightNumberController;
   TextEditingController? _specialRequestsController;
   bool _initialized = false;
 
@@ -58,6 +59,9 @@ class _PassengerDetailsScreenState
     _flightNumberController = TextEditingController(
       text: passenger?.flightNumber ?? '',
     );
+    _returnFlightNumberController = TextEditingController(
+      text: passenger?.returnFlightNumber ?? '',
+    );
     _specialRequestsController = TextEditingController(
       text: passenger?.specialRequests ?? '',
     );
@@ -70,6 +74,7 @@ class _PassengerDetailsScreenState
     _phoneController?.dispose();
     _emailController?.dispose();
     _flightNumberController?.dispose();
+    _returnFlightNumberController?.dispose();
     _specialRequestsController?.dispose();
     super.dispose();
   }
@@ -193,13 +198,26 @@ class _PassengerDetailsScreenState
                       ),
                       const SizedBox(height: 16),
                       _CupertinoFormField(
-                        label: l10n.flightNumber,
+                        label: bookingState.isRoundTrip
+                            ? l10n.outboundFlightNumber
+                            : l10n.flightNumber,
                         controller: _flightNumberController!,
                         icon: CupertinoIcons.airplane,
                         placeholder: l10n.flightNumberHint,
                         textCapitalization: TextCapitalization.characters,
                         helperText: l10n.flightMonitoringInfo,
                       ),
+                      if (bookingState.isRoundTrip) ...[
+                        const SizedBox(height: 16),
+                        _CupertinoFormField(
+                          label: l10n.returnFlightNumber,
+                          controller: _returnFlightNumberController!,
+                          icon: CupertinoIcons.airplane,
+                          placeholder: l10n.flightNumberHint,
+                          textCapitalization: TextCapitalization.characters,
+                          helperText: l10n.flightMonitoringInfo,
+                        ),
+                      ],
                       const SizedBox(height: 16),
                       _CupertinoFormField(
                         label: l10n.specialRequests,
@@ -270,6 +288,9 @@ class _PassengerDetailsScreenState
         email: _emailController!.text.trim(),
         flightNumber: _flightNumberController!.text.trim().isNotEmpty
             ? _flightNumberController!.text.trim()
+            : null,
+        returnFlightNumber: _returnFlightNumberController!.text.trim().isNotEmpty
+            ? _returnFlightNumberController!.text.trim()
             : null,
         specialRequests: _specialRequestsController!.text.trim().isNotEmpty
             ? _specialRequestsController!.text.trim()

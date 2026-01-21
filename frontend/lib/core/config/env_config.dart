@@ -3,7 +3,7 @@ class EnvConfig {
   EnvConfig._();
 
   /// Base URL for the API.
-  static const String apiBaseUrl = 'http://localhost:8000/api/v1';
+  static const String apiBaseUrl = 'http://localhost:8001/api/v1';
 
   /// Timeout for API requests in milliseconds.
   static const int apiTimeout = 30000;

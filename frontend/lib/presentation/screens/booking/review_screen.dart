@@ -272,6 +272,20 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     try {
       await Future.delayed(const Duration(seconds: 2));
 
+      // Save phone number to user profile if it changed
+      final bookingState = ref.read(bookingFlowProvider);
+      final authState = ref.read(authStateProvider);
+      final passengerPhone = bookingState.passengerDetails?.phone;
+      final currentUserPhone = authState.user?.phone;
+
+      if (passengerPhone != null &&
+          passengerPhone.isNotEmpty &&
+          passengerPhone != currentUserPhone) {
+        await ref.read(authStateProvider.notifier).updateProfile(
+          phone: passengerPhone,
+        );
+      }
+
       if (mounted) {
         await showCupertinoDialog(
           context: context,

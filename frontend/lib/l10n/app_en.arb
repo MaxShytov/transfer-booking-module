@@ -335,6 +335,12 @@
   "flightNumber": "Flight Number",
   "@flightNumber": {"description": "Flight number field label"},
 
+  "outboundFlightNumber": "Outbound Flight Number",
+  "@outboundFlightNumber": {"description": "Outbound flight number field label for round trips"},
+
+  "returnFlightNumber": "Return Flight Number",
+  "@returnFlightNumber": {"description": "Return flight number field label for round trips"},
+
   "flightNumberHint": "e.g. FR1234",
   "@flightNumberHint": {"description": "Flight number placeholder"},
 
@@ -669,5 +675,89 @@
   },
 
   "priceFrom": "from",
-  "@priceFrom": {"description": "Price from label"}
+  "@priceFrom": {"description": "Price from label"},
+
+  "yourRoute": "Your route",
+  "@yourRoute": {"description": "Your route card title"},
+
+  "swapLocations": "Swap locations",
+  "@swapLocations": {"description": "Swap pickup and dropoff locations button"},
+
+  "travelDate": "Travel date",
+  "@travelDate": {"description": "Travel date card title (one way)"},
+
+  "travelDates": "Travel dates",
+  "@travelDates": {"description": "Travel dates card title (round trip)"},
+
+  "outbound": "OUTBOUND",
+  "@outbound": {"description": "Outbound section label"},
+
+  "returnTrip": "RETURN",
+  "@returnTrip": {"description": "Return trip section label"},
+
+  "departure": "Departure",
+  "@departure": {"description": "Departure time type"},
+
+  "arrival": "Arrival",
+  "@arrival": {"description": "Arrival time type"},
+
+  "departureAbbrev": "Dep",
+  "@departureAbbrev": {"description": "Departure abbreviated"},
+
+  "arrivalAbbrev": "Arr",
+  "@arrivalAbbrev": {"description": "Arrival abbreviated"},
+
+  "now": "now",
+  "@now": {"description": "Reset to current time button"},
+
+  "applyButton": "Apply",
+  "@applyButton": {"description": "Apply changes button"},
+
+  "outboundDate": "Outbound date",
+  "@outboundDate": {"description": "Outbound date modal title"},
+
+  "returnDateModal": "Return date",
+  "@returnDateModal": {"description": "Return date modal title"},
+
+  "today": "Today",
+  "@today": {"description": "Today label in date picker"},
+
+  "tripInfo": "Trip info",
+  "@tripInfo": {"description": "Trip info card title"},
+
+  "distanceLabel": "DISTANCE",
+  "@distanceLabel": {"description": "Distance label"},
+
+  "durationLabel": "DURATION",
+  "@durationLabel": {"description": "Duration label"},
+
+  "passengersCard": "Passengers",
+  "@passengersCard": {"description": "Passengers card title"},
+
+  "luggageCard": "Luggage",
+  "@luggageCard": {"description": "Luggage card title"},
+
+  "large": "Large",
+  "@large": {"description": "Large luggage label"},
+
+  "small": "Small",
+  "@small": {"description": "Small luggage label"},
+
+  "surfboardBikeGolf": "Surfboard/Bike/Golf",
+  "@surfboardBikeGolf": {"description": "Surfboard, bike or golf equipment"},
+
+  "skiSnowboard": "Ski/Snowboard",
+  "@skiSnowboard": {"description": "Ski or snowboard equipment"},
+
+  "otherSportsEquipment": "Other sports",
+  "@otherSportsEquipment": {"description": "Other sports equipment checkbox"},
+
+  "otherSportsPlaceholder": "Please specify equipment...",
+  "@otherSportsPlaceholder": {"description": "Other sports equipment input placeholder"},
+
+  "hour": "Hour",
+  "@hour": {"description": "Hour picker label"},
+
+  "minute": "Minute",
+  "@minute": {"description": "Minute picker label"}
 }

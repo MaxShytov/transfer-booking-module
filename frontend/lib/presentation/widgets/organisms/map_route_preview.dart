@@ -12,6 +12,39 @@ import '../../../core/config/env_config.dart';
 const _defaultCenter = LatLng(39.2238, 9.1217);
 const _defaultZoom = 10.0;
 
+/// Format duration in minutes to human-readable format (e.g., "1h 56m" or "45 min")
+String _formatDuration(int totalMinutes) {
+  if (totalMinutes < 60) {
+    return '$totalMinutes min';
+  }
+  final hours = totalMinutes ~/ 60;
+  final minutes = totalMinutes % 60;
+  if (minutes == 0) {
+    return '${hours}h';
+  }
+  return '${hours}h ${minutes}m';
+}
+
+/// Parse and reformat duration string from API (e.g., "116 mins" -> "1h 56m")
+String _formatDurationString(String durationText) {
+  // Check if it's already in hours format
+  if (durationText.contains('hour') || durationText.contains('h ')) {
+    return durationText;
+  }
+
+  // Try to parse minutes from formats like "116 min", "116 mins", "~116 min"
+  final match = RegExp(r'~?(\d+)\s*min').firstMatch(durationText);
+  if (match != null) {
+    final minutes = int.tryParse(match.group(1)!);
+    if (minutes != null && minutes >= 60) {
+      final prefix = durationText.startsWith('~') ? '~' : '';
+      return '$prefix${_formatDuration(minutes)}';
+    }
+  }
+
+  return durationText;
+}
+
 /// A widget displaying Google Maps with route preview - Cupertino style.
 class MapRoutePreview extends StatefulWidget {
   final double? pickupLat;
@@ -32,6 +65,8 @@ class MapRoutePreview extends StatefulWidget {
   final String? selectLocationsLabel;
   final String? pickupMarkerTitle;
   final String? dropoffMarkerTitle;
+  /// Callback when route info (distance, duration) is available
+  final void Function(String? distance, String? duration)? onRouteInfoChanged;
 
   const MapRoutePreview({
     super.key,
@@ -52,6 +87,7 @@ class MapRoutePreview extends StatefulWidget {
     this.selectLocationsLabel,
     this.pickupMarkerTitle,
     this.dropoffMarkerTitle,
+    this.onRouteInfoChanged,
   });
 
   bool get hasPickup => pickupLat != null && pickupLng != null;
@@ -103,34 +139,6 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
     }
   }
 
-  /// Calculate departure time in seconds since epoch for traffic prediction
-  int? _getDepartureTimeSeconds() {
-    if (widget.departureDate == null || widget.departureTime == null) {
-      return null;
-    }
-
-    final timeParts = widget.departureTime!.split(':');
-    if (timeParts.length != 2) return null;
-
-    final hour = int.tryParse(timeParts[0]);
-    final minute = int.tryParse(timeParts[1]);
-    if (hour == null || minute == null) return null;
-
-    final departureDateTime = DateTime(
-      widget.departureDate!.year,
-      widget.departureDate!.month,
-      widget.departureDate!.day,
-      hour,
-      minute,
-    );
-
-    // Only use departure_time if it's in the future
-    if (departureDateTime.isAfter(DateTime.now())) {
-      return departureDateTime.millisecondsSinceEpoch ~/ 1000;
-    }
-    return null;
-  }
-
   Future<void> _fetchRoute() async {
     if (!widget.hasRoute) return;
 
@@ -138,33 +146,37 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
 
     try {
       final polylinePoints = PolylinePoints();
-      final departureTime = _getDepartureTimeSeconds();
 
+      // Note: departureTime is not passed due to a bug in flutter_polyline_points
+      // where it causes "type 'int' is not a subtype of type 'Iterable<dynamic>'" error
       final result = await polylinePoints.getRouteBetweenCoordinates(
         googleApiKey: EnvConfig.googleMapsApiKey,
         request: PolylineRequest(
           origin: PointLatLng(widget.pickupLat!, widget.pickupLng!),
           destination: PointLatLng(widget.dropoffLat!, widget.dropoffLng!),
           mode: TravelMode.driving,
-          departureTime: departureTime,
         ),
       );
 
       if (result.points.isNotEmpty && mounted) {
+        final distance = result.distanceTexts?.isNotEmpty == true
+            ? result.distanceTexts!.first
+            : null;
+        final duration = result.durationTexts?.isNotEmpty == true
+            ? _formatDurationString(result.durationTexts!.first)
+            : null;
         setState(() {
           _routePoints = result.points
               .map((point) => LatLng(point.latitude, point.longitude))
               .toList();
-          _distanceText = result.distanceTexts?.isNotEmpty == true
-              ? result.distanceTexts!.first
-              : null;
-          _durationText = result.durationTexts?.isNotEmpty == true
-              ? result.durationTexts!.first
-              : null;
+          _distanceText = distance;
+          _durationText = duration;
           // Duration in traffic is typically returned when departure_time is set
           _durationInTrafficText = _durationText;
           _isLoadingRoute = false;
         });
+        // Notify parent about route info
+        widget.onRouteInfoChanged?.call(_distanceText, _durationText);
         // Update camera to fit the route after polyline is loaded
         _updateCamera();
       } else {
@@ -182,17 +194,22 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
     if (mounted && widget.hasRoute) {
       // Calculate approximate distance using Haversine formula
       final distance = _calculateStraightLineDistance();
+      final distanceText = '~${distance.toStringAsFixed(1)} km';
+      final durationMinutes = (distance / 50 * 60).round();
+      final durationText = '~${_formatDuration(durationMinutes)}';
 
       setState(() {
         _routePoints = [
           LatLng(widget.pickupLat!, widget.pickupLng!),
           LatLng(widget.dropoffLat!, widget.dropoffLng!),
         ];
-        _distanceText = '~${distance.toStringAsFixed(1)} km';
-        _durationText = '~${(distance / 50 * 60).round()} min';
+        _distanceText = distanceText;
+        _durationText = durationText;
         _durationInTrafficText = null;
         _isLoadingRoute = false;
       });
+      // Notify parent about route info
+      widget.onRouteInfoChanged?.call(_distanceText, _durationText);
       // Update camera to fit the route
       _updateCamera();
     }
@@ -885,7 +902,7 @@ class _FullScreenRouteMapState extends State<FullScreenRouteMap> {
         }
 
         if (result.durationTexts != null && result.durationTexts!.isNotEmpty) {
-          duration = result.durationTexts!.first;
+          duration = _formatDurationString(result.durationTexts!.first);
         }
 
         if (mounted) {
@@ -895,7 +912,7 @@ class _FullScreenRouteMapState extends State<FullScreenRouteMap> {
               LatLng(widget.pickupLat!, widget.pickupLng!),
               LatLng(widget.dropoffLat!, widget.dropoffLng!),
             );
-            _duration = duration ?? '${(_distanceKm! / 50 * 60).round()} min';
+            _duration = duration ?? _formatDuration((_distanceKm! / 50 * 60).round());
             _isLoadingRoute = false;
           });
         }
@@ -922,7 +939,7 @@ class _FullScreenRouteMapState extends State<FullScreenRouteMap> {
           LatLng(widget.dropoffLat!, widget.dropoffLng!),
         ];
         _distanceKm = distance;
-        _duration = '${(distance / 50 * 60).round()} min';
+        _duration = _formatDuration((distance / 50 * 60).round());
         _isLoadingRoute = false;
       });
     }

@@ -326,6 +326,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get flightNumber => 'رقم الرحلة';
 
   @override
+  String get outboundFlightNumber => 'رقم رحلة الذهاب';
+
+  @override
+  String get returnFlightNumber => 'رقم رحلة العودة';
+
+  @override
   String get flightNumberHint => 'مثال: FR1234';
 
   @override
@@ -637,4 +643,88 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get priceFrom => 'من';
+
+  @override
+  String get yourRoute => 'مسارك';
+
+  @override
+  String get swapLocations => 'تبديل المواقع';
+
+  @override
+  String get travelDate => 'تاريخ السفر';
+
+  @override
+  String get travelDates => 'تواريخ السفر';
+
+  @override
+  String get outbound => 'الذهاب';
+
+  @override
+  String get returnTrip => 'العودة';
+
+  @override
+  String get departure => 'المغادرة';
+
+  @override
+  String get arrival => 'الوصول';
+
+  @override
+  String get departureAbbrev => 'مغا';
+
+  @override
+  String get arrivalAbbrev => 'وصو';
+
+  @override
+  String get now => 'الآن';
+
+  @override
+  String get applyButton => 'تطبيق';
+
+  @override
+  String get outboundDate => 'تاريخ الذهاب';
+
+  @override
+  String get returnDateModal => 'تاريخ العودة';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get tripInfo => 'معلومات الرحلة';
+
+  @override
+  String get distanceLabel => 'المسافة';
+
+  @override
+  String get durationLabel => 'المدة';
+
+  @override
+  String get passengersCard => 'الركاب';
+
+  @override
+  String get luggageCard => 'الأمتعة';
+
+  @override
+  String get large => 'كبير';
+
+  @override
+  String get small => 'صغير';
+
+  @override
+  String get surfboardBikeGolf => 'لوح تزلج/دراجة/غولف';
+
+  @override
+  String get skiSnowboard => 'تزلج/سنوبورد';
+
+  @override
+  String get otherSportsEquipment => 'رياضات أخرى';
+
+  @override
+  String get otherSportsPlaceholder => 'يرجى تحديد المعدات...';
+
+  @override
+  String get hour => 'الساعة';
+
+  @override
+  String get minute => 'الدقيقة';
 }

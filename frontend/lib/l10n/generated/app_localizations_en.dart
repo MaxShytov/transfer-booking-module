@@ -328,6 +328,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get flightNumber => 'Flight Number';
 
   @override
+  String get outboundFlightNumber => 'Outbound Flight Number';
+
+  @override
+  String get returnFlightNumber => 'Return Flight Number';
+
+  @override
   String get flightNumberHint => 'e.g. FR1234';
 
   @override
@@ -641,4 +647,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get priceFrom => 'from';
+
+  @override
+  String get yourRoute => 'Your route';
+
+  @override
+  String get swapLocations => 'Swap locations';
+
+  @override
+  String get travelDate => 'Travel date';
+
+  @override
+  String get travelDates => 'Travel dates';
+
+  @override
+  String get outbound => 'OUTBOUND';
+
+  @override
+  String get returnTrip => 'RETURN';
+
+  @override
+  String get departure => 'Departure';
+
+  @override
+  String get arrival => 'Arrival';
+
+  @override
+  String get departureAbbrev => 'Dep';
+
+  @override
+  String get arrivalAbbrev => 'Arr';
+
+  @override
+  String get now => 'now';
+
+  @override
+  String get applyButton => 'Apply';
+
+  @override
+  String get outboundDate => 'Outbound date';
+
+  @override
+  String get returnDateModal => 'Return date';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tripInfo => 'Trip info';
+
+  @override
+  String get distanceLabel => 'DISTANCE';
+
+  @override
+  String get durationLabel => 'DURATION';
+
+  @override
+  String get passengersCard => 'Passengers';
+
+  @override
+  String get luggageCard => 'Luggage';
+
+  @override
+  String get large => 'Large';
+
+  @override
+  String get small => 'Small';
+
+  @override
+  String get surfboardBikeGolf => 'Surfboard/Bike/Golf';
+
+  @override
+  String get skiSnowboard => 'Ski/Snowboard';
+
+  @override
+  String get otherSportsEquipment => 'Other sports';
+
+  @override
+  String get otherSportsPlaceholder => 'Please specify equipment...';
+
+  @override
+  String get hour => 'Hour';
+
+  @override
+  String get minute => 'Minute';
 }

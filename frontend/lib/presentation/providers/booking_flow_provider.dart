@@ -68,6 +68,7 @@ class PassengerDetails {
   final String phone;
   final String email;
   final String? flightNumber;
+  final String? returnFlightNumber;
   final String? specialRequests;
 
   const PassengerDetails({
@@ -76,6 +77,7 @@ class PassengerDetails {
     required this.phone,
     required this.email,
     this.flightNumber,
+    this.returnFlightNumber,
     this.specialRequests,
   });
 
@@ -85,6 +87,7 @@ class PassengerDetails {
     String? phone,
     String? email,
     String? flightNumber,
+    String? returnFlightNumber,
     String? specialRequests,
   }) {
     return PassengerDetails(
@@ -93,6 +96,7 @@ class PassengerDetails {
       phone: phone ?? this.phone,
       email: email ?? this.email,
       flightNumber: flightNumber ?? this.flightNumber,
+      returnFlightNumber: returnFlightNumber ?? this.returnFlightNumber,
       specialRequests: specialRequests ?? this.specialRequests,
     );
   }
@@ -124,13 +128,19 @@ class BookingFlowState {
   final SelectedLocation? dropoffLocation;
   final DateTime? serviceDate;
   final String? pickupTime;
+  final bool isPickupTimeArrival; // false = departure time, true = arrival time
   final bool isRoundTrip;
   final DateTime? returnDate;
   final String? returnTime;
+  final bool isReturnTimeArrival; // false = departure time, true = arrival time
   final int numPassengers;
   final int numChildren;
   final int numLargeLuggage;
   final int numSmallLuggage;
+  final int numSurfboardsBikesGolf;
+  final int numSkiSnowboard;
+  final bool hasOtherSportsEquipment;
+  final String? otherSportsEquipmentDetails;
 
   // Step 2: Vehicle selection
   final VehicleClass? selectedVehicle;
@@ -152,13 +162,19 @@ class BookingFlowState {
     this.dropoffLocation,
     this.serviceDate,
     this.pickupTime,
+    this.isPickupTimeArrival = false,
     this.isRoundTrip = false,
     this.returnDate,
     this.returnTime,
+    this.isReturnTimeArrival = false,
     this.numPassengers = 1,
     this.numChildren = 0,
     this.numLargeLuggage = 0,
     this.numSmallLuggage = 0,
+    this.numSurfboardsBikesGolf = 0,
+    this.numSkiSnowboard = 0,
+    this.hasOtherSportsEquipment = false,
+    this.otherSportsEquipmentDetails,
     this.selectedVehicle,
     this.selectedExtras = const [],
     this.passengerDetails,
@@ -181,13 +197,19 @@ class BookingFlowState {
     SelectedLocation? dropoffLocation,
     DateTime? serviceDate,
     String? pickupTime,
+    bool? isPickupTimeArrival,
     bool? isRoundTrip,
     DateTime? returnDate,
     String? returnTime,
+    bool? isReturnTimeArrival,
     int? numPassengers,
     int? numChildren,
     int? numLargeLuggage,
     int? numSmallLuggage,
+    int? numSurfboardsBikesGolf,
+    int? numSkiSnowboard,
+    bool? hasOtherSportsEquipment,
+    String? otherSportsEquipmentDetails,
     VehicleClass? selectedVehicle,
     List<SelectedExtraFee>? selectedExtras,
     PassengerDetails? passengerDetails,
@@ -202,6 +224,7 @@ class BookingFlowState {
     bool clearPrice = false,
     bool clearReturnDate = false,
     bool clearReturnTime = false,
+    bool clearOtherSportsDetails = false,
   }) {
     return BookingFlowState(
       currentStep: currentStep ?? this.currentStep,
@@ -209,13 +232,19 @@ class BookingFlowState {
       dropoffLocation: clearDropoff ? null : (dropoffLocation ?? this.dropoffLocation),
       serviceDate: serviceDate ?? this.serviceDate,
       pickupTime: pickupTime ?? this.pickupTime,
+      isPickupTimeArrival: isPickupTimeArrival ?? this.isPickupTimeArrival,
       isRoundTrip: isRoundTrip ?? this.isRoundTrip,
       returnDate: clearReturnDate ? null : (returnDate ?? this.returnDate),
       returnTime: clearReturnTime ? null : (returnTime ?? this.returnTime),
+      isReturnTimeArrival: isReturnTimeArrival ?? this.isReturnTimeArrival,
       numPassengers: numPassengers ?? this.numPassengers,
       numChildren: numChildren ?? this.numChildren,
       numLargeLuggage: numLargeLuggage ?? this.numLargeLuggage,
       numSmallLuggage: numSmallLuggage ?? this.numSmallLuggage,
+      numSurfboardsBikesGolf: numSurfboardsBikesGolf ?? this.numSurfboardsBikesGolf,
+      numSkiSnowboard: numSkiSnowboard ?? this.numSkiSnowboard,
+      hasOtherSportsEquipment: hasOtherSportsEquipment ?? this.hasOtherSportsEquipment,
+      otherSportsEquipmentDetails: clearOtherSportsDetails ? null : (otherSportsEquipmentDetails ?? this.otherSportsEquipmentDetails),
       selectedVehicle: clearVehicle ? null : (selectedVehicle ?? this.selectedVehicle),
       selectedExtras: clearExtras ? const [] : (selectedExtras ?? this.selectedExtras),
       passengerDetails: clearPassenger ? null : (passengerDetails ?? this.passengerDetails),
@@ -323,6 +352,7 @@ class BookingFlowNotifier extends StateNotifier<BookingFlowState> {
   void setNumChildren(int num) {
     state = state.copyWith(
       numChildren: num,
+      clearVehicle: true,
       clearPrice: true,
     );
   }
@@ -337,6 +367,51 @@ class BookingFlowNotifier extends StateNotifier<BookingFlowState> {
 
   void setNumSmallLuggage(int num) {
     state = state.copyWith(numSmallLuggage: num);
+  }
+
+  void setNumSurfboardsBikesGolf(int num) {
+    state = state.copyWith(
+      numSurfboardsBikesGolf: num,
+      clearVehicle: true,
+      clearPrice: true,
+    );
+  }
+
+  void setNumSkiSnowboard(int num) {
+    state = state.copyWith(
+      numSkiSnowboard: num,
+      clearVehicle: true,
+      clearPrice: true,
+    );
+  }
+
+  void setOtherSportsEquipment(bool hasEquipment, String? details) {
+    state = state.copyWith(
+      hasOtherSportsEquipment: hasEquipment,
+      otherSportsEquipmentDetails: details,
+      clearOtherSportsDetails: !hasEquipment,
+    );
+  }
+
+  void setPickupTimeMode(bool isArrival) {
+    state = state.copyWith(isPickupTimeArrival: isArrival);
+  }
+
+  void setReturnTimeMode(bool isArrival) {
+    state = state.copyWith(isReturnTimeArrival: isArrival);
+  }
+
+  void swapLocations() {
+    final pickup = state.pickupLocation;
+    final dropoff = state.dropoffLocation;
+    // Use clearPickup/clearDropoff flags when setting to null
+    state = state.copyWith(
+      pickupLocation: dropoff,
+      dropoffLocation: pickup,
+      clearPickup: dropoff == null,
+      clearDropoff: pickup == null,
+      clearPrice: true,
+    );
   }
 
   // Step 2: Vehicle selection

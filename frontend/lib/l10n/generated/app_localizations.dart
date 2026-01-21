@@ -716,6 +716,18 @@ abstract class AppLocalizations {
   /// **'Flight Number'**
   String get flightNumber;
 
+  /// Outbound flight number field label for round trips
+  ///
+  /// In en, this message translates to:
+  /// **'Outbound Flight Number'**
+  String get outboundFlightNumber;
+
+  /// Return flight number field label for round trips
+  ///
+  /// In en, this message translates to:
+  /// **'Return Flight Number'**
+  String get returnFlightNumber;
+
   /// Flight number placeholder
   ///
   /// In en, this message translates to:
@@ -1297,6 +1309,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'from'**
   String get priceFrom;
+
+  /// Your route card title
+  ///
+  /// In en, this message translates to:
+  /// **'Your route'**
+  String get yourRoute;
+
+  /// Swap pickup and dropoff locations button
+  ///
+  /// In en, this message translates to:
+  /// **'Swap locations'**
+  String get swapLocations;
+
+  /// Travel date card title (one way)
+  ///
+  /// In en, this message translates to:
+  /// **'Travel date'**
+  String get travelDate;
+
+  /// Travel dates card title (round trip)
+  ///
+  /// In en, this message translates to:
+  /// **'Travel dates'**
+  String get travelDates;
+
+  /// Outbound section label
+  ///
+  /// In en, this message translates to:
+  /// **'OUTBOUND'**
+  String get outbound;
+
+  /// Return trip section label
+  ///
+  /// In en, this message translates to:
+  /// **'RETURN'**
+  String get returnTrip;
+
+  /// Departure time type
+  ///
+  /// In en, this message translates to:
+  /// **'Departure'**
+  String get departure;
+
+  /// Arrival time type
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival'**
+  String get arrival;
+
+  /// Departure abbreviated
+  ///
+  /// In en, this message translates to:
+  /// **'Dep'**
+  String get departureAbbrev;
+
+  /// Arrival abbreviated
+  ///
+  /// In en, this message translates to:
+  /// **'Arr'**
+  String get arrivalAbbrev;
+
+  /// Reset to current time button
+  ///
+  /// In en, this message translates to:
+  /// **'now'**
+  String get now;
+
+  /// Apply changes button
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get applyButton;
+
+  /// Outbound date modal title
+  ///
+  /// In en, this message translates to:
+  /// **'Outbound date'**
+  String get outboundDate;
+
+  /// Return date modal title
+  ///
+  /// In en, this message translates to:
+  /// **'Return date'**
+  String get returnDateModal;
+
+  /// Today label in date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// Trip info card title
+  ///
+  /// In en, this message translates to:
+  /// **'Trip info'**
+  String get tripInfo;
+
+  /// Distance label
+  ///
+  /// In en, this message translates to:
+  /// **'DISTANCE'**
+  String get distanceLabel;
+
+  /// Duration label
+  ///
+  /// In en, this message translates to:
+  /// **'DURATION'**
+  String get durationLabel;
+
+  /// Passengers card title
+  ///
+  /// In en, this message translates to:
+  /// **'Passengers'**
+  String get passengersCard;
+
+  /// Luggage card title
+  ///
+  /// In en, this message translates to:
+  /// **'Luggage'**
+  String get luggageCard;
+
+  /// Large luggage label
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get large;
+
+  /// Small luggage label
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get small;
+
+  /// Surfboard, bike or golf equipment
+  ///
+  /// In en, this message translates to:
+  /// **'Surfboard/Bike/Golf'**
+  String get surfboardBikeGolf;
+
+  /// Ski or snowboard equipment
+  ///
+  /// In en, this message translates to:
+  /// **'Ski/Snowboard'**
+  String get skiSnowboard;
+
+  /// Other sports equipment checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Other sports'**
+  String get otherSportsEquipment;
+
+  /// Other sports equipment input placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Please specify equipment...'**
+  String get otherSportsPlaceholder;
+
+  /// Hour picker label
+  ///
+  /// In en, this message translates to:
+  /// **'Hour'**
+  String get hour;
+
+  /// Minute picker label
+  ///
+  /// In en, this message translates to:
+  /// **'Minute'**
+  String get minute;
 }
 
 class _AppLocalizationsDelegate

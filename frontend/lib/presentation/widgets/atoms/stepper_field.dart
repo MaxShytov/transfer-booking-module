@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 /// A stepper field with + and - buttons for numeric input (Cupertino style).
+/// Matches HTML prototype with 36px circle buttons and 2px border.
 class StepperField extends StatelessWidget {
   final String label;
   final int value;
@@ -26,25 +27,10 @@ class StepperField extends StatelessWidget {
     final canDecrement = value > minValue;
     final canIncrement = value < maxValue;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: CupertinoColors.separator.resolveFrom(context),
-        ),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
       child: Row(
         children: [
-          if (icon != null) ...[
-            Icon(
-              icon,
-              color: CupertinoColors.systemBlue,
-              size: 24,
-            ),
-            const SizedBox(width: 12),
-          ],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,54 +38,52 @@ class StepperField extends StatelessWidget {
                 Text(
                   label,
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: CupertinoColors.label,
                   ),
                 ),
                 if (subtitle != null)
-                  Text(
-                    subtitle!,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      subtitle!,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                      ),
                     ),
                   ),
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _CupertinoStepperButton(
-                  icon: CupertinoIcons.minus,
-                  onTap: canDecrement ? () => onChanged(value - 1) : null,
-                  isEnabled: canDecrement,
-                ),
-                Container(
-                  constraints: const BoxConstraints(minWidth: 40),
-                  alignment: Alignment.center,
-                  child: Text(
-                    value.toString(),
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      color: CupertinoColors.label,
-                    ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _CounterButton(
+                icon: CupertinoIcons.minus,
+                onTap: canDecrement ? () => onChanged(value - 1) : null,
+                isEnabled: canDecrement,
+              ),
+              Container(
+                constraints: const BoxConstraints(minWidth: 30),
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: CupertinoColors.label,
                   ),
                 ),
-                _CupertinoStepperButton(
-                  icon: CupertinoIcons.plus,
-                  onTap: canIncrement ? () => onChanged(value + 1) : null,
-                  isEnabled: canIncrement,
-                ),
-              ],
-            ),
+              ),
+              _CounterButton(
+                icon: CupertinoIcons.plus,
+                onTap: canIncrement ? () => onChanged(value + 1) : null,
+                isEnabled: canIncrement,
+              ),
+            ],
           ),
         ],
       ),
@@ -107,12 +91,13 @@ class StepperField extends StatelessWidget {
   }
 }
 
-class _CupertinoStepperButton extends StatelessWidget {
+/// Counter button matching HTML prototype: 36px circle with 2px border.
+class _CounterButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onTap;
   final bool isEnabled;
 
-  const _CupertinoStepperButton({
+  const _CounterButton({
     required this.icon,
     this.onTap,
     this.isEnabled = true,
@@ -120,16 +105,31 @@ class _CupertinoStepperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: const EdgeInsets.all(8),
-      minimumSize: Size.zero,
-      onPressed: onTap,
-      child: Icon(
-        icon,
-        size: 20,
-        color: isEnabled
-            ? CupertinoColors.systemBlue
-            : CupertinoColors.tertiaryLabel.resolveFrom(context),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          border: Border.all(
+            color: CupertinoColors.separator.resolveFrom(context),
+            width: 2,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            icon == CupertinoIcons.minus ? '−' : '+',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              color: isEnabled
+                  ? CupertinoColors.secondaryLabel.resolveFrom(context)
+                  : CupertinoColors.tertiaryLabel.resolveFrom(context),
+            ),
+          ),
+        ),
       ),
     );
   }

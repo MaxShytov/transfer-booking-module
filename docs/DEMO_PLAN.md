@@ -47,6 +47,7 @@
 ---
 
 ## Часть 2: Pricing Calculator Demo (5 мин)
+cartuzssc@gmail.com / 318\Ou`r`2Wx
 
 ### 2.1 Сценарий 1: Простой трансфер
 ```
