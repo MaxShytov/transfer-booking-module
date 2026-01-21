@@ -6,6 +6,9 @@ class BookingListItem {
   final String dropoffAddress;
   final String serviceDate;
   final String pickupTime;
+  final bool isRoundTrip;
+  final String? returnDate;
+  final String? returnTime;
   final String vehicleClassName;
   final double finalPrice;
   final String currency;
@@ -20,6 +23,9 @@ class BookingListItem {
     required this.dropoffAddress,
     required this.serviceDate,
     required this.pickupTime,
+    required this.isRoundTrip,
+    this.returnDate,
+    this.returnTime,
     required this.vehicleClassName,
     required this.finalPrice,
     required this.currency,
@@ -36,6 +42,9 @@ class BookingListItem {
       dropoffAddress: json['dropoff_address'] as String,
       serviceDate: json['service_date'] as String,
       pickupTime: json['pickup_time'] as String,
+      isRoundTrip: json['is_round_trip'] as bool? ?? false,
+      returnDate: json['return_date'] as String?,
+      returnTime: json['return_time'] as String?,
       vehicleClassName: json['vehicle_class_name'] as String,
       finalPrice: _parseDouble(json['final_price']),
       currency: json['currency'] as String,
@@ -82,6 +91,11 @@ class BookingDetail {
   final double? dropoffLng;
   final String serviceDate;
   final String pickupTime;
+  // Round trip
+  final bool isRoundTrip;
+  final String? returnDate;
+  final String? returnTime;
+  final String? returnFlightNumber;
   // Passengers
   final int numPassengers;
   final int numLargeLuggage;
@@ -129,6 +143,10 @@ class BookingDetail {
     this.dropoffLng,
     required this.serviceDate,
     required this.pickupTime,
+    required this.isRoundTrip,
+    this.returnDate,
+    this.returnTime,
+    this.returnFlightNumber,
     required this.numPassengers,
     required this.numLargeLuggage,
     required this.numSmallLuggage,
@@ -171,6 +189,10 @@ class BookingDetail {
       dropoffLng: _parseDoubleNullable(json['dropoff_lng']),
       serviceDate: json['service_date'] as String,
       pickupTime: json['pickup_time'] as String,
+      isRoundTrip: json['is_round_trip'] as bool? ?? false,
+      returnDate: json['return_date'] as String?,
+      returnTime: json['return_time'] as String?,
+      returnFlightNumber: json['return_flight_number'] as String?,
       numPassengers: json['num_passengers'] as int,
       numLargeLuggage: json['num_large_luggage'] as int,
       numSmallLuggage: json['num_small_luggage'] as int,

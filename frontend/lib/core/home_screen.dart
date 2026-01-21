@@ -528,16 +528,54 @@ class _BookingCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header row: reference + status
+              // Header row: reference + badges
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    booking.bookingReference,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: CupertinoColors.label,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          booking.bookingReference,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: CupertinoColors.label,
+                          ),
+                        ),
+                        if (booking.isRoundTrip) ...[
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.systemIndigo.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.arrow_2_squarepath,
+                                  size: 10,
+                                  color: CupertinoColors.systemIndigo,
+                                ),
+                                SizedBox(width: 3),
+                                Text(
+                                  'Round Trip',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: CupertinoColors.systemIndigo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                   _StatusBadge(status: booking.status),
@@ -593,22 +631,53 @@ class _BookingCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        CupertinoIcons.calendar,
-                        size: 14,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(context),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${booking.serviceDate} ${booking.pickupTime.substring(0, 5)}',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.calendar,
+                              size: 14,
+                              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                '${booking.serviceDate} ${booking.pickupTime.substring(0, 5)}',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        if (booking.isRoundTrip && booking.returnDate != null) ...[
+                          const SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.arrow_turn_down_right,
+                                size: 14,
+                                color: CupertinoColors.systemIndigo.withOpacity(0.7),
+                              ),
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: Text(
+                                  '${booking.returnDate} ${booking.returnTime?.substring(0, 5) ?? ''}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: CupertinoColors.systemIndigo.withOpacity(0.7),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                   Text(
                     '${booking.currency == 'EUR' ? '€' : booking.currency}${booking.finalPrice.toStringAsFixed(2)}',

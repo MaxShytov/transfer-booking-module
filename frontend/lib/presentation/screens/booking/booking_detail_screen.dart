@@ -155,22 +155,108 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             context,
             title: l10n.dateTime,
             icon: CupertinoIcons.calendar,
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: _buildInfoItem(
-                    context,
-                    label: l10n.date,
-                    value: booking.serviceDate,
-                  ),
+                // Outbound trip
+                Row(
+                  children: [
+                    if (booking.isRoundTrip)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Icon(
+                          CupertinoIcons.arrow_right_circle,
+                          size: 16,
+                          color: CupertinoColors.systemGreen,
+                        ),
+                      ),
+                    Expanded(
+                      child: _buildInfoItem(
+                        context,
+                        label: l10n.date,
+                        value: booking.serviceDate,
+                      ),
+                    ),
+                    Expanded(
+                      child: _buildInfoItem(
+                        context,
+                        label: l10n.time,
+                        value: booking.pickupTime.substring(0, 5),
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: _buildInfoItem(
-                    context,
-                    label: l10n.time,
-                    value: booking.pickupTime.substring(0, 5),
+                // Round trip return info
+                if (booking.isRoundTrip && booking.returnDate != null) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemIndigo.withOpacity(0.08),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.arrow_turn_down_right,
+                          size: 16,
+                          color: CupertinoColors.systemIndigo,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.returnTrip,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoColors.systemIndigo,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${booking.returnDate} ${booking.returnTime?.substring(0, 5) ?? ''}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: CupertinoColors.label,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (booking.returnFlightNumber != null && booking.returnFlightNumber!.isNotEmpty)
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.systemBackground,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.airplane,
+                                  size: 12,
+                                  color: CupertinoColors.secondaryLabel,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  booking.returnFlightNumber!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: CupertinoColors.secondaryLabel,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

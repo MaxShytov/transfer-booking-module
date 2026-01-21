@@ -79,6 +79,15 @@ class Booking(TimeStampedModel):
     service_date = models.DateField(verbose_name='Service Date')
     pickup_time = models.TimeField(verbose_name='Pickup Time')
 
+    # Round Trip
+    is_round_trip = models.BooleanField(default=False, verbose_name='Is Round Trip')
+    return_date = models.DateField(null=True, blank=True, verbose_name='Return Date')
+    return_time = models.TimeField(null=True, blank=True, verbose_name='Return Time')
+    return_flight_number = models.CharField(
+        max_length=20, blank=True,
+        verbose_name='Return Flight Number'
+    )
+
     # Passenger & Luggage
     num_passengers = models.PositiveIntegerField(verbose_name='Number of Passengers')
     num_large_luggage = models.PositiveIntegerField(default=0, verbose_name='Large Luggage')

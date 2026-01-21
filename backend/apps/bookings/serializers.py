@@ -109,6 +109,9 @@ class BookingListSerializer(serializers.ModelSerializer):
             'dropoff_address',
             'service_date',
             'pickup_time',
+            'is_round_trip',
+            'return_date',
+            'return_time',
             'vehicle_class_name',
             'final_price',
             'currency',
@@ -180,6 +183,11 @@ class BookingDetailSerializer(serializers.ModelSerializer):
             'dropoff_lng',
             'service_date',
             'pickup_time',
+            # Round trip
+            'is_round_trip',
+            'return_date',
+            'return_time',
+            'return_flight_number',
             # Passengers
             'num_passengers',
             'num_large_luggage',
