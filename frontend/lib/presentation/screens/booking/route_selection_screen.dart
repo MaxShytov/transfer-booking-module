@@ -72,7 +72,8 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
         currentState.returnDate != initial.returnDate ||
         currentState.returnTime != initial.returnTime ||
         currentState.numPassengers != initial.numPassengers ||
-        currentState.numChildren != initial.numChildren ||
+        currentState.numChildSeats != initial.numChildSeats ||
+        currentState.numBoosterSeats != initial.numBoosterSeats ||
         currentState.numLargeLuggage != initial.numLargeLuggage ||
         currentState.numSmallLuggage != initial.numSmallLuggage ||
         currentState.numSurfboardsBikesGolf !=
@@ -328,6 +329,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                             : '${nextHour.toString().padLeft(2, '0')}:00';
                         ref.read(bookingFlowProvider.notifier).setReturnTime(time);
                       },
+                      durationMinutes: bookingState.durationMinutes,
                       travelDateLabel: l10n.travelDate,
                       travelDatesLabel: l10n.travelDates,
                       roundTripLabel: l10n.roundTrip,
@@ -362,14 +364,22 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                               .setNumPassengers(value);
                         },
                         adultsLabel: l10n.adults,
-                        children: bookingState.numChildren,
-                        onChildrenChanged: (value) {
+                        childSeats: bookingState.numChildSeats,
+                        onChildSeatsChanged: (value) {
                           ref
                               .read(bookingFlowProvider.notifier)
-                              .setNumChildren(value);
+                              .setNumChildSeats(value);
                         },
-                        childrenLabel: l10n.children,
-                        childrenSubtitle: l10n.childrenSubtitle,
+                        childSeatsLabel: l10n.childSeats,
+                        childSeatsSubtitle: l10n.childSeatsSubtitle,
+                        boosterSeats: bookingState.numBoosterSeats,
+                        onBoosterSeatsChanged: (value) {
+                          ref
+                              .read(bookingFlowProvider.notifier)
+                              .setNumBoosterSeats(value);
+                        },
+                        boosterSeatsLabel: l10n.boosterSeats,
+                        boosterSeatsSubtitle: l10n.boosterSeatsSubtitle,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -465,11 +475,14 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                         selectLocationsLabel: l10n.selectLocationsToSeeRoute,
                         pickupMarkerTitle: l10n.pickup,
                         dropoffMarkerTitle: l10n.dropoff,
-                        onRouteInfoChanged: (distance, duration) {
+                        onRouteInfoChanged: (distance, duration, durationMinutes) {
                           setState(() {
                             _distanceText = distance;
                             _durationText = duration;
                           });
+                          if (durationMinutes != null) {
+                            ref.read(bookingFlowProvider.notifier).setDurationMinutes(durationMinutes);
+                          }
                         },
                       ),
                     ),

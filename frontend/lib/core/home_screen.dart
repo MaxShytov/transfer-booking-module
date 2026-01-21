@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../data/models/booking.dart';
+import '../data/repositories/booking_repository.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../presentation/providers/auth_provider.dart';
 import '../presentation/providers/booking_flow_provider.dart';
@@ -70,13 +72,36 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late CupertinoTabController _tabController;
+  final GlobalKey<_BookingsListTabState> _bookingsListKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = CupertinoTabController();
+    _tabController.addListener(_onTabChanged);
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _onTabChanged() {
+    // Refresh bookings list when switching to the bookings tab
+    if (_tabController.index == 1) {
+      _bookingsListKey.currentState?.refreshBookings();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authStateProvider);
-    final user = authState.user;
     final l10n = AppLocalizations.of(context);
 
     return CupertinoTabScaffold(
+      controller: _tabController,
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(
@@ -103,7 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               case 0:
                 return _BookingTab();
               case 1:
-                return _BookingsListTab();
+                return _BookingsListTab(key: _bookingsListKey);
               case 2:
                 return _MoreTab();
               default:
@@ -255,44 +280,424 @@ class _BookingTab extends ConsumerWidget {
 }
 
 /// Bookings list tab.
-class _BookingsListTab extends StatelessWidget {
+class _BookingsListTab extends ConsumerStatefulWidget {
+  const _BookingsListTab({super.key});
+
+  @override
+  ConsumerState<_BookingsListTab> createState() => _BookingsListTabState();
+}
+
+class _BookingsListTabState extends ConsumerState<_BookingsListTab>
+    with WidgetsBindingObserver {
+  List<BookingListItem>? _bookings;
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _loadBookings();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Refresh when app comes back to foreground
+    if (state == AppLifecycleState.resumed) {
+      _loadBookings();
+    }
+  }
+
+  /// Public method to refresh bookings from parent widget.
+  void refreshBookings() {
+    _loadBookings();
+  }
+
+  Future<void> _loadBookings() async {
+    final authState = ref.read(authStateProvider);
+    if (!authState.isAuthenticated) {
+      setState(() {
+        _isLoading = false;
+        _bookings = [];
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final bookings = await ref.read(bookingRepositoryProvider).getBookings();
+      if (mounted) {
+        setState(() {
+          _bookings = bookings;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final authState = ref.watch(authStateProvider);
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(l10n.tabMyBookings),
       ),
       child: SafeArea(
-        child: Center(
+        child: !authState.isAuthenticated
+            ? _buildLoginPrompt(context, l10n)
+            : _isLoading
+                ? const Center(child: CupertinoActivityIndicator())
+                : _error != null
+                    ? _buildError(context, l10n)
+                    : _bookings == null || _bookings!.isEmpty
+                        ? _buildEmpty(context, l10n)
+                        : _buildBookingsList(context, l10n),
+      ),
+    );
+  }
+
+  Widget _buildLoginPrompt(BuildContext context, AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            CupertinoIcons.person_circle,
+            size: 64,
+            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          ),
+          const SizedBox(height: AppDimensions.spacingLg),
+          Text(
+            l10n.login,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: CupertinoColors.label,
+            ),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          Text(
+            l10n.bookingHistoryWillAppear,
+            style: TextStyle(
+              fontSize: 15,
+              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+            ),
+          ),
+          const SizedBox(height: AppDimensions.spacingLg),
+          CupertinoButton.filled(
+            child: Text(l10n.login),
+            onPressed: () => context.push('/login'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmpty(BuildContext context, AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            CupertinoIcons.clock,
+            size: 64,
+            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          ),
+          const SizedBox(height: AppDimensions.spacingLg),
+          Text(
+            l10n.noBookingsYet,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: CupertinoColors.label,
+            ),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          Text(
+            l10n.bookingHistoryWillAppear,
+            style: TextStyle(
+              fontSize: 15,
+              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildError(BuildContext context, AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            CupertinoIcons.exclamationmark_circle,
+            size: 64,
+            color: CupertinoColors.systemRed,
+          ),
+          const SizedBox(height: AppDimensions.spacingLg),
+          Text(
+            _error ?? 'Error',
+            style: TextStyle(
+              fontSize: 15,
+              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppDimensions.spacingLg),
+          CupertinoButton.filled(
+            child: Text(l10n.retry),
+            onPressed: _loadBookings,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBookingsList(BuildContext context, AppLocalizations l10n) {
+    return CustomScrollView(
+      slivers: [
+        CupertinoSliverRefreshControl(
+          onRefresh: _loadBookings,
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.all(AppDimensions.screenPadding),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final booking = _bookings![index];
+                return _BookingCard(
+                  booking: booking,
+                  onTap: () => context.push('/bookings/${booking.id}'),
+                );
+              },
+              childCount: _bookings!.length,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Booking card widget.
+class _BookingCard extends StatelessWidget {
+  final BookingListItem booking;
+  final VoidCallback onTap;
+
+  const _BookingCard({
+    required this.booking,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: CupertinoColors.systemBackground.resolveFrom(context),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: CupertinoColors.separator.resolveFrom(context),
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                CupertinoIcons.clock,
-                size: 64,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              // Header row: reference + status
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    booking.bookingReference,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: CupertinoColors.label,
+                    ),
+                  ),
+                  _StatusBadge(status: booking.status),
+                ],
               ),
-              const SizedBox(height: AppDimensions.spacingLg),
-              Text(
-                l10n.noBookingsYet,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: CupertinoColors.label,
-                ),
+              const SizedBox(height: 12),
+              // Route
+              Row(
+                children: [
+                  const Icon(
+                    CupertinoIcons.location,
+                    size: 16,
+                    color: CupertinoColors.systemGreen,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      booking.pickupAddress,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: CupertinoColors.label.resolveFrom(context),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: AppDimensions.spacingSm),
-              Text(
-                l10n.bookingHistoryWillAppear,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
-                ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(
+                    CupertinoIcons.location_solid,
+                    size: 16,
+                    color: CupertinoColors.systemRed,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      booking.dropoffAddress,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: CupertinoColors.label.resolveFrom(context),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              // Footer row: date/time + price
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.calendar,
+                        size: 14,
+                        color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${booking.serviceDate} ${booking.pickupTime.substring(0, 5)}',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '${booking.currency == 'EUR' ? '€' : booking.currency}${booking.finalPrice.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      color: CupertinoColors.systemBlue,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Status badge widget.
+class _StatusBadge extends StatelessWidget {
+  final String status;
+
+  const _StatusBadge({required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    Color backgroundColor;
+    Color textColor;
+
+    switch (status) {
+      case 'pending':
+        backgroundColor = CupertinoColors.systemYellow.withOpacity(0.2);
+        textColor = CupertinoColors.systemOrange;
+        break;
+      case 'confirmed':
+        backgroundColor = CupertinoColors.systemBlue.withOpacity(0.2);
+        textColor = CupertinoColors.systemBlue;
+        break;
+      case 'in_progress':
+        backgroundColor = CupertinoColors.systemPurple.withOpacity(0.2);
+        textColor = CupertinoColors.systemPurple;
+        break;
+      case 'completed':
+        backgroundColor = CupertinoColors.systemGreen.withOpacity(0.2);
+        textColor = CupertinoColors.systemGreen;
+        break;
+      case 'cancelled':
+        backgroundColor = CupertinoColors.systemRed.withOpacity(0.2);
+        textColor = CupertinoColors.systemRed;
+        break;
+      default:
+        backgroundColor = CupertinoColors.systemGrey.withOpacity(0.2);
+        textColor = CupertinoColors.systemGrey;
+    }
+
+    String displayText;
+    switch (status) {
+      case 'pending':
+        displayText = 'Pending';
+        break;
+      case 'confirmed':
+        displayText = 'Confirmed';
+        break;
+      case 'in_progress':
+        displayText = 'In Progress';
+        break;
+      case 'completed':
+        displayText = 'Completed';
+        break;
+      case 'cancelled':
+        displayText = 'Cancelled';
+        break;
+      default:
+        displayText = status;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        displayText,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: textColor,
         ),
       ),
     );

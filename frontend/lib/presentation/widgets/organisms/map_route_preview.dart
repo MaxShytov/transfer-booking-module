@@ -25,15 +25,66 @@ String _formatDuration(int totalMinutes) {
   return '${hours}h ${minutes}m';
 }
 
-/// Parse and reformat duration string from API (e.g., "116 mins" -> "1h 56m")
+/// Parse duration string to minutes (e.g., "3 hours 56 mins" -> 236, "45 min" -> 45)
+int? _parseDurationMinutes(String durationText) {
+  // Try "X hours Y mins" format
+  final hoursMinutesMatch = RegExp(r'(\d+)\s*hours?\s+(\d+)\s*mins?').firstMatch(durationText);
+  if (hoursMinutesMatch != null) {
+    final hours = int.tryParse(hoursMinutesMatch.group(1)!) ?? 0;
+    final minutes = int.tryParse(hoursMinutesMatch.group(2)!) ?? 0;
+    return hours * 60 + minutes;
+  }
+
+  // Try "X hours" format
+  final hoursOnlyMatch = RegExp(r'(\d+)\s*hours?$').firstMatch(durationText);
+  if (hoursOnlyMatch != null) {
+    final hours = int.tryParse(hoursOnlyMatch.group(1)!) ?? 0;
+    return hours * 60;
+  }
+
+  // Try "Xh Ym" format (our formatted output)
+  final shortFormatMatch = RegExp(r'~?(\d+)h\s*(\d+)m').firstMatch(durationText);
+  if (shortFormatMatch != null) {
+    final hours = int.tryParse(shortFormatMatch.group(1)!) ?? 0;
+    final minutes = int.tryParse(shortFormatMatch.group(2)!) ?? 0;
+    return hours * 60 + minutes;
+  }
+
+  // Try "Xh" format
+  final shortHoursMatch = RegExp(r'~?(\d+)h$').firstMatch(durationText);
+  if (shortHoursMatch != null) {
+    final hours = int.tryParse(shortHoursMatch.group(1)!) ?? 0;
+    return hours * 60;
+  }
+
+  // Try "X min" or "X mins" format
+  final minutesMatch = RegExp(r'~?(\d+)\s*mins?').firstMatch(durationText);
+  if (minutesMatch != null) {
+    return int.tryParse(minutesMatch.group(1)!);
+  }
+
+  return null;
+}
+
+/// Parse and reformat duration string from API (e.g., "3 hours 56 mins" -> "3h 56m")
 String _formatDurationString(String durationText) {
-  // Check if it's already in hours format
-  if (durationText.contains('hour') || durationText.contains('h ')) {
-    return durationText;
+  // Convert "X hours Y mins" format to "Xh Ym"
+  final hoursMinutesMatch = RegExp(r'(\d+)\s*hours?\s+(\d+)\s*mins?').firstMatch(durationText);
+  if (hoursMinutesMatch != null) {
+    final hours = hoursMinutesMatch.group(1);
+    final minutes = hoursMinutesMatch.group(2);
+    return '${hours}h ${minutes}m';
+  }
+
+  // Convert "X hours" format to "Xh"
+  final hoursOnlyMatch = RegExp(r'(\d+)\s*hours?$').firstMatch(durationText);
+  if (hoursOnlyMatch != null) {
+    final hours = hoursOnlyMatch.group(1);
+    return '${hours}h';
   }
 
   // Try to parse minutes from formats like "116 min", "116 mins", "~116 min"
-  final match = RegExp(r'~?(\d+)\s*min').firstMatch(durationText);
+  final match = RegExp(r'~?(\d+)\s*mins?').firstMatch(durationText);
   if (match != null) {
     final minutes = int.tryParse(match.group(1)!);
     if (minutes != null && minutes >= 60) {
@@ -65,8 +116,8 @@ class MapRoutePreview extends StatefulWidget {
   final String? selectLocationsLabel;
   final String? pickupMarkerTitle;
   final String? dropoffMarkerTitle;
-  /// Callback when route info (distance, duration) is available
-  final void Function(String? distance, String? duration)? onRouteInfoChanged;
+  /// Callback when route info (distance, duration, durationMinutes) is available
+  final void Function(String? distance, String? duration, int? durationMinutes)? onRouteInfoChanged;
 
   const MapRoutePreview({
     super.key,
@@ -176,7 +227,8 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
           _isLoadingRoute = false;
         });
         // Notify parent about route info
-        widget.onRouteInfoChanged?.call(_distanceText, _durationText);
+        final durationMins = duration != null ? _parseDurationMinutes(duration) : null;
+        widget.onRouteInfoChanged?.call(_distanceText, _durationText, durationMins);
         // Update camera to fit the route after polyline is loaded
         _updateCamera();
       } else {
@@ -209,7 +261,7 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
         _isLoadingRoute = false;
       });
       // Notify parent about route info
-      widget.onRouteInfoChanged?.call(_distanceText, _durationText);
+      widget.onRouteInfoChanged?.call(_distanceText, _durationText, durationMinutes);
       // Update camera to fit the route
       _updateCamera();
     }

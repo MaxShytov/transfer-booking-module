@@ -7,6 +7,8 @@ class ExtraFeeTile extends StatelessWidget {
   final ExtraFee fee;
   final bool isSelected;
   final int quantity;
+  final int minQuantity;
+  final String? minQuantityHint;
   final ValueChanged<bool>? onToggle;
   final ValueChanged<int>? onQuantityChanged;
 
@@ -15,6 +17,8 @@ class ExtraFeeTile extends StatelessWidget {
     required this.fee,
     this.isSelected = false,
     this.quantity = 1,
+    this.minQuantity = 1,
+    this.minQuantityHint,
     this.onToggle,
     this.onQuantityChanged,
   });
@@ -101,8 +105,30 @@ class ExtraFeeTile extends StatelessWidget {
                       const SizedBox(height: 8),
                       _CupertinoQuantitySelector(
                         quantity: quantity,
+                        minQuantity: minQuantity,
                         onChanged: onQuantityChanged,
                       ),
+                      // Minimum quantity hint
+                      if (minQuantity > 0 && minQuantityHint != null) ...[
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.info_circle,
+                              size: 14,
+                              color: CupertinoColors.systemOrange.resolveFrom(context),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              minQuantityHint!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: CupertinoColors.systemOrange.resolveFrom(context),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ],
                 ),
@@ -147,10 +173,12 @@ class ExtraFeeTile extends StatelessWidget {
 
 class _CupertinoQuantitySelector extends StatelessWidget {
   final int quantity;
+  final int minQuantity;
   final ValueChanged<int>? onChanged;
 
   const _CupertinoQuantitySelector({
     required this.quantity,
+    this.minQuantity = 1,
     this.onChanged,
   });
 
@@ -167,11 +195,11 @@ class _CupertinoQuantitySelector extends StatelessWidget {
           CupertinoButton(
             padding: const EdgeInsets.all(8),
             minimumSize: Size.zero,
-            onPressed: quantity > 1 ? () => onChanged?.call(quantity - 1) : null,
+            onPressed: quantity > minQuantity ? () => onChanged?.call(quantity - 1) : null,
             child: Icon(
               CupertinoIcons.minus,
               size: 18,
-              color: quantity > 1
+              color: quantity > minQuantity
                   ? CupertinoColors.systemBlue
                   : CupertinoColors.tertiaryLabel.resolveFrom(context),
             ),

@@ -24,7 +24,9 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
     super.initState();
     Future.microtask(() {
       final bookingState = ref.read(bookingFlowProvider);
-      final totalPassengers = bookingState.numPassengers + bookingState.numChildren;
+      // Total passengers = adults + toddlers (child seats) + children (boosters)
+      final totalPassengers = bookingState.numPassengers +
+          bookingState.numChildSeats + bookingState.numBoosterSeats;
       ref.read(availableVehiclesProvider.notifier).loadAvailableVehicles(
             numPassengers: totalPassengers,
             numLargeLuggage: bookingState.numLargeLuggage,
@@ -37,7 +39,9 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
     final bookingState = ref.watch(bookingFlowProvider);
     final vehiclesState = ref.watch(availableVehiclesProvider);
     final l10n = AppLocalizations.of(context);
-    final totalPassengers = bookingState.numPassengers + bookingState.numChildren;
+    // Total passengers = adults + toddlers (child seats) + children (boosters)
+    final totalPassengers = bookingState.numPassengers +
+        bookingState.numChildSeats + bookingState.numBoosterSeats;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -90,10 +94,18 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      l10n.passengersAndBagsInfo(
-                        totalPassengers,
-                        bookingState.numLargeLuggage,
-                      ),
+                      // Show detailed info if there are toddlers or children
+                      (bookingState.numChildSeats > 0 || bookingState.numBoosterSeats > 0)
+                          ? l10n.passengersDetailedInfo(
+                              totalPassengers,
+                              bookingState.numChildSeats,
+                              bookingState.numBoosterSeats,
+                              bookingState.numLargeLuggage,
+                            )
+                          : l10n.passengersAndBagsInfo(
+                              totalPassengers,
+                              bookingState.numLargeLuggage,
+                            ),
                       style: const TextStyle(
                         fontSize: 15,
                         color: CupertinoColors.systemBlue,
@@ -114,7 +126,8 @@ class _VehicleSelectionScreenState extends ConsumerState<VehicleSelectionScreen>
                           retryLabel: l10n.retry,
                           onRetry: () {
                             final bs = ref.read(bookingFlowProvider);
-                            final total = bs.numPassengers + bs.numChildren;
+                            final total = bs.numPassengers +
+                                bs.numChildSeats + bs.numBoosterSeats;
                             ref
                                 .read(availableVehiclesProvider.notifier)
                                 .loadAvailableVehicles(

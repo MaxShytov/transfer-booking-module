@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../data/models/price_breakdown.dart';
+import '../../../data/repositories/booking_repository.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/booking_flow_provider.dart';
 import '../../widgets/atoms/booking_progress_indicator.dart';
@@ -270,17 +271,51 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     setState(() => _isSubmitting = true);
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
-
-      // Save phone number to user profile if it changed
       final bookingState = ref.read(bookingFlowProvider);
       final authState = ref.read(authStateProvider);
-      final passengerPhone = bookingState.passengerDetails?.phone;
+      final passenger = bookingState.passengerDetails!;
+      final priceCalculation = bookingState.priceCalculation!;
+
+      // Create booking via API
+      final bookingResponse = await ref.read(bookingRepositoryProvider).createBooking(
+        // Route
+        pickupAddress: bookingState.pickupLocation!.address,
+        pickupLat: bookingState.pickupLocation!.lat,
+        pickupLng: bookingState.pickupLocation!.lng,
+        dropoffAddress: bookingState.dropoffLocation!.address,
+        dropoffLat: bookingState.dropoffLocation!.lat,
+        dropoffLng: bookingState.dropoffLocation!.lng,
+        serviceDate: bookingState.serviceDate!,
+        pickupTime: bookingState.pickupTime!,
+        // Round trip
+        isRoundTrip: bookingState.isRoundTrip,
+        returnDate: bookingState.returnDate,
+        returnTime: bookingState.returnTime,
+        // Passengers & luggage
+        numPassengers: bookingState.numPassengers,
+        numChildren: bookingState.numChildren,
+        numLargeLuggage: bookingState.numLargeLuggage,
+        numSmallLuggage: bookingState.numSmallLuggage,
+        // Vehicle
+        vehicleClassId: bookingState.selectedVehicle!.id,
+        // Pricing
+        priceCalculation: priceCalculation,
+        // Customer
+        customerFirstName: passenger.firstName,
+        customerLastName: passenger.lastName,
+        customerPhone: passenger.phone,
+        customerEmail: passenger.email,
+        // Trip details
+        flightNumber: passenger.flightNumber,
+        returnFlightNumber: passenger.returnFlightNumber,
+        specialRequests: passenger.specialRequests,
+      );
+
+      // Save phone number to user profile if it changed
+      final passengerPhone = passenger.phone;
       final currentUserPhone = authState.user?.phone;
 
-      if (passengerPhone != null &&
-          passengerPhone.isNotEmpty &&
-          passengerPhone != currentUserPhone) {
+      if (passengerPhone.isNotEmpty && passengerPhone != currentUserPhone) {
         await ref.read(authStateProvider.notifier).updateProfile(
           phone: passengerPhone,
         );
@@ -300,12 +335,25 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   size: 32,
                 ),
                 const SizedBox(width: 8),
-                Text(l10n.bookingConfirmed),
+                Flexible(child: Text(l10n.bookingConfirmed)),
               ],
             ),
             content: Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Text(l10n.bookingConfirmedMessage),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(l10n.bookingConfirmedMessage),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Ref: ${bookingResponse.bookingReference}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             ),
             actions: [
               CupertinoDialogAction(

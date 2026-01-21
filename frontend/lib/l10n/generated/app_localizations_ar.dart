@@ -192,6 +192,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get childrenSubtitle => 'أقل من 12 سنة';
 
   @override
+  String get childSeats => 'الرضع حتى 4 سنوات';
+
+  @override
+  String get childSeatsSubtitle => 'مقعد أطفال مطلوب';
+
+  @override
+  String get boosterSeats => 'الأطفال 4-12 سنة';
+
+  @override
+  String get boosterSeatsSubtitle => 'مقعد مرتفع مطلوب';
+
+  @override
   String get largeLuggage => 'أمتعة كبيرة';
 
   @override
@@ -237,6 +249,36 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String passengersAndBagsInfo(int passengers, int bags) {
     return '$passengers ركاب، $bags أمتعة كبيرة';
+  }
+
+  @override
+  String passengersDetailedInfo(
+    int total,
+    int toddlers,
+    int children,
+    int bags,
+  ) {
+    return '$total ركاب (منهم $toddlers رضيع، $children طفل)، $bags أمتعة كبيرة';
+  }
+
+  @override
+  String inclToddlers(int count) {
+    return 'منهم $count رضيع';
+  }
+
+  @override
+  String inclChildren(int count) {
+    return 'منهم $count طفل';
+  }
+
+  @override
+  String minChildSeatsRequired(int count) {
+    return 'الحد الأدنى $count مطلوب للرضع';
+  }
+
+  @override
+  String minBoosterSeatsRequired(int count) {
+    return 'الحد الأدنى $count مطلوب للأطفال';
   }
 
   @override

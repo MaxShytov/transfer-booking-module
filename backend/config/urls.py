@@ -16,7 +16,7 @@ urlpatterns = [
     path('api/v1/vehicles/', include('apps.vehicles.urls')),
     path('api/v1/routes/', include('apps.routes.urls')),
     path('api/v1/pricing/', include('apps.pricing.urls')),
-    # path('api/v1/bookings/', include('apps.bookings.urls')),  # Coming in Sprint 3
+    path('api/v1/bookings/', include('apps.bookings.urls')),
 ]
 
 # Debug toolbar (development only)

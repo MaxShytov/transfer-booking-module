@@ -470,6 +470,30 @@ abstract class AppLocalizations {
   /// **'Under 12 years'**
   String get childrenSubtitle;
 
+  /// Toddlers needing child seat label
+  ///
+  /// In en, this message translates to:
+  /// **'Toddlers up to 4 years'**
+  String get childSeats;
+
+  /// Child seat requirement description
+  ///
+  /// In en, this message translates to:
+  /// **'Child seat required'**
+  String get childSeatsSubtitle;
+
+  /// Children needing booster seat label
+  ///
+  /// In en, this message translates to:
+  /// **'Children 4-12 years'**
+  String get boosterSeats;
+
+  /// Booster seat requirement description
+  ///
+  /// In en, this message translates to:
+  /// **'Booster seat required'**
+  String get boosterSeatsSubtitle;
+
   /// Large luggage stepper label
   ///
   /// In en, this message translates to:
@@ -559,6 +583,41 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{passengers} passengers, {bags} large bags'**
   String passengersAndBagsInfo(int passengers, int bags);
+
+  /// Detailed passenger and bags info banner with child breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'{total} passengers (incl. {toddlers} toddlers, {children} children), {bags} large bags'**
+  String passengersDetailedInfo(
+    int total,
+    int toddlers,
+    int children,
+    int bags,
+  );
+
+  /// Including toddlers text
+  ///
+  /// In en, this message translates to:
+  /// **'incl. {count} toddlers'**
+  String inclToddlers(int count);
+
+  /// Including children text
+  ///
+  /// In en, this message translates to:
+  /// **'incl. {count} children'**
+  String inclChildren(int count);
+
+  /// Minimum child seats hint based on toddlers count
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum {count} required for toddlers'**
+  String minChildSeatsRequired(int count);
+
+  /// Minimum booster seats hint based on children count
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum {count} required for children'**
+  String minBoosterSeatsRequired(int count);
 
   /// Vehicle not suitable message
   ///

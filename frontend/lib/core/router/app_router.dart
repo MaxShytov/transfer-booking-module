@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../presentation/providers/auth_provider.dart';
 import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/auth/register_screen.dart';
+import '../../presentation/screens/booking/booking_detail_screen.dart';
 import '../../presentation/screens/booking/extras_selection_screen.dart';
 import '../../presentation/screens/booking/passenger_details_screen.dart';
 import '../../presentation/screens/booking/review_screen.dart';
@@ -115,6 +116,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/booking/review',
         name: 'booking-review',
         builder: (context, state) => const ReviewScreen(),
+      ),
+
+      // Booking details route
+      GoRoute(
+        path: '/bookings/:id',
+        name: 'booking-detail',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return BookingDetailScreen(bookingId: id);
+        },
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

@@ -185,6 +185,18 @@
   "childrenSubtitle": "Under 12 years",
   "@childrenSubtitle": {"description": "Children age description"},
 
+  "childSeats": "Toddlers up to 4 years",
+  "@childSeats": {"description": "Toddlers needing child seat label"},
+
+  "childSeatsSubtitle": "Child seat required",
+  "@childSeatsSubtitle": {"description": "Child seat requirement description"},
+
+  "boosterSeats": "Children 4-12 years",
+  "@boosterSeats": {"description": "Children needing booster seat label"},
+
+  "boosterSeatsSubtitle": "Booster seat required",
+  "@boosterSeatsSubtitle": {"description": "Booster seat requirement description"},
+
   "largeLuggage": "Large Luggage",
   "@largeLuggage": {"description": "Large luggage stepper label"},
 
@@ -233,6 +245,49 @@
     "placeholders": {
       "passengers": {"type": "int"},
       "bags": {"type": "int"}
+    }
+  },
+
+  "passengersDetailedInfo": "{total} passengers (incl. {toddlers} toddlers, {children} children), {bags} large bags",
+  "@passengersDetailedInfo": {
+    "description": "Detailed passenger and bags info banner with child breakdown",
+    "placeholders": {
+      "total": {"type": "int"},
+      "toddlers": {"type": "int"},
+      "children": {"type": "int"},
+      "bags": {"type": "int"}
+    }
+  },
+
+  "inclToddlers": "incl. {count} toddlers",
+  "@inclToddlers": {
+    "description": "Including toddlers text",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "inclChildren": "incl. {count} children",
+  "@inclChildren": {
+    "description": "Including children text",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "minChildSeatsRequired": "Minimum {count} required for toddlers",
+  "@minChildSeatsRequired": {
+    "description": "Minimum child seats hint based on toddlers count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "minBoosterSeatsRequired": "Minimum {count} required for children",
+  "@minBoosterSeatsRequired": {
+    "description": "Minimum booster seats hint based on children count",
+    "placeholders": {
+      "count": {"type": "int"}
     }
   },
 

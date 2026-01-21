@@ -60,10 +60,10 @@ class PricingRepository {
     final response = await _dio.post(
       '/pricing/calculate/',
       data: {
-        'pickup_lat': pickupLat,
-        'pickup_lng': pickupLng,
-        'dropoff_lat': dropoffLat,
-        'dropoff_lng': dropoffLng,
+        'pickup_lat': _roundCoordinate(pickupLat),
+        'pickup_lng': _roundCoordinate(pickupLng),
+        'dropoff_lat': _roundCoordinate(dropoffLat),
+        'dropoff_lng': _roundCoordinate(dropoffLng),
         'service_date': _formatDate(serviceDate),
         'pickup_time': pickupTime,
         'num_passengers': numPassengers,
@@ -83,5 +83,10 @@ class PricingRepository {
 
   String _formatDate(DateTime date) {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
+  /// Round coordinate to 8 decimal places to match backend DecimalField precision.
+  double _roundCoordinate(double value) {
+    return double.parse(value.toStringAsFixed(8));
   }
 }

@@ -56,7 +56,8 @@ class ExtraFee {
         return basePrice != null ? (amount / 100) * basePrice : 0;
       case FeeType.flat:
       default:
-        return amount;
+        // For flat fees, also multiply by quantity (e.g., child seats, boosters)
+        return amount * quantity;
     }
   }
 

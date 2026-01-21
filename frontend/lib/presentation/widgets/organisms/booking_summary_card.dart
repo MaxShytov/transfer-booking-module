@@ -156,6 +156,14 @@ class BookingSummaryCard extends StatelessWidget {
                                 color: CupertinoColors.systemBlue,
                               ),
                             ),
+                            if (bookingState.returnTime != null)
+                              Text(
+                                ' ${bookingState.returnTime}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: CupertinoColors.systemBlue,
+                                ),
+                              ),
                           ],
                         ],
                       ),

@@ -156,5 +156,97 @@ void main() {
         expect(state.numLargeLuggage, equals(0));
       });
     });
+
+    group('setNumChildSeats', () {
+      test('should set number of child seats (toddlers)', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumChildSeats(2);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.numChildSeats, equals(2));
+      });
+
+      test('should clear selected vehicle when child seats count changes', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumChildSeats(3);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.selectedVehicle, isNull);
+      });
+
+      test('should clear price when child seats count changes', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumChildSeats(1);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.priceCalculation, isNull);
+      });
+    });
+
+    group('setNumBoosterSeats', () {
+      test('should set number of booster seats (children 4-12)', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumBoosterSeats(3);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.numBoosterSeats, equals(3));
+      });
+
+      test('should clear selected vehicle when booster seats count changes', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumBoosterSeats(2);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.selectedVehicle, isNull);
+      });
+
+      test('should clear price when booster seats count changes', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        notifier.setNumBoosterSeats(4);
+
+        final state = container.read(bookingFlowProvider);
+        expect(state.priceCalculation, isNull);
+      });
+    });
+
+    group('total passengers with child seats and boosters', () {
+      test('total should include adults, toddlers, and children', () {
+        final notifier = container.read(bookingFlowProvider.notifier);
+
+        // 2 adults + 1 toddler + 2 children = 5 passengers
+        notifier.setNumPassengers(2);
+        notifier.setNumChildSeats(1); // toddlers
+        notifier.setNumBoosterSeats(2); // children 4-12
+
+        final state = container.read(bookingFlowProvider);
+        final totalPassengers = state.numPassengers +
+            state.numChildSeats +
+            state.numBoosterSeats;
+
+        expect(totalPassengers, equals(5));
+      });
+
+      test('default state should have zero child seats and boosters', () {
+        final state = container.read(bookingFlowProvider);
+
+        expect(state.numChildSeats, equals(0));
+        expect(state.numBoosterSeats, equals(0));
+      });
+    });
+
+    group('extraFeesTotal', () {
+      test('should calculate total from selected extras', () {
+        final state = container.read(bookingFlowProvider);
+
+        // Initial state has no extras
+        expect(state.extraFeesTotal, equals(0.0));
+      });
+    });
   });
 }

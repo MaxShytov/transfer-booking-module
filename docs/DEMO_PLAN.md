@@ -1,168 +1,193 @@
-# 📋 План Demo для Transfer Booking Module
+# Demo Plan: 8move Transfer Booking System
 
-**Проект:** Sardinia Airport Transfer
-**Клиент:** Marco Cutolo
-**Дата создания:** January 19, 2026
-
----
-
-## 🎯 Цель демо
-Показать Marco Cutolo готовность системы к бронированию трансферов на Сардинии.
+**Client:** Marco Cutolo (Sardinia Airport Transfers)
+**Date:** January 2026
 
 ---
 
-## Часть 1: Admin Panel (5-7 мин)
+## Opening Script
 
-### 1.1 Вход в систему
-- Открыть http://localhost:8000/admin/
-- Войти как `max@trident.software` / `Password123`
-- Показать интерфейс Django Admin (английский, локализация планируется в Sprint 5)
-
-### 1.2 Vehicle Classes (Классы автомобилей)
-- Открыть **Vehicles → Vehicle classes**
-- Показать 7 классов от Economy до Large Minibus
-- Продемонстрировать:
-  - Tier system (1-7)
-  - Price multipliers (1.00 - 3.50)
-  - Capacity (passengers + luggage)
-  - Example vehicles
-
-### 1.3 Fixed Routes (Маршруты Сардинии)
-- Открыть **Routes → Fixed routes**
-- Показать 7 предустановленных маршрутов:
-  - Cagliari Airport → City Center (€35)
-  - Cagliari Airport → Villasimius (€80)
-  - Cagliari Airport → Costa Smeralda (€450)
-  - Olbia Airport → Porto Cervo (€65)
-  - И другие...
-- Показать geolocation data (lat/lng, radius)
-
-### 1.4 Pricing Configuration
-- **Seasonal Multipliers**: 6 сезонов (Low, Shoulder, High, Ferragosto, Christmas)
-- **Passenger Multipliers**: 16 правил (по 2-3 диапазона на каждый класс авто)
-  - Редактируются inline в форме Vehicle Class
-- **Time Multipliers**: Standard (06-22) и Late Night (22-06)
-- **Extra Fees**: 9 дополнительных услуг
+> "Marco, thank you for reaching out.
+>
+> We're a custom software development company, and we have a platform called **8move** — a logistics and transfer management system.
+>
+> You requested a WordPress plugin. We don't have a ready-made plugin, but we have something better — a complete system that we developed for a hotel chain client.
+>
+> Based on this system, we can either:
+> 1. Create a plugin for your WordPress website, or
+> 2. Build a full solution with a web platform and mobile apps for your customers.
+>
+> The mobile app option often provides additional advantages — you can send push notifications to customers, for example, when they're planning their next visit to your region. They can also make additional bookings while they're staying in Sardinia, directly from their phone.
+>
+> I've prepared test data for Sardinia to show you how the system works.
+>
+> Let me walk you through:
+> - **Popular Routes** — your most frequently requested routes
+> - **Live Pricing** — real-time price calculation based on your parameters
+> - **Booking Flow** — streamlined process with only essential fields
+> - **Admin Panel** — full control over pricing management
+>
+> Let me show you a demo today and discuss how we can adapt this solution to your specific needs."
 
 ---
 
-## Часть 2: Pricing Calculator Demo (5 мин)
-cartuzssc@gmail.com / 318\Ou`r`2Wx
+## Part 1: Mobile App — Customer Booking Flow (7-10 min)
 
-### 2.1 Сценарий 1: Простой трансфер
-```
-Route: Cagliari Airport → Villasimius
-Passengers: 3
-Vehicle: Economy Sedan
-Date: July 15 (High Summer)
-Time: 14:30 (Standard)
+### 1.1 Home Screen — Popular Routes
+- Open the Flutter app on device/emulator
+- Show the **Home screen** with popular Sardinia routes:
+  - Cagliari Airport → City Center
+  - Cagliari Airport → Villasimius
+  - Olbia Airport → Porto Cervo
+  - Olbia Airport → Costa Smeralda
+- Explain: *"These are your most requested routes. Customers tap once and go straight to booking."*
 
-Расчёт:
-€80 × 1.00 (Economy) × 1.00 (1-3 pax) × 1.30 (Summer) × 1.00 = €104
-```
+### 1.2 Booking Flow — Simple Transfer
+**Scenario:** Tourist arriving at Cagliari Airport, going to Villasimius
 
-### 2.2 Сценарий 2: Группа с upgrade
-```
-Route: Same
-Passengers: 6 (requires Minivan)
-Vehicle: Luxury Minivan (upgrade)
-Date: August 15 (Ferragosto!)
-Time: 23:00 (Night)
+1. **Select Route** — tap "Cagliari Airport → Villasimius"
+2. **Enter Details:**
+   - Date: July 15
+   - Time: 14:30
+   - Passengers: 3 adults
+   - Luggage: 3 large bags
+3. **Show Map Preview** — route visualization with distance and estimated time
+4. **Select Vehicle:**
+   - Show available vehicle classes (Economy Sedan, Business Sedan, Minivan)
+   - Point out capacity indicators
+   - Select "Economy Sedan"
+5. **Show Price Calculation:**
+   - Base price: €80
+   - Summer season: +30%
+   - **Total: €104**
+6. **Contact Info** — simple form (name, phone, email)
+7. **Confirmation Screen** — booking summary
 
-Расчёт:
-€80 × 2.20 (Luxury) × 1.10 (4-6 pax) × 1.40 (Ferragosto) × 1.20 (Night) = €324.86
-+ Child Seat €10 = €334.86
-```
+### 1.3 Booking Flow — Group with Extras
+**Scenario:** Family group, peak season, night arrival
 
-### 2.3 Сценарий 3: Distance-based (нет fixed route)
-```
-Route: Custom address → Custom address (100km)
-Pricing: €50 base + €1.50/km = €200 base
-Apply multipliers...
-```
+1. **Same route** but change parameters:
+   - Date: August 15 (Ferragosto!)
+   - Time: 23:00 (night flight)
+   - Passengers: 6 (2 adults + 4 children)
+   - Add: Child seat
+2. **Show automatic upgrade:**
+   - *"System automatically suggests Minivan because 6 passengers don't fit in a sedan"*
+3. **Select Luxury Minivan** — upgrade option
+4. **Show price breakdown:**
+   - Base: €80
+   - Luxury Minivan: ×2.20
+   - Passengers (6): ×1.10
+   - Ferragosto peak: ×1.40
+   - Night transfer: ×1.20
+   - Child seat: +€10
+   - **Total: ~€335**
+5. Explain: *"All pricing rules are configurable from admin panel"*
 
----
-
-## Часть 3: API Endpoints (3 мин)
-
-### 3.1 Authentication
-```bash
-# Получить JWT token (Admin/Staff)
-POST /api/auth/token/
-{
-  "email": "max@trident.software",
-  "password": "Password123"
-}
-
-# Логин обычного покупателя (Customer)
-{
-  "email": "cartuzssc@gmail.com",
-  "password": "9LU50(2q16U;"
-}
-```
-
-### 3.2 Показать структуру API (готово к реализации)
-- `/api/vehicles/classes/` - список классов
-- `/api/routes/fixed/` - фиксированные маршруты
-- `/api/pricing/calculate/` - расчёт цены
-- `/api/bookings/` - создание бронирования
+### 1.4 Custom Address Booking
+- Show how customer can enter any pickup/dropoff address
+- Demonstrate address autocomplete (Google Places)
+- Explain: *"For routes not in your popular list, we calculate by distance"*
 
 ---
 
-## Часть 4: Database Schema (2 мин)
+## Part 2: Admin Panel — Business Management (7-10 min)
 
-### 4.1 Показать модели
-- Открыть код моделей в IDE
-- Продемонстрировать связи между таблицами
-- Показать Booking model со всеми полями
+### 2.1 Login & Overview
+- Open http://localhost:8000/admin/
+- Login as admin
+- Explain: *"This is where you manage everything — routes, prices, vehicles, bookings"*
+
+### 2.2 Routes Management
+**Show Fixed Routes section:**
+- Display all 7 Sardinia routes
+- Open one route (Cagliari → Villasimius):
+  - Base price: €80
+  - Distance: ~45km
+  - Coordinates for automatic matching
+- Explain: *"When customer selects addresses near these points, system automatically applies fixed pricing"*
+- Demonstrate: *"You can easily add new routes or adjust prices"*
+
+### 2.3 Vehicle Classes
+**Show Vehicle Classes section:**
+- 7 classes from Economy to Large Minibus
+- For each class show:
+  - Price multiplier (1.00 → 3.50)
+  - Passenger capacity
+  - Luggage capacity
+- Explain: *"If you partner with a luxury car service, just add a new class"*
+
+### 2.4 Dynamic Pricing Rules
+**Show pricing flexibility:**
+
+1. **Seasonal Multipliers:**
+   - Low Season: ×1.00
+   - Shoulder: ×1.10
+   - High Summer: ×1.30
+   - Ferragosto (Aug 10-20): ×1.40
+   - Christmas: ×1.25
+   - *"You control when peak pricing applies"*
+
+2. **Time Multipliers:**
+   - Standard (06:00-22:00): ×1.00
+   - Night (22:00-06:00): ×1.20
+   - *"Night transfers cost 20% more by default"*
+
+3. **Extra Services:**
+   - Child seat: €10
+   - Pet transport: €20-35
+   - Additional stop: €15
+   - Meet & Greet: €15
+   - *"Add any service your customers need"*
+
+### 2.5 Bookings Management
+- Show bookings list (if any test bookings exist)
+- Demonstrate status workflow: Pending → Confirmed → Completed
+- Explain: *"You see all bookings in real-time, can filter by date, status, route"*
 
 ---
 
-## Часть 5: Roadmap (3 мин)
+## Part 3: Key Benefits Summary (2-3 min)
 
-### Что готово сейчас ✅
-- Database models
-- Seed data для Сардинии
-- Admin panel
-- JWT Authentication
-- Project structure
+### For Your Customers:
+- Book transfer in under 2 minutes
+- See exact price before booking
+- Push notifications for reminders
+- Easy rebooking for return trips
 
-### Следующие шаги 🔜
-1. **Sprint 2**: API endpoints (CRUD для всех entities)
-2. **Sprint 3**: Price Calculator service
-3. **Sprint 4**: Booking flow
-4. **Sprint 5**: Flutter Web frontend
-5. **Sprint 6**: Payment integration (Stripe)
+### For Your Business:
+- Full control over pricing
+- No technical knowledge needed to adjust prices
+- Real-time booking visibility
+- Scalable — works for 10 or 10,000 bookings
 
-### Phase 2 (после MVP) 🚀
-- **Polygon Geomatching**: Переход от Radius к Polygon для фиксированных маршрутов
-  - PostGIS + GeoDjango для точного определения зон
-  - Admin widget для рисования полигонов на карте
-  - Позволит точнее определять зоны аэропортов, городов и курортов
+### Options We Discussed:
+1. **WordPress Plugin** — embed booking widget on your existing site
+2. **Full Solution** — web platform + iOS/Android apps
 
 ---
 
-## 📝 Checklist для демо
+## Questions for Marco
 
-### Перед демо:
-- [ ] Docker запущен (`./start.sh`)
-- [ ] Seed data загружен
-- [ ] Admin user создан
-- [ ] Postman/curl готов для API тестов
+1. Are these route prices accurate for your business?
+2. Any additional routes to add? (Alghero Airport?)
+3. What extra services do your customers typically request?
+4. Do you have existing driver management software, or should we include that?
+5. Payment processing — do you need online payments or cash only?
 
-### Во время демо:
-- [ ] Показать все 7 vehicle classes
-- [ ] Показать все 7 Sardinia routes
-- [ ] Показать pricing multipliers
-- [ ] Рассчитать 2-3 примера цен
-- [ ] Продемонстрировать JWT auth
-- [ ] Показать booking model structure
+---
 
-### Вопросы для Marco:
-1. Верны ли цены на маршруты?
-2. Нужны ли дополнительные сезоны (Easter)?
-3. Какие extra fees добавить/убрать?
-4. Приоритеты для следующего спринта?
+## Technical Notes (don't show, just reference if asked)
+
+### Demo Credentials
+- Admin: `max@trident.software` / `Password123`
+- Test Customer: `cartuzssc@gmail.com`
+
+### Pre-Demo Checklist
+- [ ] Backend running (`./start.sh`)
+- [ ] Flutter app running on device/emulator
+- [ ] Test data loaded (7 routes, 7 vehicle classes, pricing rules)
+- [ ] Network connection stable
 
 ---
 

@@ -3,6 +3,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../data/models/extra_fee.dart';
 import '../../providers/booking_flow_provider.dart';
 import '../../providers/extra_fees_provider.dart';
 import '../../widgets/atoms/booking_progress_indicator.dart';
@@ -19,6 +20,8 @@ class ExtrasSelectionScreen extends ConsumerStatefulWidget {
 }
 
 class _ExtrasSelectionScreenState extends ConsumerState<ExtrasSelectionScreen> {
+  bool _hasAutoAddedSeats = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,11 +30,112 @@ class _ExtrasSelectionScreenState extends ConsumerState<ExtrasSelectionScreen> {
     });
   }
 
+  /// Auto-add child seats and boosters based on passenger selections
+  void _autoAddChildSeatsAndBoosters(List<ExtraFee> optionalFees) {
+    if (_hasAutoAddedSeats) return;
+
+    final bookingState = ref.read(bookingFlowProvider);
+
+    _hasAutoAddedSeats = true;
+
+    // Find child seat fee (common codes: child_seat, childseat, baby_seat)
+    ExtraFee? childSeatFee;
+    for (final fee in optionalFees) {
+      final code = fee.feeCode.toLowerCase();
+      final name = fee.feeName.toLowerCase();
+      if (code.contains('child_seat') ||
+          code.contains('childseat') ||
+          code.contains('baby_seat') ||
+          code.contains('babyseat') ||
+          name.contains('child seat') ||
+          name.contains('baby seat')) {
+        childSeatFee = fee;
+        break;
+      }
+    }
+
+    // Find booster seat fee (common codes: booster, booster_seat)
+    ExtraFee? boosterFee;
+    for (final fee in optionalFees) {
+      final code = fee.feeCode.toLowerCase();
+      final name = fee.feeName.toLowerCase();
+      if (code.contains('booster') || name.contains('booster')) {
+        boosterFee = fee;
+        break;
+      }
+    }
+
+    // Auto-add child seats if needed
+    if (bookingState.numChildSeats > 0 && childSeatFee != null) {
+      ref.read(bookingFlowProvider.notifier).setExtraQuantity(
+            childSeatFee,
+            bookingState.numChildSeats,
+          );
+    }
+
+    // Auto-add boosters if needed
+    if (bookingState.numBoosterSeats > 0 && boosterFee != null) {
+      ref.read(bookingFlowProvider.notifier).setExtraQuantity(
+            boosterFee,
+            bookingState.numBoosterSeats,
+          );
+    }
+  }
+
+  /// Check if fee is a child seat
+  bool _isChildSeatFee(ExtraFee fee) {
+    final code = fee.feeCode.toLowerCase();
+    final name = fee.feeName.toLowerCase();
+    return code.contains('child_seat') ||
+        code.contains('childseat') ||
+        code.contains('baby_seat') ||
+        code.contains('babyseat') ||
+        name.contains('child seat') ||
+        name.contains('baby seat');
+  }
+
+  /// Check if fee is a booster seat
+  bool _isBoosterSeatFee(ExtraFee fee) {
+    final code = fee.feeCode.toLowerCase();
+    final name = fee.feeName.toLowerCase();
+    return code.contains('booster') || name.contains('booster');
+  }
+
+  /// Get minimum quantity for a fee based on passenger selections
+  /// Returns the required minimum for child seats and boosters
+  int _getMinQuantityForFee(ExtraFee fee, dynamic bookingState) {
+    if (_isChildSeatFee(fee)) {
+      return bookingState.numChildSeats;
+    }
+    if (_isBoosterSeatFee(fee)) {
+      return bookingState.numBoosterSeats;
+    }
+    return 0;
+  }
+
+  /// Get hint text for minimum quantity requirement
+  String? _getMinQuantityHint(ExtraFee fee, dynamic bookingState, AppLocalizations l10n) {
+    if (_isChildSeatFee(fee) && bookingState.numChildSeats > 0) {
+      return l10n.minChildSeatsRequired(bookingState.numChildSeats);
+    }
+    if (_isBoosterSeatFee(fee) && bookingState.numBoosterSeats > 0) {
+      return l10n.minBoosterSeatsRequired(bookingState.numBoosterSeats);
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final bookingState = ref.watch(bookingFlowProvider);
     final feesState = ref.watch(extraFeesProvider);
     final l10n = AppLocalizations.of(context);
+
+    // Auto-add child seats and boosters when fees are loaded
+    if (feesState.optionalFees.isNotEmpty && !_hasAutoAddedSeats) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _autoAddChildSeatsAndBoosters(feesState.optionalFees);
+      });
+    }
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -113,17 +217,25 @@ class _ExtrasSelectionScreenState extends ConsumerState<ExtrasSelectionScreen> {
                                         .read(bookingFlowProvider.notifier)
                                         .getExtraQuantity(fee.feeCode);
 
+                                    // Determine minimum quantity for child seats and boosters
+                                    final minQuantity = _getMinQuantityForFee(fee, bookingState);
+                                    final minQuantityHint = _getMinQuantityHint(fee, bookingState, l10n);
+
                                     return Padding(
                                       padding: const EdgeInsets.only(bottom: 12),
                                       child: ExtraFeeTile(
                                         fee: fee,
                                         isSelected: isSelected,
                                         quantity: isSelected ? quantity : 1,
-                                        onToggle: (selected) {
-                                          ref
-                                              .read(bookingFlowProvider.notifier)
-                                              .toggleExtra(fee);
-                                        },
+                                        minQuantity: minQuantity,
+                                        minQuantityHint: minQuantityHint,
+                                        onToggle: minQuantity > 0
+                                            ? null // Disable toggle if required by passenger count
+                                            : (selected) {
+                                                ref
+                                                    .read(bookingFlowProvider.notifier)
+                                                    .toggleExtra(fee);
+                                              },
                                         onQuantityChanged: (qty) {
                                           ref
                                               .read(bookingFlowProvider.notifier)

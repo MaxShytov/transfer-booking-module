@@ -135,12 +135,15 @@ class BookingFlowState {
   final bool isReturnTimeArrival; // false = departure time, true = arrival time
   final int numPassengers;
   final int numChildren;
+  final int numChildSeats; // Children up to 4 years (need child seat)
+  final int numBoosterSeats; // Children 4-12 years (need booster seat)
   final int numLargeLuggage;
   final int numSmallLuggage;
   final int numSurfboardsBikesGolf;
   final int numSkiSnowboard;
   final bool hasOtherSportsEquipment;
   final String? otherSportsEquipmentDetails;
+  final int? durationMinutes; // Route duration in minutes
 
   // Step 2: Vehicle selection
   final VehicleClass? selectedVehicle;
@@ -169,12 +172,15 @@ class BookingFlowState {
     this.isReturnTimeArrival = false,
     this.numPassengers = 1,
     this.numChildren = 0,
+    this.numChildSeats = 0,
+    this.numBoosterSeats = 0,
     this.numLargeLuggage = 0,
     this.numSmallLuggage = 0,
     this.numSurfboardsBikesGolf = 0,
     this.numSkiSnowboard = 0,
     this.hasOtherSportsEquipment = false,
     this.otherSportsEquipmentDetails,
+    this.durationMinutes,
     this.selectedVehicle,
     this.selectedExtras = const [],
     this.passengerDetails,
@@ -204,12 +210,15 @@ class BookingFlowState {
     bool? isReturnTimeArrival,
     int? numPassengers,
     int? numChildren,
+    int? numChildSeats,
+    int? numBoosterSeats,
     int? numLargeLuggage,
     int? numSmallLuggage,
     int? numSurfboardsBikesGolf,
     int? numSkiSnowboard,
     bool? hasOtherSportsEquipment,
     String? otherSportsEquipmentDetails,
+    int? durationMinutes,
     VehicleClass? selectedVehicle,
     List<SelectedExtraFee>? selectedExtras,
     PassengerDetails? passengerDetails,
@@ -225,6 +234,7 @@ class BookingFlowState {
     bool clearReturnDate = false,
     bool clearReturnTime = false,
     bool clearOtherSportsDetails = false,
+    bool clearDuration = false,
   }) {
     return BookingFlowState(
       currentStep: currentStep ?? this.currentStep,
@@ -239,12 +249,15 @@ class BookingFlowState {
       isReturnTimeArrival: isReturnTimeArrival ?? this.isReturnTimeArrival,
       numPassengers: numPassengers ?? this.numPassengers,
       numChildren: numChildren ?? this.numChildren,
+      numChildSeats: numChildSeats ?? this.numChildSeats,
+      numBoosterSeats: numBoosterSeats ?? this.numBoosterSeats,
       numLargeLuggage: numLargeLuggage ?? this.numLargeLuggage,
       numSmallLuggage: numSmallLuggage ?? this.numSmallLuggage,
       numSurfboardsBikesGolf: numSurfboardsBikesGolf ?? this.numSurfboardsBikesGolf,
       numSkiSnowboard: numSkiSnowboard ?? this.numSkiSnowboard,
       hasOtherSportsEquipment: hasOtherSportsEquipment ?? this.hasOtherSportsEquipment,
       otherSportsEquipmentDetails: clearOtherSportsDetails ? null : (otherSportsEquipmentDetails ?? this.otherSportsEquipmentDetails),
+      durationMinutes: clearDuration ? null : (durationMinutes ?? this.durationMinutes),
       selectedVehicle: clearVehicle ? null : (selectedVehicle ?? this.selectedVehicle),
       selectedExtras: clearExtras ? const [] : (selectedExtras ?? this.selectedExtras),
       passengerDetails: clearPassenger ? null : (passengerDetails ?? this.passengerDetails),
@@ -325,12 +338,23 @@ class BookingFlowNotifier extends StateNotifier<BookingFlowState> {
   }
 
   void setRoundTrip(bool isRoundTrip) {
-    state = state.copyWith(
-      isRoundTrip: isRoundTrip,
-      clearReturnDate: !isRoundTrip,
-      clearReturnTime: !isRoundTrip,
-      clearPrice: true,
-    );
+    if (isRoundTrip) {
+      // Auto-set return date to +7 days from service date
+      final returnDate = state.serviceDate?.add(const Duration(days: 7));
+      state = state.copyWith(
+        isRoundTrip: true,
+        returnDate: returnDate,
+        returnTime: state.pickupTime, // Same time as outbound
+        clearPrice: true,
+      );
+    } else {
+      state = state.copyWith(
+        isRoundTrip: false,
+        clearReturnDate: true,
+        clearReturnTime: true,
+        clearPrice: true,
+      );
+    }
   }
 
   void setReturnDate(DateTime date) {
@@ -352,6 +376,22 @@ class BookingFlowNotifier extends StateNotifier<BookingFlowState> {
   void setNumChildren(int num) {
     state = state.copyWith(
       numChildren: num,
+      clearVehicle: true,
+      clearPrice: true,
+    );
+  }
+
+  void setNumChildSeats(int num) {
+    state = state.copyWith(
+      numChildSeats: num,
+      clearVehicle: true,
+      clearPrice: true,
+    );
+  }
+
+  void setNumBoosterSeats(int num) {
+    state = state.copyWith(
+      numBoosterSeats: num,
       clearVehicle: true,
       clearPrice: true,
     );
@@ -399,6 +439,10 @@ class BookingFlowNotifier extends StateNotifier<BookingFlowState> {
 
   void setReturnTimeMode(bool isArrival) {
     state = state.copyWith(isReturnTimeArrival: isArrival);
+  }
+
+  void setDurationMinutes(int minutes) {
+    state = state.copyWith(durationMinutes: minutes);
   }
 
   void swapLocations() {

@@ -22,6 +22,9 @@ class TravelDatesCard extends StatelessWidget {
   final VoidCallback onReturnTap;
   final VoidCallback onReturnNowTap;
 
+  // Route duration in minutes (for calculating departure/arrival times)
+  final int? durationMinutes;
+
   // Localized strings
   final String travelDateLabel;
   final String travelDatesLabel;
@@ -47,6 +50,7 @@ class TravelDatesCard extends StatelessWidget {
     required this.isReturnArrival,
     required this.onReturnTap,
     required this.onReturnNowTap,
+    this.durationMinutes,
     required this.travelDateLabel,
     required this.travelDatesLabel,
     required this.roundTripLabel,
@@ -99,6 +103,7 @@ class TravelDatesCard extends StatelessWidget {
             date: outboundDate,
             time: outboundTime,
             isArrival: isOutboundArrival,
+            durationMinutes: durationMinutes,
             onTap: onOutboundTap,
             onNowTap: onOutboundNowTap,
             departureAbbrev: departureAbbrev,
@@ -122,6 +127,7 @@ class TravelDatesCard extends StatelessWidget {
               date: returnDate,
               time: returnTime,
               isArrival: isReturnArrival,
+              durationMinutes: durationMinutes,
               onTap: onReturnTap,
               onNowTap: onReturnNowTap,
               departureAbbrev: departureAbbrev,
@@ -226,6 +232,7 @@ class _DateTimeSection extends StatelessWidget {
   final DateTime? date;
   final String? time;
   final bool isArrival;
+  final int? durationMinutes;
   final VoidCallback onTap;
   final VoidCallback onNowTap;
   final String departureAbbrev;
@@ -236,6 +243,7 @@ class _DateTimeSection extends StatelessWidget {
     this.date,
     this.time,
     required this.isArrival,
+    this.durationMinutes,
     required this.onTap,
     required this.onNowTap,
     required this.departureAbbrev,
@@ -248,11 +256,56 @@ class _DateTimeSection extends StatelessWidget {
     return formatter.format(date);
   }
 
+  /// Calculate the other time (departure if arrival selected, or vice versa)
+  String? _calculateOtherTime() {
+    if (time == null || durationMinutes == null) return null;
+
+    final parts = time!.split(':');
+    if (parts.length != 2) return null;
+
+    final hours = int.tryParse(parts[0]);
+    final minutes = int.tryParse(parts[1]);
+    if (hours == null || minutes == null) return null;
+
+    final totalMinutes = hours * 60 + minutes;
+    int otherTotalMinutes;
+
+    if (isArrival) {
+      // Selected time is arrival, calculate departure (subtract duration)
+      otherTotalMinutes = totalMinutes - durationMinutes!;
+    } else {
+      // Selected time is departure, calculate arrival (add duration)
+      otherTotalMinutes = totalMinutes + durationMinutes!;
+    }
+
+    // Handle day overflow/underflow
+    if (otherTotalMinutes < 0) {
+      otherTotalMinutes += 24 * 60;
+    } else if (otherTotalMinutes >= 24 * 60) {
+      otherTotalMinutes -= 24 * 60;
+    }
+
+    final otherHours = otherTotalMinutes ~/ 60;
+    final otherMins = otherTotalMinutes % 60;
+    return '${otherHours.toString().padLeft(2, '0')}:${otherMins.toString().padLeft(2, '0')}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final dateText = date != null ? _formatDate(date!) : 'Select date';
     final timeText = time ?? '--:--';
-    final typeText = isArrival ? arrivalAbbrev : departureAbbrev;
+    final otherTime = _calculateOtherTime();
+
+    // Determine departure and arrival times
+    String depTime;
+    String arrTime;
+    if (isArrival) {
+      arrTime = timeText;
+      depTime = otherTime ?? '--:--';
+    } else {
+      depTime = timeText;
+      arrTime = otherTime ?? '--:--';
+    }
 
     return GestureDetector(
       onTap: onTap,
@@ -268,28 +321,85 @@ class _DateTimeSection extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Date, time and type display
+            // Date and times display
             Expanded(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '$dateText | $timeText',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(context),
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    dateText,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: CupertinoColors.secondaryLabel.resolveFrom(context),
                     ),
-                    TextSpan(
-                      text: ' $typeText',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      // Departure time
+                      Text(
+                        depTime,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: isArrival ? FontWeight.normal : FontWeight.w600,
+                          color: isArrival
+                              ? CupertinoColors.tertiaryLabel.resolveFrom(context)
+                              : CupertinoColors.label.resolveFrom(context),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      Text(
+                        ' $departureAbbrev',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: isArrival ? FontWeight.normal : FontWeight.w500,
+                          color: isArrival
+                              ? CupertinoColors.tertiaryLabel.resolveFrom(context)
+                              : CupertinoColors.secondaryLabel.resolveFrom(context),
+                        ),
+                      ),
+                      if (otherTime != null) ...[
+                        Text(
+                          '  →  ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: CupertinoColors.tertiaryLabel.resolveFrom(context),
+                          ),
+                        ),
+                        // Arrival time
+                        Text(
+                          arrTime,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: isArrival ? FontWeight.w600 : FontWeight.normal,
+                            color: isArrival
+                                ? CupertinoColors.label.resolveFrom(context)
+                                : CupertinoColors.tertiaryLabel.resolveFrom(context),
+                          ),
+                        ),
+                        Text(
+                          ' $arrivalAbbrev',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: isArrival ? FontWeight.w500 : FontWeight.normal,
+                            color: isArrival
+                                ? CupertinoColors.secondaryLabel.resolveFrom(context)
+                                : CupertinoColors.tertiaryLabel.resolveFrom(context),
+                          ),
+                        ),
+                      ] else ...[
+                        // Show only selected type when no duration available
+                        Text(
+                          '  ${isArrival ? arrivalAbbrev : departureAbbrev}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
               ),
             ),
             // Now button

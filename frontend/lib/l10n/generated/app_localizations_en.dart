@@ -192,6 +192,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get childrenSubtitle => 'Under 12 years';
 
   @override
+  String get childSeats => 'Toddlers up to 4 years';
+
+  @override
+  String get childSeatsSubtitle => 'Child seat required';
+
+  @override
+  String get boosterSeats => 'Children 4-12 years';
+
+  @override
+  String get boosterSeatsSubtitle => 'Booster seat required';
+
+  @override
   String get largeLuggage => 'Large Luggage';
 
   @override
@@ -237,6 +249,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String passengersAndBagsInfo(int passengers, int bags) {
     return '$passengers passengers, $bags large bags';
+  }
+
+  @override
+  String passengersDetailedInfo(
+    int total,
+    int toddlers,
+    int children,
+    int bags,
+  ) {
+    return '$total passengers (incl. $toddlers toddlers, $children children), $bags large bags';
+  }
+
+  @override
+  String inclToddlers(int count) {
+    return 'incl. $count toddlers';
+  }
+
+  @override
+  String inclChildren(int count) {
+    return 'incl. $count children';
+  }
+
+  @override
+  String minChildSeatsRequired(int count) {
+    return 'Minimum $count required for toddlers';
+  }
+
+  @override
+  String minBoosterSeatsRequired(int count) {
+    return 'Minimum $count required for children';
   }
 
   @override
