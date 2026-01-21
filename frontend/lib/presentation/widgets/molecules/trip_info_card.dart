@@ -86,12 +86,16 @@ class _TripInfoItem extends StatelessWidget {
           color: CupertinoColors.systemBlue,
         ),
         const SizedBox(height: 10),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: CupertinoColors.label,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: CupertinoColors.label,
+            ),
+            maxLines: 1,
           ),
         ),
         const SizedBox(height: 4),
