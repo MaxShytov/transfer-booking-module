@@ -1,41 +1,24 @@
-<div style="position:relative;width:100%;min-height:400px;overflow:hidden;background-color:#172139;border-radius:12px;margin-bottom:32px;">
-  <img src="../.gitbook/assets/banner-background.jpg" alt="Luxury Transfer Service" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;">
-  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(23,33,57,0.92) 0%,rgba(23,33,57,0.85) 40%,rgba(62,153,212,0.3) 100%);"></div>
-  <div style="position:relative;z-index:10;padding:40px;">
-    <div style="margin-bottom:24px;">
-      <img src="../.gitbook/assets/logo-dark.svg" alt="8Move Transfer" style="height:55px;width:auto;">
-    </div>
-    <p style="font-size:32px;font-weight:700;color:#ffffff;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.2;">Purpose-Built for Luxury Transport Operators</p>
-    <p style="font-size:18px;color:#ffffff;margin-bottom:24px;opacity:0.95;font-weight:400;">
-      <span style="color:#3e99d4;font-weight:600;">Mobile App</span> •
-      <span style="color:#3e99d4;font-weight:600;">Admin Panel</span> •
-      <span style="color:#3e99d4;font-weight:600;">Analytics Dashboard</span>
-    </p>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:#ffffff;">
-        <div style="width:24px;height:24px;background-color:#3e99d4;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:14px;height:14px;fill:#ffffff;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        </div>
-        <span>Transparent Multi-Factor Pricing Engine</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:#ffffff;">
-        <div style="width:24px;height:24px;background-color:#3e99d4;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:14px;height:14px;fill:#ffffff;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        </div>
-        <span>Swiss GDPR/FADP Compliant Engineering</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:#ffffff;">
-        <div style="width:24px;height:24px;background-color:#3e99d4;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:14px;height:14px;fill:#ffffff;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        </div>
-        <span>Multi-Language Support (EN/FR/DE/IT/AR + more)</span>
-      </div>
-    </div>
-    <div>
-      <a href="https://8move.com/contacts/" target="_blank" style="padding:12px 28px;font-size:16px;font-weight:600;border-radius:8px;text-decoration:none;display:inline-block;background-color:#3e99d4;color:#ffffff;">Contact Sales</a>
-    </div>
-  </div>
-</div>
+---
+cover: ../.gitbook/assets/banner-background.jpg
+coverY: 0
+layout: landing
+---
+
+# Purpose-Built for Luxury Transport Operators
+
+**Mobile App** • **Admin Panel** • **Analytics Dashboard**
+
+{% hint style="success" %}
+✓ Transparent Multi-Factor Pricing Engine
+
+✓ Swiss GDPR/FADP Compliant Engineering
+
+✓ Multi-Language Support (EN/FR/DE/IT/AR + more)
+{% endhint %}
+
+[**Contact Sales →**](https://8move.com/contacts/)
+
+---
 
 # What is 8Move Transfer?
 
