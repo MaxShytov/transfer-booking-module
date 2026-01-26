@@ -32,7 +32,7 @@ Prominent card at the top featuring:
 
 Browse frequently booked routes for quick access:
 
-<figure><img src="../../.gitbook/assets/Mobile App. List of popular routes with pricing.png" alt=""><figcaption><p>List of popular routes with pricing</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Mobile App. List of popular routes with pricing.png" alt="" width="375"><figcaption><p>List of popular routes with pricing</p></figcaption></figure>
 
 **Each Route Card Shows:**
 

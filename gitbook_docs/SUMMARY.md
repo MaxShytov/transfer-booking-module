@@ -18,6 +18,8 @@
   * [Troubleshooting](user-guides/mobile-app/troubleshooting.md)
 * [Admin Panel](user-guides/admin-panel/README.md)
   * [Full Admin Guide](user-guides/admin-panel/FULL_GUIDE.md)
+  * [Dashboards](user-guides/admin-panel/dashboard.md)
+  * [Best Practices](user-guides/admin-panel/dashboard-1.md)
 
 ## Business Operations
 
