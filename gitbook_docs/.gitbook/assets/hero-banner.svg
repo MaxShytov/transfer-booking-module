@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="overlay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#172139;stop-opacity:0.95"/>
+      <stop offset="40%" style="stop-color:#172139;stop-opacity:0.88"/>
+      <stop offset="100%" style="stop-color:#3e99d4;stop-opacity:0.4"/>
+    </linearGradient>
+    <style>
+      .logo-light { fill: #ffffff; }
+      .logo-accent { fill: #3e99d4; }
+      .text-white { fill: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+      .text-accent { fill: #3e99d4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+      .check-bg { fill: #3e99d4; }
+      .check-icon { fill: #ffffff; }
+      .btn-bg { fill: #3e99d4; }
+      .btn-text { fill: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="500" fill="#172139"/>
+  <rect width="1200" height="500" fill="url(#overlay)"/>
+
+  <!-- Logo -->
+  <g transform="translate(60, 50) scale(0.22)">
+    <path class="logo-light" d="M253.37,111.43a110,110,0,0,0-97.73-72.14l-31.36-38v40l.07,0v33l1.67-.54A78.65,78.65,0,0,1,150.29,70c29.88,0,56.67,16.25,69.92,42.41l.35.7H254Z"/>
+    <path class="logo-light" d="M113.14,48.7V46.88l-1.71.62a110,110,0,0,0-72.14,97.73l-38,31.36h40l0-.07h33l-.54-1.67A79,79,0,0,1,70,150.58c0-29.88,16.25-56.67,42.41-69.91l.7-.36V48.7Z"/>
+    <path class="logo-light" d="M176.17,258.63v-33l-1.67.54A78.65,78.65,0,0,1,150.23,230c-29.88,0-56.67-16.25-69.92-42.41l-.35-.7H46.53l.62,1.71a110,110,0,0,0,97.73,72.14l31.35,38v-40Z"/>
+    <path class="logo-accent" d="M258.65,123.77l0,.06h-33l.54,1.67A79,79,0,0,1,230,149.78c0,29.88-16.25,56.67-42.41,69.91l-.7.35v33.43l1.71-.62a110,110,0,0,0,72.14-97.72l38-31.36Z"/>
+    <path class="logo-accent" d="M184.08,112.17a39,39,0,0,0-60.07-12,40,40,0,0,0-13.87,35.53,40.81,40.81,0,0,0,33,34.9l-.42,4.87,14.75-6.89-13.35-9.33-.44,5.11-1-.17a35.15,35.15,0,0,1-14.08-6.22,35.64,35.64,0,0,1-14.18-24.86,36.22,36.22,0,0,1,8-26.66,36.6,36.6,0,0,1,27-13.31,37.48,37.48,0,0,1,38.29,32.58c0,.2.1.87.13,1s.13,1.5.14,1.75c0,.9.08,1.88.05,2.8,0,.46,0,.93,0,1.4,0-.47.06-.94.09-1.4A38.22,38.22,0,0,0,184.08,112.17Z"/>
+    <path class="logo-accent" d="M189.86,164.46A40.71,40.71,0,0,0,157,129.64l.42-4.86-14.71,6.88L156,141l.44-5.1c.34,0,.67.11,1,.18a35,35,0,0,1,14,6.2A35.55,35.55,0,0,1,185.64,167a36.12,36.12,0,0,1-8,26.6,36.55,36.55,0,0,1-27,13.28,37.38,37.38,0,0,1-38.19-32.51c0-.2-.11-.86-.14-1s-.12-1.49-.13-1.74c0-.9-.08-1.88,0-2.79,0-.46,0-.93,0-1.4,0,.47-.06.93-.09,1.4a37.94,37.94,0,0,0,4,19,39,39,0,0,0,59.93,12A39.94,39.94,0,0,0,189.86,164.46Z"/>
+  </g>
+
+  <!-- 8Move Text -->
+  <text class="text-white" x="140" y="85" font-size="36" font-weight="700">8Move</text>
+  <text class="text-white" x="140" y="115" font-size="28" font-weight="400">Transfer</text>
+
+  <!-- Main Tagline -->
+  <text class="text-white" x="60" y="180" font-size="42" font-weight="700">Purpose-Built for Luxury</text>
+  <text class="text-white" x="60" y="230" font-size="42" font-weight="700">Transport Operators</text>
+
+  <!-- Subtitle -->
+  <text x="60" y="280" font-size="22">
+    <tspan class="text-accent" font-weight="600">Mobile App</tspan>
+    <tspan class="text-white"> • </tspan>
+    <tspan class="text-accent" font-weight="600">Admin Panel</tspan>
+    <tspan class="text-white"> • </tspan>
+    <tspan class="text-accent" font-weight="600">Analytics Dashboard</tspan>
+  </text>
+
+  <!-- Feature 1 -->
+  <circle class="check-bg" cx="80" cy="330" r="14"/>
+  <path class="check-icon" d="M75 330l4 4 8-8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="text-white" x="105" y="336" font-size="18">Transparent Multi-Factor Pricing Engine</text>
+
+  <!-- Feature 2 -->
+  <circle class="check-bg" cx="80" cy="370" r="14"/>
+  <path class="check-icon" d="M75 370l4 4 8-8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="text-white" x="105" y="376" font-size="18">Swiss GDPR/FADP Compliant Engineering</text>
+
+  <!-- Feature 3 -->
+  <circle class="check-bg" cx="80" cy="410" r="14"/>
+  <path class="check-icon" d="M75 410l4 4 8-8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="text-white" x="105" y="416" font-size="18">Multi-Language Support (EN/FR/DE/IT/AR + more)</text>
+
+  <!-- CTA Button -->
+  <rect class="btn-bg" x="60" y="445" width="180" height="45" rx="8"/>
+  <text class="btn-text" x="150" y="475" font-size="18" font-weight="600" text-anchor="middle">Contact Sales</text>
+</svg>
