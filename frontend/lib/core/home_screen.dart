@@ -156,7 +156,7 @@ class _BookingTab extends ConsumerWidget {
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      'assets/images/logo.svg',
+                      'assets/images/logo_color.svg',
                       height: 64,
                     ),
                     const SizedBox(height: AppDimensions.spacingLg),
