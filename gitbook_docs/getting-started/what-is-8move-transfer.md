@@ -1,4 +1,4 @@
-[![8Move Transfer - Purpose-Built for Luxury Transport Operators](../.gitbook/assets/hero-banner.svg)](https://8move.com/contacts/)
+<figure><img src="../.gitbook/assets/hero-banner.svg" alt="8Move Transfer - Purpose-Built for Luxury Transport Operators"></figure>
 
 # What is 8Move Transfer?
 
