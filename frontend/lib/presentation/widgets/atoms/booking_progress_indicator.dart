@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 /// Progress indicator for booking wizard steps (Cupertino style).
 class BookingProgressIndicator extends StatelessWidget {
@@ -101,7 +102,7 @@ class _CupertinoStepIndicator extends StatelessWidget {
           child: Center(
             child: isCompleted
                 ? const Icon(
-                    CupertinoIcons.checkmark,
+                    Icons.check,
                     size: 16,
                     color: CupertinoColors.white,
                   )

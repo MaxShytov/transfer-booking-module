@@ -104,7 +104,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Logo
                 Center(
                   child: SvgPicture.asset(
-                    'assets/images/logo.svg',
+                    'assets/images/logo_color.svg',
                     height: 80,
                   ),
                 ),

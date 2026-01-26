@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import '../../../l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -107,7 +108,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
         middle: Text(l10n.bookTransfer),
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.xmark),
+          child: const Icon(Icons.close),
           onPressed: () => _handleClose(context, bookingState, l10n),
         ),
       ),
@@ -164,7 +165,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                                 child: LocationInputField(
                                   label: l10n.pickupLocation,
                                   hint: l10n.enterAddressOrSelect,
-                                  icon: CupertinoIcons.scope,
+                                  icon: Icons.my_location,
                                   iconColor: CupertinoColors.systemBlue,
                                   selectedAddress: bookingState.pickupLocation?.address,
                                   predefinedLocations: locationsState.locations,
@@ -212,7 +213,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                                 child: LocationInputField(
                                   label: l10n.dropoffLocation,
                                   hint: l10n.enterAddressOrSelect,
-                                  icon: CupertinoIcons.circle_fill,
+                                  icon: Icons.circle,
                                   iconColor: const Color(0xFFDC143C),
                                   selectedAddress: bookingState.dropoffLocation?.address,
                                   predefinedLocations: locationsState.locations,
@@ -355,7 +356,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                     // Card 4: Passengers
                     RouteCard(
                       title: l10n.passengersCard,
-                      titleIcon: CupertinoIcons.person_2,
+                      titleIcon: Icons.people,
                       child: PassengersCard(
                         adults: bookingState.numPassengers,
                         onAdultsChanged: (value) {
@@ -387,7 +388,7 @@ class _RouteSelectionScreenState extends ConsumerState<RouteSelectionScreen> {
                     // Card 5: Luggage
                     RouteCard(
                       title: l10n.luggageCard,
-                      titleIcon: CupertinoIcons.briefcase,
+                      titleIcon: Icons.work_outline,
                       child: LuggageCard(
                         largeLuggage: bookingState.numLargeLuggage,
                         onLargeLuggageChanged: (value) {
@@ -650,7 +651,7 @@ class _MapIconButton extends StatelessWidget {
           color: CupertinoColors.systemBlue,
         ),
         child: const Icon(
-          CupertinoIcons.map,
+          Icons.map_outlined,
           size: 18,
           color: CupertinoColors.white,
         ),
@@ -681,7 +682,7 @@ class _SwapButton extends StatelessWidget {
           ),
         ),
         child: Icon(
-          CupertinoIcons.arrow_up_arrow_down,
+          Icons.swap_vert,
           size: 28,
           color: CupertinoColors.secondaryLabel.resolveFrom(context),
         ),

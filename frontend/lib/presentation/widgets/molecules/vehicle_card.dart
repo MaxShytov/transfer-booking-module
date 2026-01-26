@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 import '../../../data/models/vehicle_class.dart';
 
@@ -112,19 +113,19 @@ class VehicleCard extends StatelessWidget {
                 Row(
                   children: [
                     _CupertinoCapacityBadge(
-                      icon: CupertinoIcons.person,
+                      icon: Icons.person_outline,
                       value: vehicle.maxPassengers,
                       label: 'passengers',
                     ),
                     const SizedBox(width: 12),
                     _CupertinoCapacityBadge(
-                      icon: CupertinoIcons.briefcase,
+                      icon: Icons.work_outline,
                       value: vehicle.maxLargeLuggage,
                       label: 'large bags',
                     ),
                     const SizedBox(width: 12),
                     _CupertinoCapacityBadge(
-                      icon: CupertinoIcons.bag,
+                      icon: Icons.luggage,
                       value: vehicle.maxSmallLuggage,
                       label: 'small bags',
                     ),
@@ -145,7 +146,7 @@ class VehicleCard extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
-                          CupertinoIcons.info,
+                          Icons.info_outline,
                           size: 16,
                           color: CupertinoColors.systemRed,
                         ),
@@ -177,7 +178,7 @@ class VehicleCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          CupertinoIcons.checkmark_circle_fill,
+                          Icons.check_circle,
                           size: 18,
                           color: CupertinoColors.systemBlue,
                         ),
@@ -278,7 +279,7 @@ class VehicleCardCompact extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
-              CupertinoIcons.car_detailed,
+              Icons.directions_car,
               color: CupertinoColors.systemBlue,
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import '../../../l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -97,14 +98,14 @@ class ProfileScreen extends ConsumerWidget {
               CupertinoListSection.insetGrouped(
                 children: [
                   CupertinoListTile.notched(
-                    leading: const Icon(CupertinoIcons.phone),
+                    leading: const Icon(Icons.phone_outlined),
                     title: Text(l10n.phone),
                     additionalInfo: Text(
                       user.phone?.isNotEmpty == true ? user.phone! : l10n.notSet,
                     ),
                   ),
                   CupertinoListTile.notched(
-                    leading: const Icon(CupertinoIcons.globe),
+                    leading: const Icon(Icons.language),
                     title: Text(l10n.language),
                     additionalInfo: Text(_getCurrentLanguageName(context, ref, l10n)),
                     trailing: const CupertinoListTileChevron(),
@@ -125,7 +126,7 @@ class ProfileScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
-                        CupertinoIcons.square_arrow_right,
+                        Icons.logout,
                         color: CupertinoColors.systemRed,
                       ),
                       const SizedBox(width: 8),
@@ -262,7 +263,7 @@ class ProfileScreen extends ConsumerWidget {
                 if (selectedLocale == null) ...[
                   const SizedBox(width: 8),
                   const Icon(
-                    CupertinoIcons.checkmark,
+                    Icons.check,
                     size: 18,
                     color: CupertinoColors.systemBlue,
                   ),
@@ -285,7 +286,7 @@ class ProfileScreen extends ConsumerWidget {
                   if (isSelected) ...[
                     const SizedBox(width: 8),
                     const Icon(
-                      CupertinoIcons.checkmark,
+                      Icons.check,
                       size: 18,
                       color: CupertinoColors.systemBlue,
                     ),

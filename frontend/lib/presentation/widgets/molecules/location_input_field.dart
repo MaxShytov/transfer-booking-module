@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 
@@ -272,7 +273,7 @@ class _LocationInputFieldState extends State<LocationInputField> {
                     });
                   },
                   child: Icon(
-                    CupertinoIcons.xmark_circle_fill,
+                    Icons.cancel,
                     size: 18,
                     color: CupertinoColors.tertiaryLabel.resolveFrom(context),
                   ),
@@ -306,7 +307,7 @@ class _LocationInputFieldState extends State<LocationInputField> {
                 // Current location option
                 if (widget.showCurrentLocation && widget.onCurrentLocationTap != null)
                   _CupertinoSuggestionTile(
-                    icon: CupertinoIcons.location,
+                    icon: Icons.location_on_outlined,
                     iconColor: CupertinoColors.systemBlue,
                     title: widget.currentLocationLabel ?? 'Current Location',
                     subtitle: widget.currentLocationSubtitle ?? 'Use GPS to detect your location',
@@ -319,7 +320,7 @@ class _LocationInputFieldState extends State<LocationInputField> {
                 // Custom location option (choose on map)
                 if (widget.onCustomLocationTap != null)
                   _CupertinoSuggestionTile(
-                    icon: CupertinoIcons.map,
+                    icon: Icons.map_outlined,
                     iconColor: CupertinoColors.systemOrange,
                     title: widget.chooseOnMapLabel ?? 'Choose on Map',
                     subtitle: widget.chooseOnMapSubtitle ?? 'Select a custom location on the map',
@@ -384,7 +385,7 @@ class _LocationInputFieldState extends State<LocationInputField> {
                     ),
                   ),
                   ..._placePredictions.map((prediction) => _CupertinoSuggestionTile(
-                        icon: CupertinoIcons.placemark,
+                        icon: Icons.place_outlined,
                         iconColor: CupertinoColors.systemGreen,
                         title: prediction.mainText,
                         subtitle: prediction.secondaryText,
@@ -426,17 +427,17 @@ class _LocationInputFieldState extends State<LocationInputField> {
   IconData _getLocationIcon(String locationType) {
     switch (locationType) {
       case 'airport':
-        return CupertinoIcons.airplane;
+        return Icons.flight;
       case 'port':
-        return CupertinoIcons.drop;
+        return Icons.water_drop;
       case 'city_center':
-        return CupertinoIcons.building_2_fill;
+        return Icons.apartment;
       case 'resort':
-        return CupertinoIcons.sun_max;
+        return Icons.wb_sunny;
       case 'hotel':
-        return CupertinoIcons.bed_double;
+        return Icons.hotel;
       default:
-        return CupertinoIcons.placemark;
+        return Icons.place_outlined;
     }
   }
 }

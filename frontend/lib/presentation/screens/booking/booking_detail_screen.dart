@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -60,7 +61,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
         middle: Text(_booking?.bookingReference ?? l10n.reviewBooking),
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.back),
+          child: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -88,7 +89,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            CupertinoIcons.exclamationmark_circle,
+            Icons.error_outline,
             size: 64,
             color: CupertinoColors.systemRed,
           ),
@@ -127,12 +128,12 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           _buildSection(
             context,
             title: l10n.stepRoute,
-            icon: CupertinoIcons.location,
+            icon: Icons.location_on_outlined,
             child: Column(
               children: [
                 _buildRouteRow(
                   context,
-                  icon: CupertinoIcons.location,
+                  icon: Icons.location_on_outlined,
                   iconColor: CupertinoColors.systemGreen,
                   label: l10n.from,
                   value: booking.pickupAddress,
@@ -140,7 +141,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                 const SizedBox(height: 12),
                 _buildRouteRow(
                   context,
-                  icon: CupertinoIcons.location_solid,
+                  icon: Icons.location_on,
                   iconColor: CupertinoColors.systemRed,
                   label: l10n.to,
                   value: booking.dropoffAddress,
@@ -154,7 +155,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           _buildSection(
             context,
             title: l10n.dateTime,
-            icon: CupertinoIcons.calendar,
+            icon: Icons.calendar_today,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -165,7 +166,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: Icon(
-                          CupertinoIcons.arrow_right_circle,
+                          Icons.arrow_circle_right,
                           size: 16,
                           color: CupertinoColors.systemGreen,
                         ),
@@ -198,7 +199,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                     child: Row(
                       children: [
                         Icon(
-                          CupertinoIcons.arrow_turn_down_right,
+                          Icons.subdirectory_arrow_right,
                           size: 16,
                           color: CupertinoColors.systemIndigo,
                         ),
@@ -238,7 +239,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  CupertinoIcons.airplane,
+                                  Icons.flight,
                                   size: 12,
                                   color: CupertinoColors.secondaryLabel,
                                 ),
@@ -266,7 +267,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           _buildSection(
             context,
             title: l10n.vehicle,
-            icon: CupertinoIcons.car_detailed,
+            icon: Icons.directions_car,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,7 +298,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             _buildSection(
               context,
               title: l10n.flightNumber,
-              icon: CupertinoIcons.airplane,
+              icon: Icons.flight,
               child: Text(
                 booking.flightNumber!,
                 style: const TextStyle(
@@ -314,7 +315,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             _buildSection(
               context,
               title: l10n.specialRequests,
-              icon: CupertinoIcons.doc_text,
+              icon: Icons.description_outlined,
               child: Text(
                 booking.specialRequests!,
                 style: const TextStyle(
@@ -330,7 +331,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           _buildSection(
             context,
             title: l10n.passenger,
-            icon: CupertinoIcons.person,
+            icon: Icons.person_outline,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -366,7 +367,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           _buildSection(
             context,
             title: l10n.price,
-            icon: CupertinoIcons.money_euro,
+            icon: Icons.euro,
             child: Column(
               children: [
                 if (booking.extraFeesJson.isNotEmpty) ...[
@@ -406,32 +407,32 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       case 'pending':
         backgroundColor = CupertinoColors.systemYellow.withOpacity(0.2);
         textColor = CupertinoColors.systemOrange;
-        icon = CupertinoIcons.clock;
+        icon = Icons.access_time;
         break;
       case 'confirmed':
         backgroundColor = CupertinoColors.systemBlue.withOpacity(0.2);
         textColor = CupertinoColors.systemBlue;
-        icon = CupertinoIcons.checkmark_circle;
+        icon = Icons.check_circle_outline;
         break;
       case 'in_progress':
         backgroundColor = CupertinoColors.systemPurple.withOpacity(0.2);
         textColor = CupertinoColors.systemPurple;
-        icon = CupertinoIcons.car_detailed;
+        icon = Icons.directions_car;
         break;
       case 'completed':
         backgroundColor = CupertinoColors.systemGreen.withOpacity(0.2);
         textColor = CupertinoColors.systemGreen;
-        icon = CupertinoIcons.checkmark_circle_fill;
+        icon = Icons.check_circle;
         break;
       case 'cancelled':
         backgroundColor = CupertinoColors.systemRed.withOpacity(0.2);
         textColor = CupertinoColors.systemRed;
-        icon = CupertinoIcons.xmark_circle;
+        icon = Icons.cancel_outlined;
         break;
       default:
         backgroundColor = CupertinoColors.systemGrey.withOpacity(0.2);
         textColor = CupertinoColors.systemGrey;
-        icon = CupertinoIcons.question_circle;
+        icon = Icons.help_outline;
     }
 
     return Container(

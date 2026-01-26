@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import '../../../l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -90,7 +91,7 @@ class _PassengerDetailsScreenState
         middle: Text(l10n.passengerDetails),
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.back),
+          child: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             ref.read(bookingFlowProvider.notifier).previousStep();
             if (context.canPop()) {
@@ -138,7 +139,7 @@ class _PassengerDetailsScreenState
                       _CupertinoFormField(
                         label: l10n.firstName,
                         controller: _firstNameController!,
-                        icon: CupertinoIcons.person,
+                        icon: Icons.person_outline,
                         textCapitalization: TextCapitalization.words,
                         errorText: _firstNameError,
                         onChanged: (_) {
@@ -151,7 +152,7 @@ class _PassengerDetailsScreenState
                       _CupertinoFormField(
                         label: l10n.lastName,
                         controller: _lastNameController!,
-                        icon: CupertinoIcons.person,
+                        icon: Icons.person_outline,
                         textCapitalization: TextCapitalization.words,
                         errorText: _lastNameError,
                         onChanged: (_) {
@@ -164,7 +165,7 @@ class _PassengerDetailsScreenState
                       _CupertinoFormField(
                         label: l10n.phoneNumber,
                         controller: _phoneController!,
-                        icon: CupertinoIcons.phone,
+                        icon: Icons.phone_outlined,
                         placeholder: l10n.phoneNumberHint,
                         keyboardType: TextInputType.phone,
                         errorText: _phoneError,
@@ -178,7 +179,7 @@ class _PassengerDetailsScreenState
                       _CupertinoFormField(
                         label: l10n.email,
                         controller: _emailController!,
-                        icon: CupertinoIcons.mail,
+                        icon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                         errorText: _emailError,
                         onChanged: (_) {
@@ -202,7 +203,7 @@ class _PassengerDetailsScreenState
                             ? l10n.outboundFlightNumber
                             : l10n.flightNumber,
                         controller: _flightNumberController!,
-                        icon: CupertinoIcons.airplane,
+                        icon: Icons.flight,
                         placeholder: l10n.flightNumberHint,
                         textCapitalization: TextCapitalization.characters,
                         helperText: l10n.flightMonitoringInfo,
@@ -212,7 +213,7 @@ class _PassengerDetailsScreenState
                         _CupertinoFormField(
                           label: l10n.returnFlightNumber,
                           controller: _returnFlightNumberController!,
-                          icon: CupertinoIcons.airplane,
+                          icon: Icons.flight,
                           placeholder: l10n.flightNumberHint,
                           textCapitalization: TextCapitalization.characters,
                           helperText: l10n.flightMonitoringInfo,
@@ -222,7 +223,7 @@ class _PassengerDetailsScreenState
                       _CupertinoFormField(
                         label: l10n.specialRequests,
                         controller: _specialRequestsController!,
-                        icon: CupertinoIcons.doc_text,
+                        icon: Icons.description_outlined,
                         placeholder: l10n.specialRequestsHint,
                         maxLines: 3,
                       ),

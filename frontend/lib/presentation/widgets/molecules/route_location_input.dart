@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 /// Combined pickup/dropoff location input with visual connection line
 /// and swap button for exchanging locations.
@@ -184,7 +185,7 @@ class _SwapButton extends StatelessWidget {
           ),
         ),
         child: Icon(
-          CupertinoIcons.arrow_up_arrow_down,
+          Icons.swap_vert,
           size: 24,
           color: CupertinoColors.secondaryLabel.resolveFrom(context),
         ),

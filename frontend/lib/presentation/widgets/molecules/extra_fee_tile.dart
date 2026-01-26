@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 import '../../../data/models/extra_fee.dart';
 
@@ -72,7 +73,7 @@ class ExtraFeeTile extends StatelessWidget {
                 ),
                 child: isSelected
                     ? const Icon(
-                        CupertinoIcons.checkmark,
+                        Icons.check,
                         size: 16,
                         color: CupertinoColors.white,
                       )
@@ -114,7 +115,7 @@ class ExtraFeeTile extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
-                              CupertinoIcons.info_circle,
+                              Icons.info_outline,
                               size: 14,
                               color: CupertinoColors.systemOrange.resolveFrom(context),
                             ),
@@ -197,7 +198,7 @@ class _CupertinoQuantitySelector extends StatelessWidget {
             minimumSize: Size.zero,
             onPressed: quantity > minQuantity ? () => onChanged?.call(quantity - 1) : null,
             child: Icon(
-              CupertinoIcons.minus,
+              Icons.remove,
               size: 18,
               color: quantity > minQuantity
                   ? CupertinoColors.systemBlue
@@ -221,7 +222,7 @@ class _CupertinoQuantitySelector extends StatelessWidget {
             minimumSize: Size.zero,
             onPressed: () => onChanged?.call(quantity + 1),
             child: const Icon(
-              CupertinoIcons.plus,
+              Icons.add,
               size: 18,
               color: CupertinoColors.systemBlue,
             ),
@@ -272,7 +273,7 @@ class ExtraFeeChip extends StatelessWidget {
             GestureDetector(
               onTap: onRemove,
               child: const Icon(
-                CupertinoIcons.xmark_circle_fill,
+                Icons.cancel,
                 size: 16,
                 color: CupertinoColors.systemBlue,
               ),

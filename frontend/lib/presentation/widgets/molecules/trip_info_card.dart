@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 /// Card displaying trip distance and duration.
 /// Clickable to scroll to map preview.
@@ -40,7 +41,7 @@ class TripInfoCard extends StatelessWidget {
           children: [
             Expanded(
               child: _TripInfoItem(
-                icon: CupertinoIcons.map,
+                icon: Icons.map_outlined,
                 value: distanceText ?? '--',
                 label: distanceLabel.toUpperCase(),
               ),
@@ -52,7 +53,7 @@ class TripInfoCard extends StatelessWidget {
             ),
             Expanded(
               child: _TripInfoItem(
-                icon: CupertinoIcons.clock,
+                icon: Icons.access_time,
                 value: durationText ?? '--',
                 label: durationLabel.toUpperCase(),
               ),

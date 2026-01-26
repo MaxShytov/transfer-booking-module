@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimensions.dart';
@@ -80,7 +81,7 @@ class PriceBreakdownCard extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  CupertinoIcons.doc_text,
+                  Icons.description_outlined,
                   color: CupertinoColors.systemBlue,
                 ),
                 const SizedBox(width: AppDimensions.spacingSm),
@@ -124,7 +125,7 @@ class PriceBreakdownCard extends StatelessWidget {
           context,
           label: pricingTypeLabel ?? 'Pricing Type',
           value: breakdown.isFixedRoute ? (fixedRouteLabel ?? 'Fixed Route') : (distanceBasedLabel ?? 'Distance Based'),
-          icon: CupertinoIcons.map,
+          icon: Icons.map_outlined,
         ),
 
         if (breakdown.routeName != null)
@@ -132,7 +133,7 @@ class PriceBreakdownCard extends StatelessWidget {
             context,
             label: routeLabel ?? 'Route',
             value: breakdown.routeName!,
-            icon: CupertinoIcons.location,
+            icon: Icons.location_on_outlined,
           ),
 
         if (breakdown.distanceKm != null)
@@ -140,7 +141,7 @@ class PriceBreakdownCard extends StatelessWidget {
             context,
             label: distanceLabel ?? 'Distance',
             value: '${breakdown.distanceKm!.toStringAsFixed(1)} km',
-            icon: CupertinoIcons.arrow_right,
+            icon: Icons.arrow_forward,
           ),
 
         _buildDivider(context),

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:intl/intl.dart';
 
 import '../../providers/booking_flow_provider.dart';
@@ -65,7 +66,7 @@ class BookingSummaryCard extends StatelessWidget {
             // Route section
             _CupertinoSummarySection(
               title: routeTitle ?? 'Route',
-              icon: CupertinoIcons.map,
+              icon: Icons.map_outlined,
               onEdit: onEditRoute,
               editLabel: editLabel,
               child: Column(
@@ -75,7 +76,7 @@ class BookingSummaryCard extends StatelessWidget {
                     label: fromLabel ?? 'From',
                     address:
                         bookingState.pickupLocation?.address ?? notSelectedText ?? 'Not selected',
-                    icon: CupertinoIcons.circle,
+                    icon: Icons.circle_outlined,
                     iconColor: CupertinoColors.systemGreen,
                   ),
                   const SizedBox(height: 8),
@@ -83,14 +84,14 @@ class BookingSummaryCard extends StatelessWidget {
                     label: toLabel ?? 'To',
                     address:
                         bookingState.dropoffLocation?.address ?? notSelectedText ?? 'Not selected',
-                    icon: CupertinoIcons.location_solid,
+                    icon: Icons.location_on,
                     iconColor: CupertinoColors.systemRed,
                   ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
                       Icon(
-                        CupertinoIcons.calendar,
+                        Icons.calendar_today,
                         size: 16,
                         color: CupertinoColors.secondaryLabel.resolveFrom(context),
                       ),
@@ -106,7 +107,7 @@ class BookingSummaryCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Icon(
-                        CupertinoIcons.clock,
+                        Icons.access_time,
                         size: 16,
                         color: CupertinoColors.secondaryLabel.resolveFrom(context),
                       ),
@@ -135,7 +136,7 @@ class BookingSummaryCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const Icon(
-                            CupertinoIcons.arrow_2_squarepath,
+                            Icons.sync_alt,
                             size: 14,
                             color: CupertinoColors.systemBlue,
                           ),
@@ -173,17 +174,17 @@ class BookingSummaryCard extends StatelessWidget {
                   Row(
                     children: [
                       _CupertinoInfoChip(
-                        icon: CupertinoIcons.person,
+                        icon: Icons.person_outline,
                         label: '${bookingState.numPassengers}',
                       ),
                       const SizedBox(width: 8),
                       _CupertinoInfoChip(
-                        icon: CupertinoIcons.briefcase,
+                        icon: Icons.work_outline,
                         label: '${bookingState.numLargeLuggage}',
                       ),
                       const SizedBox(width: 8),
                       _CupertinoInfoChip(
-                        icon: CupertinoIcons.bag,
+                        icon: Icons.luggage,
                         label: '${bookingState.numSmallLuggage}',
                       ),
                     ],
@@ -196,7 +197,7 @@ class BookingSummaryCard extends StatelessWidget {
               _buildDivider(context),
               _CupertinoSummarySection(
                 title: vehicleTitle ?? 'Vehicle',
-                icon: CupertinoIcons.car_detailed,
+                icon: Icons.directions_car,
                 onEdit: onEditVehicle,
                 editLabel: editLabel,
                 child: Row(
@@ -209,7 +210,7 @@ class BookingSummaryCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(
-                        CupertinoIcons.car_detailed,
+                        Icons.directions_car,
                         color: CupertinoColors.systemBlue,
                       ),
                     ),
@@ -246,7 +247,7 @@ class BookingSummaryCard extends StatelessWidget {
               _buildDivider(context),
               _CupertinoSummarySection(
                 title: extrasTitle ?? 'Extras',
-                icon: CupertinoIcons.plus_circle,
+                icon: Icons.add_circle_outline,
                 onEdit: onEditExtras,
                 editLabel: editLabel,
                 child: Wrap(
@@ -297,7 +298,7 @@ class BookingSummaryCard extends StatelessWidget {
               _buildDivider(context),
               _CupertinoSummarySection(
                 title: passengerTitle ?? 'Passenger',
-                icon: CupertinoIcons.person_circle,
+                icon: Icons.account_circle,
                 onEdit: onEditPassenger,
                 editLabel: editLabel,
                 child: Column(
@@ -315,7 +316,7 @@ class BookingSummaryCard extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          CupertinoIcons.phone,
+                          Icons.phone_outlined,
                           size: 14,
                           color:
                               CupertinoColors.secondaryLabel.resolveFrom(context),
@@ -330,7 +331,7 @@ class BookingSummaryCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 16),
                         Icon(
-                          CupertinoIcons.mail,
+                          Icons.email_outlined,
                           size: 14,
                           color:
                               CupertinoColors.secondaryLabel.resolveFrom(context),
@@ -353,7 +354,7 @@ class BookingSummaryCard extends StatelessWidget {
                       Row(
                         children: [
                           Icon(
-                            CupertinoIcons.airplane,
+                            Icons.flight,
                             size: 14,
                             color: CupertinoColors.secondaryLabel
                                 .resolveFrom(context),

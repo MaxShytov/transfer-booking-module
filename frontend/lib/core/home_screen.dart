@@ -1,67 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/models/booking.dart';
+import '../data/models/fixed_route.dart';
 import '../data/repositories/booking_repository.dart';
+import '../data/repositories/routes_repository.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../presentation/providers/auth_provider.dart';
 import '../presentation/providers/booking_flow_provider.dart';
 import '../presentation/widgets/atoms/gradient_button.dart';
 import 'theme/app_dimensions.dart';
 
-/// Popular route data for quick booking.
-class PopularRoute {
-  final String fromName;
-  final String toName;
-  final String price;
-  final double pickupLat;
-  final double pickupLng;
-  final double dropoffLat;
-  final double dropoffLng;
-
-  const PopularRoute({
-    required this.fromName,
-    required this.toName,
-    required this.price,
-    required this.pickupLat,
-    required this.pickupLng,
-    required this.dropoffLat,
-    required this.dropoffLng,
-  });
-}
-
-/// Predefined popular routes with coordinates.
-const _popularRoutes = [
-  PopularRoute(
-    fromName: 'Cagliari Airport',
-    toName: 'City Center',
-    price: '€35',
-    pickupLat: 39.2514,
-    pickupLng: 9.0543,
-    dropoffLat: 39.2238,
-    dropoffLng: 9.1217,
-  ),
-  PopularRoute(
-    fromName: 'Cagliari Airport',
-    toName: 'Villasimius',
-    price: '€80',
-    pickupLat: 39.2514,
-    pickupLng: 9.0543,
-    dropoffLat: 39.1452,
-    dropoffLng: 9.5178,
-  ),
-  PopularRoute(
-    fromName: 'Olbia Airport',
-    toName: 'Porto Cervo',
-    price: '€65',
-    pickupLat: 40.8987,
-    pickupLng: 9.5176,
-    dropoffLat: 41.1318,
-    dropoffLng: 9.5322,
-  ),
-];
+/// Provider for popular routes (fixed routes from API).
+final popularRoutesProvider = FutureProvider<List<FixedRoute>>((ref) async {
+  final repository = ref.watch(routesRepositoryProvider);
+  return repository.getFixedRoutes();
+});
 
 /// Home screen with Cupertino tab navigation.
 class HomeScreen extends ConsumerStatefulWidget {
@@ -105,18 +62,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.add_circled),
-            activeIcon: const Icon(CupertinoIcons.add_circled_solid),
+            icon: const Icon(Icons.add_circle_outline),
+            activeIcon: const Icon(Icons.add_circle),
             label: l10n.tabBook,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.list_bullet),
-            activeIcon: const Icon(CupertinoIcons.list_bullet),
+            icon: const Icon(Icons.list_alt_outlined),
+            activeIcon: const Icon(Icons.list_alt),
             label: l10n.tabMyBookings,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.ellipsis),
-            activeIcon: const Icon(CupertinoIcons.ellipsis),
+            icon: const Icon(Icons.more_horiz),
+            activeIcon: const Icon(Icons.more_horiz),
             label: l10n.tabMore,
           ),
         ],
@@ -152,7 +109,7 @@ class _BookingTab extends ConsumerWidget {
         middle: Text(l10n.appTitle),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.person_circle),
+          child: const Icon(Icons.account_circle),
           onPressed: () => context.push('/profile'),
         ),
       ),
@@ -242,13 +199,10 @@ class _BookingTab extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppDimensions.spacingMd),
-              ..._popularRoutes.map((route) => _CupertinoPopularRouteCard(
-                from: route.fromName,
-                to: route.toName,
-                price: route.price,
+              _PopularRoutesList(
+                onRouteSelected: (route) => _startBookingWithRoute(context, ref, route),
                 priceFromLabel: l10n.priceFrom,
-                onTap: () => _startBookingWithRoute(context, ref, route),
-              )),
+              ),
             ],
           ),
         ),
@@ -256,19 +210,19 @@ class _BookingTab extends ConsumerWidget {
     );
   }
 
-  void _startBookingWithRoute(BuildContext context, WidgetRef ref, PopularRoute route) {
+  void _startBookingWithRoute(BuildContext context, WidgetRef ref, FixedRoute route) {
     final notifier = ref.read(bookingFlowProvider.notifier);
 
     // Reset booking state and set locations
     notifier.reset();
     notifier.setPickupLocation(SelectedLocation(
-      address: route.fromName,
+      address: route.pickupAddress,
       lat: route.pickupLat,
       lng: route.pickupLng,
       isPredefined: true,
     ));
     notifier.setDropoffLocation(SelectedLocation(
-      address: route.toName,
+      address: route.dropoffAddress,
       lat: route.dropoffLat,
       lng: route.dropoffLng,
       isPredefined: true,
@@ -276,6 +230,47 @@ class _BookingTab extends ConsumerWidget {
 
     // Navigate to booking
     context.push('/booking');
+  }
+}
+
+/// Widget that loads and displays popular routes from API.
+class _PopularRoutesList extends ConsumerWidget {
+  final void Function(FixedRoute route) onRouteSelected;
+  final String priceFromLabel;
+
+  const _PopularRoutesList({
+    required this.onRouteSelected,
+    required this.priceFromLabel,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final routesAsync = ref.watch(popularRoutesProvider);
+
+    return routesAsync.when(
+      data: (routes) => Column(
+        children: routes.map((route) => _CupertinoPopularRouteCard(
+          from: route.pickupAddress,
+          to: route.dropoffAddress,
+          price: '€${route.basePrice.toStringAsFixed(0)}',
+          priceFromLabel: priceFromLabel,
+          onTap: () => onRouteSelected(route),
+        )).toList(),
+      ),
+      loading: () => const Padding(
+        padding: EdgeInsets.all(16),
+        child: CupertinoActivityIndicator(),
+      ),
+      error: (error, _) => Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text(
+          'Failed to load routes',
+          style: TextStyle(
+            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -381,7 +376,7 @@ class _BookingsListTabState extends ConsumerState<_BookingsListTab>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            CupertinoIcons.person_circle,
+            Icons.account_circle,
             size: 64,
             color: CupertinoColors.secondaryLabel.resolveFrom(context),
           ),
@@ -418,7 +413,7 @@ class _BookingsListTabState extends ConsumerState<_BookingsListTab>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            CupertinoIcons.clock,
+            Icons.access_time,
             size: 64,
             color: CupertinoColors.secondaryLabel.resolveFrom(context),
           ),
@@ -450,7 +445,7 @@ class _BookingsListTabState extends ConsumerState<_BookingsListTab>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            CupertinoIcons.exclamationmark_circle,
+            Icons.error_outline,
             size: 64,
             color: CupertinoColors.systemRed,
           ),
@@ -558,7 +553,7 @@ class _BookingCard extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  CupertinoIcons.arrow_2_squarepath,
+                                  Icons.sync_alt,
                                   size: 10,
                                   color: CupertinoColors.systemIndigo,
                                 ),
@@ -586,7 +581,7 @@ class _BookingCard extends StatelessWidget {
               Row(
                 children: [
                   const Icon(
-                    CupertinoIcons.location,
+                    Icons.location_on_outlined,
                     size: 16,
                     color: CupertinoColors.systemGreen,
                   ),
@@ -608,7 +603,7 @@ class _BookingCard extends StatelessWidget {
               Row(
                 children: [
                   const Icon(
-                    CupertinoIcons.location_solid,
+                    Icons.location_on,
                     size: 16,
                     color: CupertinoColors.systemRed,
                   ),
@@ -638,7 +633,7 @@ class _BookingCard extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
-                              CupertinoIcons.calendar,
+                              Icons.calendar_today,
                               size: 14,
                               color: CupertinoColors.secondaryLabel.resolveFrom(context),
                             ),
@@ -659,7 +654,7 @@ class _BookingCard extends StatelessWidget {
                           Row(
                             children: [
                               Icon(
-                                CupertinoIcons.arrow_turn_down_right,
+                                Icons.subdirectory_arrow_right,
                                 size: 14,
                                 color: CupertinoColors.systemIndigo.withOpacity(0.7),
                               ),
@@ -774,10 +769,12 @@ class _StatusBadge extends StatelessWidget {
 }
 
 /// More options tab.
-class _MoreTab extends StatelessWidget {
+class _MoreTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final authState = ref.watch(authStateProvider);
+    final user = authState.user;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -786,14 +783,26 @@ class _MoreTab extends StatelessWidget {
       child: SafeArea(
         child: CupertinoListSection.insetGrouped(
           children: [
+            // Dispatcher link for admin/manager users
+            if (user != null && user.canAccessDispatcher)
+              CupertinoListTile.notched(
+                leading: const Icon(
+                  Icons.people_alt,
+                  color: CupertinoColors.systemIndigo,
+                ),
+                title: const Text('Диспетчерская'),
+                subtitle: const Text('Управление заказами'),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () => context.push('/dispatcher'),
+              ),
             CupertinoListTile.notched(
-              leading: const Icon(CupertinoIcons.person),
+              leading: const Icon(Icons.person_outline),
               title: Text(l10n.profile),
               trailing: const CupertinoListTileChevron(),
               onTap: () => context.push('/profile'),
             ),
             CupertinoListTile.notched(
-              leading: const Icon(CupertinoIcons.question_circle),
+              leading: const Icon(Icons.help_outline),
               title: Text(l10n.helpAndSupport),
               trailing: const CupertinoListTileChevron(),
               onTap: () {
@@ -813,7 +822,7 @@ class _MoreTab extends StatelessWidget {
               },
             ),
             CupertinoListTile.notched(
-              leading: const Icon(CupertinoIcons.info),
+              leading: const Icon(Icons.info_outline),
               title: Text(l10n.about),
               trailing: const CupertinoListTileChevron(),
               onTap: () {
@@ -881,7 +890,7 @@ class _CupertinoPopularRouteCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
-                  CupertinoIcons.car_detailed,
+                  Icons.directions_car,
                   color: CupertinoColors.systemBlue,
                   size: 20,
                 ),
@@ -902,16 +911,20 @@ class _CupertinoPopularRouteCard extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          CupertinoIcons.arrow_right,
+                          Icons.arrow_forward,
                           size: 12,
                           color: CupertinoColors.secondaryLabel.resolveFrom(context),
                         ),
                         const SizedBox(width: 4),
-                        Text(
-                          to,
-                          style: TextStyle(
-                            color: CupertinoColors.secondaryLabel.resolveFrom(context),
-                            fontSize: 13,
+                        Expanded(
+                          child: Text(
+                            to,
+                            style: TextStyle(
+                              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                              fontSize: 13,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -941,7 +954,7 @@ class _CupertinoPopularRouteCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Icon(
-                CupertinoIcons.chevron_right,
+                Icons.chevron_right,
                 color: CupertinoColors.secondaryLabel.resolveFrom(context),
                 size: 18,
               ),

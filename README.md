@@ -173,6 +173,32 @@ Final Price = (Base × Vehicle × Passengers × Season × Time) + Extra Fees
 - **Season:** 1.00 (Low) → 1.40 (Ferragosto)
 - **Time:** 1.00 (Day) → 1.20 (Night 22:00-06:00)
 
+## Sales Dashboard (Streamlit)
+
+Интерактивный дашборд для анализа продаж на базе Streamlit.
+
+**Запуск:**
+```bash
+# Активировать виртуальное окружение
+source venv/bin/activate
+
+# Установить зависимости (если ещё не установлены)
+pip install -r backend/requirements.txt
+
+# Запустить дашборд
+streamlit run backend/dashboard/sales_report.py
+```
+
+Дашборд откроется в браузере: http://localhost:8501
+
+**Возможности:**
+- Ключевые метрики: выручка, количество бронирований, средний чек
+- Динамика выручки по месяцам
+- Анализ по статусам бронирований и оплат
+- Распределение по классам автомобилей и маршрутам
+- Фильтрация по периоду, статусу, классу авто
+- Экспорт данных в CSV
+
 ## Documentation
 
 - [Database Schema](docs/initial_requirements/database_schema.md)

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import '../../../l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +37,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
         middle: Text(l10n.reviewBooking),
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.back),
+          child: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             ref.read(bookingFlowProvider.notifier).previousStep();
             if (context.canPop()) {
@@ -215,7 +216,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const Icon(
-                                    CupertinoIcons.checkmark_circle_fill,
+                                    Icons.check_circle,
                                     size: 16,
                                     color: CupertinoColors.systemGreen,
                                   ),
@@ -330,7 +331,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  CupertinoIcons.checkmark_circle_fill,
+                  Icons.check_circle,
                   color: CupertinoColors.systemGreen,
                   size: 32,
                 ),
@@ -514,7 +515,7 @@ class _CupertinoErrorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              CupertinoIcons.exclamationmark_circle,
+              Icons.error_outline,
               size: 64,
               color: CupertinoColors.systemRed,
             ),
@@ -542,7 +543,7 @@ class _CupertinoErrorWidget extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(CupertinoIcons.refresh),
+                  const Icon(Icons.refresh),
                   const SizedBox(width: 8),
                   Text(retryLabel),
                 ],

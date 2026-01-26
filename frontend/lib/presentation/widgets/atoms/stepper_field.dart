@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 /// A stepper field with + and - buttons for numeric input (Cupertino style).
 /// Matches HTML prototype with 36px circle buttons and 2px border.
@@ -61,7 +62,7 @@ class StepperField extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _CounterButton(
-                icon: CupertinoIcons.minus,
+                icon: Icons.remove,
                 onTap: canDecrement ? () => onChanged(value - 1) : null,
                 isEnabled: canDecrement,
               ),
@@ -79,7 +80,7 @@ class StepperField extends StatelessWidget {
                 ),
               ),
               _CounterButton(
-                icon: CupertinoIcons.plus,
+                icon: Icons.add,
                 onTap: canIncrement ? () => onChanged(value + 1) : null,
                 isEnabled: canIncrement,
               ),
@@ -120,7 +121,7 @@ class _CounterButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            icon == CupertinoIcons.minus ? '−' : '+',
+            icon == Icons.remove ? '−' : '+',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,

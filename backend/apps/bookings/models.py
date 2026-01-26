@@ -236,6 +236,19 @@ class Booking(TimeStampedModel):
     confirmed_at = models.DateTimeField(null=True, blank=True, verbose_name='Confirmed At')
     completed_at = models.DateTimeField(null=True, blank=True, verbose_name='Completed At')
 
+    # Dispatcher fields
+    assigned_driver = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        related_name='assigned_bookings',
+        limit_choices_to={'role': 'driver'},
+        verbose_name='Assigned Driver'
+    )
+    cancelled_at = models.DateTimeField(null=True, blank=True, verbose_name='Cancelled At')
+    cancellation_reason = models.TextField(blank=True, verbose_name='Cancellation Reason')
+    dispatcher_notes = models.TextField(blank=True, verbose_name='Dispatcher Notes')
+
     class Meta:
         verbose_name = 'Booking'
         verbose_name_plural = 'Bookings'

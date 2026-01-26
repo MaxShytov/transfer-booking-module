@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 import '../atoms/app_text_field.dart';
 
@@ -63,8 +64,8 @@ class _PasswordFieldState extends State<PasswordField> {
         onPressed: _toggleVisibility,
         child: Icon(
           _obscureText
-              ? CupertinoIcons.eye_slash
-              : CupertinoIcons.eye,
+              ? Icons.visibility_off
+              : Icons.visibility,
           color: CupertinoColors.secondaryLabel,
           size: 20,
         ),

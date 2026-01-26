@@ -12,6 +12,7 @@ import '../../presentation/screens/booking/review_screen.dart';
 import '../../presentation/screens/booking/route_selection_screen.dart';
 import '../../presentation/screens/booking/vehicle_selection_screen.dart';
 import '../../presentation/screens/profile/profile_screen.dart';
+import '../../presentation/screens/dispatcher/dispatcher_screen.dart';
 import '../home_screen.dart';
 
 /// Listenable for auth state changes to trigger router refresh.
@@ -126,6 +127,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           final id = int.parse(state.pathParameters['id']!);
           return BookingDetailScreen(bookingId: id);
         },
+      ),
+
+      // Dispatcher routes
+      GoRoute(
+        path: '/dispatcher',
+        name: 'dispatcher',
+        builder: (context, state) => const DispatcherScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

@@ -17,6 +17,9 @@ urlpatterns = [
     path('api/v1/routes/', include('apps.routes.urls')),
     path('api/v1/pricing/', include('apps.pricing.urls')),
     path('api/v1/bookings/', include('apps.bookings.urls')),
+
+    # Dispatcher API
+    path('api/v1/dispatcher/', include('apps.dispatcher.urls')),
 ]
 
 # Debug toolbar (development only)

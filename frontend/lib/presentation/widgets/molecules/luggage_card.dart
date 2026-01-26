@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import '../atoms/stepper_field.dart';
 
 /// Card for selecting luggage quantities and sports equipment.
@@ -234,7 +235,7 @@ class _Checkbox extends StatelessWidget {
       ),
       child: isChecked
           ? const Icon(
-              CupertinoIcons.checkmark,
+              Icons.check,
               size: 16,
               color: CupertinoColors.white,
             )

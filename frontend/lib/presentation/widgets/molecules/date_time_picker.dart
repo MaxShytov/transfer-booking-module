@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:intl/intl.dart';
 
 /// Combined date and time picker widget - Cupertino style.
@@ -110,7 +111,7 @@ class _CupertinoDatePickerField extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              CupertinoIcons.calendar,
+              Icons.calendar_today,
               size: 20,
               color: enabled
                   ? CupertinoColors.systemBlue
@@ -242,7 +243,7 @@ class _CupertinoTimePickerField extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              CupertinoIcons.clock,
+              Icons.access_time,
               size: 20,
               color: enabled
                   ? CupertinoColors.systemBlue

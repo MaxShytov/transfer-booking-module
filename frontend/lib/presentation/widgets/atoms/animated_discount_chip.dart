@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 /// Animated discount chip that pulses when active.
 /// Used for showing round trip discount (-10%).
@@ -84,7 +85,7 @@ class _AnimatedDiscountChipState extends State<AnimatedDiscountChip>
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
-                CupertinoIcons.arrow_2_squarepath,
+                Icons.sync_alt,
                 size: 14,
                 color: CupertinoColors.white,
               ),

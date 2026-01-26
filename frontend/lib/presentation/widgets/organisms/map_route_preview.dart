@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/material.dart' show Colors, Icons;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -472,7 +472,7 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
-                          CupertinoIcons.fullscreen,
+                          Icons.fullscreen,
                           size: 16,
                           color: CupertinoColors.systemBlue,
                         ),
@@ -520,7 +520,7 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
                       children: [
                         if (_distanceText != null) ...[
                           const Icon(
-                            CupertinoIcons.map,
+                            Icons.map_outlined,
                             size: 14,
                             color: CupertinoColors.systemBlue,
                           ),
@@ -543,7 +543,7 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
                           ),
                         if (_durationText != null) ...[
                           const Icon(
-                            CupertinoIcons.clock,
+                            Icons.access_time,
                             size: 14,
                             color: CupertinoColors.systemGreen,
                           ),
@@ -604,7 +604,7 @@ class _MapRoutePreviewState extends State<MapRoutePreview> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          CupertinoIcons.location_solid,
+                          Icons.location_on,
                           size: 40,
                           color: CupertinoColors.systemBlue.withValues(alpha: 0.7),
                         ),
@@ -749,7 +749,7 @@ class _FullScreenMapPickerState extends State<FullScreenMapPicker> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 36),
               child: Icon(
-                CupertinoIcons.placemark_fill,
+                Icons.place,
                 size: 48,
                 color: markerColor,
               ),
@@ -777,8 +777,8 @@ class _FullScreenMapPickerState extends State<FullScreenMapPicker> {
                 children: [
                   Icon(
                     widget.isPickup
-                        ? CupertinoIcons.location
-                        : CupertinoIcons.placemark,
+                        ? Icons.location_on_outlined
+                        : Icons.place_outlined,
                     color: markerColor,
                   ),
                   const SizedBox(width: 12),
@@ -1141,7 +1141,7 @@ class _FullScreenRouteMapState extends State<FullScreenRouteMap> {
                     Row(
                       children: [
                         const Icon(
-                          CupertinoIcons.circle_fill,
+                          Icons.circle,
                           size: 12,
                           color: CupertinoColors.systemGreen,
                         ),
@@ -1200,7 +1200,7 @@ class _FullScreenRouteMapState extends State<FullScreenRouteMap> {
                     Row(
                       children: [
                         const Icon(
-                          CupertinoIcons.placemark_fill,
+                          Icons.place,
                           size: 12,
                           color: CupertinoColors.systemRed,
                         ),

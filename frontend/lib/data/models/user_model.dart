@@ -82,4 +82,7 @@ class UserModel {
 
   /// Check if user can see detailed price breakdown.
   bool get canSeeDetailedPricing => isAdmin || isManager;
+
+  /// Check if user can access dispatcher dashboard.
+  bool get canAccessDispatcher => isAdmin || isManager;
 }
