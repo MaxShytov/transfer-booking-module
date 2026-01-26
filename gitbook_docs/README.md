@@ -6,74 +6,45 @@ Welcome to the comprehensive documentation for **8Move Transfer** - a complete p
 
 8Move Transfer is a full-stack solution for managing private transfer services, consisting of:
 
-- **Mobile Application** - Customer-facing app for booking transfers
-- **Admin Panel** - Backend management system for operations
-- **Analytics Dashboard** - Business intelligence and reporting
+* **Mobile Application** - Customer-facing app for booking transfers
+* **Admin Panel** - Backend management system for operations
+* **Analytics Dashboard** - Business intelligence and reporting
 
 ## Quick Links
 
-<table data-view="cards">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th data-hidden data-card-target data-type="content-ref"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>📱 Mobile App Guide</strong></td>
-      <td>Learn how to use the customer mobile application</td>
-      <td><a href="user-guides/mobile-app/">mobile-app</a></td>
-    </tr>
-    <tr>
-      <td><strong>🖥️ Admin Panel Guide</strong></td>
-      <td>Manage bookings, pricing, and operations</td>
-      <td><a href="user-guides/admin-panel/">admin-panel</a></td>
-    </tr>
-    <tr>
-      <td><strong>💼 Business Operations</strong></td>
-      <td>Understand pricing models and workflows</td>
-      <td><a href="business-operations/">business-operations</a></td>
-    </tr>
-  </tbody>
-</table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>📱 Mobile App Guide</strong></td><td>Learn how to use the customer mobile application</td><td><a href="user-guides/mobile-app/">mobile-app</a></td></tr><tr><td><strong>🖥️ Admin Panel Guide</strong></td><td>Manage bookings, pricing, and operations</td><td><a href="user-guides/admin-panel/">admin-panel</a></td></tr><tr><td><strong>💼 Business Operations</strong></td><td>Understand pricing models and workflows</td><td><a href="business-operations/">business-operations</a></td></tr></tbody></table>
 
 ## Key Features
 
 ### For Customers
-- **Multi-language Support** - English, Italian, German, French, Arabic
-- **Transparent Pricing** - Real-time price calculation with detailed breakdown
-- **Flexible Booking** - Single and round-trip transfers
-- **Flight Tracking** - Automatic pickup time adjustments
-- **Child Safety** - Integrated child seat and booster seat options
+
+* **Multi-language Support** - English, Italian, German, French, Arabic
+* **Transparent Pricing** - Real-time price calculation with detailed breakdown
+* **Flexible Booking** - Single and round-trip transfers
+* **Flight Tracking** - Automatic pickup time adjustments
+* **Child Safety** - Integrated child seat and booster seat options
 
 ### For Operators
-- **Dynamic Pricing Engine** - Seasonal, time-based, and passenger multipliers
-- **Fixed & Distance Routes** - Hybrid pricing model
-- **Vehicle Fleet Management** - Multiple vehicle classes with capacity rules
-- **Booking Management** - Complete lifecycle from pending to completed
-- **Analytics Dashboard** - Revenue tracking and performance metrics
+
+* **Dynamic Pricing Engine** - Seasonal, time-based, and passenger multipliers
+* **Fixed & Distance Routes** - Hybrid pricing model
+* **Vehicle Fleet Management** - Multiple vehicle classes with capacity rules
+* **Booking Management** - Complete lifecycle from pending to completed
+* **Analytics Dashboard** - Revenue tracking and performance metrics
 
 ## System Components
 
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Mobile App | Flutter | iOS & Android customer application |
-| Backend API | Django REST Framework | Business logic and data management |
-| Admin Panel | Django Admin | Operations management interface |
-| Database | PostgreSQL + PostGIS | Data storage with geospatial support |
-| Analytics | Streamlit | Business intelligence dashboard |
+<table><thead><tr><th>Component</th><th>Purpose</th><th data-hidden>Technology</th></tr></thead><tbody><tr><td>Mobile App</td><td>iOS &#x26; Android customer application</td><td>Flutter</td></tr><tr><td>Backend API</td><td>Business logic and data management</td><td>Django REST Framework</td></tr><tr><td>Admin Panel</td><td>Operations management interface</td><td>Django Admin</td></tr><tr><td>Database</td><td>Data storage with geospatial support</td><td>PostgreSQL + PostGIS</td></tr><tr><td>Analytics</td><td>Business intelligence dashboard</td><td>Streamlit</td></tr></tbody></table>
 
 ## Supported Languages
 
 The system supports five languages across all user interfaces:
 
-- 🇬🇧 English
-- 🇮🇹 Italian (Italiano)
-- 🇩🇪 German (Deutsch)
-- 🇫🇷 French (Français)
-- 🇸🇦 Arabic (العربية)
+* 🇬🇧 English
+* 🇮🇹 Italian (Italiano)
+* 🇩🇪 German (Deutsch)
+* 🇫🇷 French (Français)
+* 🇸🇦 Arabic (العربية)
 
 ## Who Should Use This Documentation?
 
@@ -91,9 +62,9 @@ The system supports five languages across all user interfaces:
 
 Need assistance? Check out our support resources:
 
-- **FAQ** - Common questions and answers
-- **Troubleshooting** - Solve common issues
-- **Contact Support** - Reach out to our team
+* **FAQ** - Common questions and answers
+* **Troubleshooting** - Solve common issues
+* **Contact Support** - Reach out to our team
 
 ## Getting Started
 
@@ -104,6 +75,6 @@ Ready to dive in? Start with:
 3. [Mobile App Guide](user-guides/mobile-app/) - Start booking transfers
 4. [Admin Panel Guide](user-guides/admin-panel/) - Manage your operations
 
----
+***
 
-*Last updated: January 2026*
+_Last updated: January 2026_
