@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8Move Transfer Banner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            background-color: #172139;
+        }
+
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(23, 33, 57, 0.92) 0%,
+                rgba(23, 33, 57, 0.85) 40%,
+                rgba(62, 153, 212, 0.3) 100%
+            );
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+        }
+
+        .main-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .subtitle-accent {
+            color: #3e99d4;
+            font-weight: 600;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .feature-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #3e99d4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #3e99d4;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(62, 153, 212, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: #2d7eb8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(62, 153, 212, 0.6);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tech-stack {
+            margin-top: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .banner {
+                height: 500px;
+            }
+
+            .banner-content {
+                padding: 40px 60px;
+            }
+
+            .main-title {
+                font-size: 46px;
+            }
+
+            .subtitle {
+                font-size: 24px;
+            }
+
+            .feature {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner {
+                height: 600px;
+            }
+
+            .banner-content {
+                padding: 30px 30px;
+            }
+
+            .main-title {
+                font-size: 36px;
+            }
+
+            .tagline {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 20px;
+            }
+
+            .feature {
+                font-size: 16px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner {
+                height: 520px;
+            }
+
+            .banner-content {
+                padding: 12px 20px 15px 20px;
+            }
+
+            .logo {
+                margin-bottom: 12px;
+            }
+
+            .logo-img {
+                height: 63px;
+            }
+
+            .main-title {
+                font-size: 28px;
+            }
+
+            .tagline {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .features {
+                margin-bottom: 20px;
+                gap: 10px;
+            }
+
+            .feature {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="background.jpg" alt="Luxury Transfer Service" class="banner-background">
+        <div class="banner-overlay"></div>
+        
+        <div class="banner-content">
+            <div class="logo">
+                <img src="logo.svg" alt="8Move Transfer" class="logo-img">
+            </div>
+
+            <p class="tagline">Purpose-Built for Luxury Transport Operators</p>
+            
+            <p class="subtitle">
+                <span class="subtitle-accent">Mobile App</span> • 
+                <span class="subtitle-accent">Admin Panel</span> • 
+                <span class="subtitle-accent">Analytics Dashboard</span>
+            </p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <span>Transparent Multi-Factor Pricing Engine</span>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <span>Swiss GDPR/FADP Compliant Engineering</span>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <span>Multi-Language Support (EN/FR/DE/IT/AR + more on request)</span>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="https://8move.com/contacts/" target="_blank" class="btn btn-primary">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
