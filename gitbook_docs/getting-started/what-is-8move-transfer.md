@@ -2,71 +2,55 @@
 icon: car
 ---
 
-# Purpose-Built for Luxury Transport Operators
-
-**Mobile App** • **Admin Panel** • **Analytics Dashboard**
-
-***
-
-{% hint style="success" %}
-**Transparent Multi-Factor Pricing Engine**
-{% endhint %}
-
-{% hint style="success" %}
-**Swiss GDPR/FADP Compliant Engineering**
-{% endhint %}
-
-{% hint style="success" %}
-**Multi-Language Support (EN/FR/DE/IT/AR + more)**
-{% endhint %}
-
-[**Contact Sales →**](https://8move.com/contacts/)
-
-***
-
 # What is 8Move Transfer?
+
+##
+
+***
+
+## What is 8Move Transfer?
 
 8Move Transfer is a comprehensive private transfer booking platform designed to connect customers with professional transfer services. The system handles the complete booking lifecycle from initial reservation to service completion.
 
-## Overview
+### Overview
 
 8Move Transfer provides a modern, user-friendly solution for booking private transfers with transparent pricing and real-time availability. The platform consists of three main components working together seamlessly:
 
-### Mobile Application
+#### Mobile Application
 
 A Flutter-based mobile app available for iOS and Android, providing customers with:
 
-- Intuitive booking wizard with 5-step process
-- Real-time price calculations
-- Multi-language interface (5 languages)
-- Booking history and management
-- Profile customization
-- Flight tracking integration
+* Intuitive booking wizard with 5-step process
+* Real-time price calculations
+* Multi-language interface (5 languages)
+* Booking history and management
+* Profile customization
+* Flight tracking integration
 
-### Admin Panel
+#### Admin Panel
 
 A Django-based management system for operations teams:
 
-- User and role management
-- Booking lifecycle management
-- Vehicle fleet configuration
-- Dynamic pricing engine
-- Route management (fixed and distance-based)
-- Analytics and reporting
+* User and role management
+* Booking lifecycle management
+* Vehicle fleet configuration
+* Dynamic pricing engine
+* Route management (fixed and distance-based)
+* Analytics and reporting
 
-### Analytics Dashboard
+#### Analytics Dashboard
 
 A Streamlit-powered business intelligence tool:
 
-- Revenue tracking and trends
-- Booking performance metrics
-- Vehicle utilization analysis
-- Route profitability insights
-- Period comparisons
+* Revenue tracking and trends
+* Booking performance metrics
+* Vehicle utilization analysis
+* Route profitability insights
+* Period comparisons
 
-## How It Works
+### How It Works
 
-### For Customers
+#### For Customers
 
 1. **Browse** - Explore popular routes or create custom transfers
 2. **Configure** - Select dates, passengers, luggage, and vehicle class
@@ -74,7 +58,7 @@ A Streamlit-powered business intelligence tool:
 4. **Book** - Confirm and receive booking reference
 5. **Track** - Monitor booking status in real-time
 
-### For Operators
+#### For Operators
 
 1. **Configure** - Set up routes, vehicles, and pricing rules
 2. **Receive** - Get notified of new bookings
@@ -83,9 +67,9 @@ A Streamlit-powered business intelligence tool:
 5. **Complete** - Mark transfers as completed
 6. **Analyze** - Review performance and revenue
 
-## Core Capabilities
+### Core Capabilities
 
-### Intelligent Pricing Engine
+#### Intelligent Pricing Engine
 
 The system uses a sophisticated multi-factor pricing model:
 
@@ -94,181 +78,206 @@ Final Price = (Base × Vehicle × Passengers × Season × Time) + Extras
 ```
 
 Factors include:
-- **Base Price** - Route or distance-based
-- **Vehicle Multiplier** - Based on selected vehicle class
-- **Passenger Multiplier** - Based on vehicle capacity utilization
-- **Seasonal Multiplier** - Peak/off-peak pricing
-- **Time Multiplier** - Early morning, late night, rush hour
-- **Extra Fees** - Child seats, luggage, special services
-- **Round Trip Discount** - Savings for return bookings
 
-### Geospatial Route Matching
+* **Base Price** - Route or distance-based
+* **Vehicle Multiplier** - Based on selected vehicle class
+* **Passenger Multiplier** - Based on vehicle capacity utilization
+* **Seasonal Multiplier** - Peak/off-peak pricing
+* **Time Multiplier** - Early morning, late night, rush hour
+* **Extra Fees** - Child seats, luggage, special services
+* **Round Trip Discount** - Savings for return bookings
+
+#### Geospatial Route Matching
 
 Uses PostGIS and Haversine formula to:
-- Match customer locations to fixed routes within radius tolerance
-- Calculate accurate distances for distance-based pricing
-- Provide visual route previews on interactive maps
-- Optimize pickup and dropoff locations
 
-### Multi-tier Vehicle System
+* Match customer locations to fixed routes within radius tolerance
+* Calculate accurate distances for distance-based pricing
+* Provide visual route previews on interactive maps
+* Optimize pickup and dropoff locations
+
+#### Multi-tier Vehicle System
 
 Supports flexible vehicle classification:
-- Economy, Comfort, Business tiers
-- Minivan and Minibus options
-- Automatic capacity-based filtering
-- Per-class pricing multipliers
-- Passenger and luggage capacity rules
 
-### Flight Integration
+* Economy, Comfort, Business tiers
+* Minivan and Minibus options
+* Automatic capacity-based filtering
+* Per-class pricing multipliers
+* Passenger and luggage capacity rules
+
+#### Flight Integration
 
 Monitors flight arrivals to automatically adjust pickup times for:
-- Airport transfers
-- Flight delays
-- Early arrivals
-- Optimal timing
 
-## Target Markets
+* Airport transfers
+* Flight delays
+* Early arrivals
+* Optimal timing
+
+### Target Markets
 
 8Move Transfer is designed for:
 
-### Transfer Service Operators
-- Private taxi companies
-- Limousine services
-- Airport shuttle operators
-- Hotel transfer services
-- Tour operators
+#### Transfer Service Operators
 
-### Geographic Focus
-- Tourist destinations
-- Airport transfer corridors
-- Urban to resort routes
-- Intercity connections
+* Private taxi companies
+* Limousine services
+* Airport shuttle operators
+* Hotel transfer services
+* Tour operators
 
-### Customer Segments
-- Business travelers
-- Tourists and vacationers
-- Airport passengers
-- Hotel guests
-- Event attendees
+#### Geographic Focus
 
-## Technical Architecture
+* Tourist destinations
+* Airport transfer corridors
+* Urban to resort routes
+* Intercity connections
 
-### Frontend
-- **Framework**: Flutter
-- **State Management**: Riverpod
-- **Navigation**: GoRouter
-- **Maps**: Flutter Map with OpenStreetMap
-- **Localization**: 5 languages
+#### Customer Segments
 
-### Backend
-- **Framework**: Django 4.x
-- **API**: Django REST Framework
-- **Database**: PostgreSQL 14+
-- **Geospatial**: PostGIS extension
-- **Admin**: Django Admin (customized)
+* Business travelers
+* Tourists and vacationers
+* Airport passengers
+* Hotel guests
+* Event attendees
 
-### Infrastructure
-- **Deployment**: Azure Cloud / Docker
-- **Storage**: MinIO / Azure Blob
-- **Analytics**: Streamlit
-- **Monitoring**: Built-in Django logging
+### Technical Architecture
 
-## Compliance & Standards
+#### Frontend
 
-### Data Protection
-- GDPR compliant
-- Swiss FADP compliant
-- Secure data storage
-- Privacy by design
+* **Framework**: Flutter
+* **State Management**: Riverpod
+* **Navigation**: GoRouter
+* **Maps**: Flutter Map with OpenStreetMap
+* **Localization**: 5 languages
 
-### Child Safety
-- Swiss child seat regulations
-- Automatic seat requirement detection
-- Age-appropriate safety measures
+#### Backend
 
-### Accessibility
-- Multi-language support
-- Clear visual hierarchy
-- Intuitive navigation
-- RTL support for Arabic
+* **Framework**: Django 4.x
+* **API**: Django REST Framework
+* **Database**: PostgreSQL 14+
+* **Geospatial**: PostGIS extension
+* **Admin**: Django Admin (customized)
 
-## Deployment Options
+#### Infrastructure
+
+* **Deployment**: Azure Cloud / Docker
+* **Storage**: MinIO / Azure Blob
+* **Analytics**: Streamlit
+* **Monitoring**: Built-in Django logging
+
+### Compliance & Standards
+
+#### Data Protection
+
+* GDPR compliant
+* Swiss FADP compliant
+* Secure data storage
+* Privacy by design
+
+#### Child Safety
+
+* Swiss child seat regulations
+* Automatic seat requirement detection
+* Age-appropriate safety measures
+
+#### Accessibility
+
+* Multi-language support
+* Clear visual hierarchy
+* Intuitive navigation
+* RTL support for Arabic
+
+### Deployment Options
 
 8Move Transfer can be deployed in several configurations:
 
-### Cloud-hosted SaaS
-- Fully managed by Trident Software
-- Regular updates and maintenance
-- Scalable infrastructure
-- Multi-tenant architecture
+#### Cloud-hosted SaaS
 
-### Self-hosted
-- Deploy on your infrastructure
-- Full control and customization
-- On-premise or private cloud
-- White-label options
+* Fully managed by Trident Software
+* Regular updates and maintenance
+* Scalable infrastructure
+* Multi-tenant architecture
 
-### Hybrid
-- Mobile app as SaaS
-- Backend self-hosted
-- Integration flexibility
+#### Self-hosted
 
-## What Makes 8Move Transfer Different?
+* Deploy on your infrastructure
+* Full control and customization
+* On-premise or private cloud
+* White-label options
 
-### Transparent Pricing
+#### Hybrid
+
+* Mobile app as SaaS
+* Backend self-hosted
+* Integration flexibility
+
+### What Makes 8Move Transfer Different?
+
+#### Transparent Pricing
+
 Unlike competitors with hidden fees, 8Move shows complete price breakdown before booking confirmation.
 
-### Swiss Engineering
+#### Swiss Engineering
+
 Built with Swiss precision, focusing on reliability, security, and data protection compliance.
 
-### Operator-Friendly
+#### Operator-Friendly
+
 Designed by industry professionals who understand transfer service operations.
 
-### Flexible Pricing Model
+#### Flexible Pricing Model
+
 Hybrid approach supports both fixed popular routes and dynamic distance-based pricing.
 
-### Multi-language Native
+#### Multi-language Native
+
 Not just translated UI, but culturally adapted experience for each language.
 
-## Use Cases
+### Use Cases
 
-### Airport Transfers
-- Flight tracking integration
-- Meet & greet services
-- Luggage assistance
-- Early/late flight handling
+#### Airport Transfers
 
-### Hotel Shuttles
-- Guest booking integration
-- Recurring routes
-- Batch bookings
-- Corporate accounts
+* Flight tracking integration
+* Meet & greet services
+* Luggage assistance
+* Early/late flight handling
 
-### Event Transportation
-- Conference shuttles
-- Wedding transfers
-- Group bookings
-- Multiple stops
+#### Hotel Shuttles
 
-### Tourism
-- Resort transfers
-- Sightseeing trips
-- Multi-day packages
-- Special requests
+* Guest booking integration
+* Recurring routes
+* Batch bookings
+* Corporate accounts
 
-## Roadmap
+#### Event Transportation
+
+* Conference shuttles
+* Wedding transfers
+* Group bookings
+* Multiple stops
+
+#### Tourism
+
+* Resort transfers
+* Sightseeing trips
+* Multi-day packages
+* Special requests
+
+### Roadmap
 
 Future enhancements planned:
 
-- Driver mobile application
-- Real-time GPS tracking
-- In-app messaging
-- Payment gateway integration (Stripe)
-- Corporate booking portal
-- Loyalty programs
-- Affiliate system
-- Advanced reporting
+* Driver mobile application
+* Real-time GPS tracking
+* In-app messaging
+* Payment gateway integration (Stripe)
+* Corporate booking portal
+* Loyalty programs
+* Affiliate system
+* Advanced reporting
 
----
+***
 
 Ready to explore the system? Continue with [Key Features](key-features.md) or jump into the [Mobile App Guide](../user-guides/mobile-app/).

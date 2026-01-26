@@ -1,5 +1,27 @@
 # Welcome to 8Move Transfer
 
+## Purpose-Built for Luxury Transport Operators
+
+**Mobile App** • **Admin Panel** • **Analytics Dashboard**
+
+***
+
+{% hint style="success" %}
+**Transparent Multi-Factor Pricing Engine**
+{% endhint %}
+
+{% hint style="success" %}
+**Swiss GDPR/FADP Compliant Engineering**
+{% endhint %}
+
+{% hint style="success" %}
+**Multi-Language Support (EN/FR/DE/IT/AR + more)**
+{% endhint %}
+
+<p align="right"><a href="https://8move.com/contacts/"><strong>Contact Sales →</strong></a></p>
+
+***
+
 Welcome to the comprehensive documentation for **8Move Transfer** - a complete private transfer booking system designed for seamless customer experience and efficient operations management.
 
 ## What is 8Move Transfer?
