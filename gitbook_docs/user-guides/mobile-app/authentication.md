@@ -6,7 +6,7 @@ Learn how to access your 8Move Transfer account through the mobile application.
 
 Access your existing account with your registered credentials.
 
-<figure><img src="../../.gitbook/assets/image.png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt="" width="375"><figcaption></figcaption></figure>
 
 ### Steps to Log In
 
@@ -28,6 +28,10 @@ _Coming soon_ - Password recovery functionality will allow you to reset your pas
 ## Registration Screen
 
 Create a new account to start booking transfers.
+
+<figure><img src="../../.gitbook/assets/image (2).png" alt="" width="375"><figcaption></figcaption></figure>
+
+Registration form with required and optional fields
 
 ### Required Information
 
@@ -63,6 +67,12 @@ Once you complete registration:
 2. You're automatically logged in
 3. You can start booking immediately
 4. A welcome email is sent to your address
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure>
+
+_Successful registration confirmation_
+
+
 
 ***
 
@@ -106,6 +116,10 @@ Currently, email verification is not required. You can start using the app immed
 3. **Account doesn't exist**
    * Make sure you've registered
    * Try registering instead of logging in
+
+<figure><img src="../../.gitbook/assets/image (3).png" alt="" width="375"><figcaption></figcaption></figure>
+
+_Example of login error message_
 
 ### Registration Issues
 
