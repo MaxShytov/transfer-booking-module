@@ -8,7 +8,7 @@ The bottom navigation bar provides quick access to:
 
 | Tab             | Icon | Purpose                                    |
 | --------------- | ---- | ------------------------------------------ |
-| **Book**        | 🚗   | Start new transfer bookings                |
+| **Book**        |      | Start new transfer bookings                |
 | **My Bookings** | 📋   | View and manage existing bookings          |
 | **More**        | ⋯    | Profile, settings, and additional features |
 
