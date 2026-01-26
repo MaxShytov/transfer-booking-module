@@ -1,6 +1,6 @@
 ---
 cover: .gitbook/assets/banner-background.jpg
-coverY: 0
+coverY: -336.8831366900041
 ---
 
 # Welcome to 8Move Transfer
