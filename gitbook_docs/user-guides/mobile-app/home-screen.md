@@ -6,16 +6,19 @@ The home screen is your central hub for accessing all app features. It consists 
 
 The bottom navigation bar provides quick access to:
 
-| Tab | Icon | Purpose |
-|-----|------|---------|
-| **Book** | ![Book icon](../../.gitbook/assets/icons/add-circle.svg) | Start new transfer bookings |
-| **My Bookings** | ![Bookings icon](../../.gitbook/assets/icons/list-alt.svg) | View and manage existing bookings |
-| **More** | ![More icon](../../.gitbook/assets/icons/more-horiz.svg) | Profile, settings, and additional features |
+| Tab             | Icon                                                       | Purpose                                    |
+| --------------- | ---------------------------------------------------------- | ------------------------------------------ |
+| **Book**        | ![Book icon](../../.gitbook/assets/icons/add-circle.svg)   | Start new transfer bookings                |
+| **My Bookings** | ![Bookings icon](../../.gitbook/assets/icons/list-alt.svg) | View and manage existing bookings          |
+| **More**        | ![More icon](../../.gitbook/assets/icons/more-horiz.svg)   | Profile, settings, and additional features |
+
 ***
 
 ## Tab 1: Book a Transfer
 
 The main booking tab is your starting point for creating new transfers.
+
+<figure><img src="../../.gitbook/assets/Mobile App. Welcome page.png" alt="" width="375"><figcaption><p>Book tab showing quick booking card and popular routes</p></figcaption></figure>
 
 ### Quick Booking Card
 
@@ -29,7 +32,7 @@ Prominent card at the top featuring:
 
 Browse frequently booked routes for quick access:
 
-<figure><img src="../../.gitbook/assets/Mobile App. List of popular routes with pricing.png" alt="" width="375"><figcaption><p>List of popular routes with pricing</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Mobile App. List of popular routes with pricing.png" alt=""><figcaption><p>List of popular routes with pricing</p></figcaption></figure>
 
 **Each Route Card Shows:**
 
